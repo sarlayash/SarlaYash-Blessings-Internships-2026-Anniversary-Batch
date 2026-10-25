@@ -1372,7 +1372,290 @@ function copyWelcomeEmailText() {
 }
 
 // ----------------------------------------------------
-// 12. DOWNLOAD WELCOME EMAIL & OFFER LETTER ENGINE
+// 12. HIGH-FIDELITY PDF GENERATION & DOWNLOAD ENGINE
+// ----------------------------------------------------
+function downloadOfferLetter() {
+  const element = document.getElementById('offerLetterPdfDoc');
+  if (!element) {
+    alert("Offer letter document not found.");
+    return;
+  }
+
+  const app = window.currentUserApp || {
+    regId: 'SY-2026-0842',
+    name: currentUser?.displayName || 'Candidate Name'
+  };
+
+  const regIdClean = (app.regId || '2026').replace(/[^a-zA-Z0-9_-]/g, '');
+  const filename = `SarlaYash-Internship-Offer-Letter-${regIdClean}.pdf`;
+
+  const btn = document.getElementById('downloadOfferPdfBtn');
+  const originalHtml = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = `<span class="inline-block animate-spin mr-1.5">⏳</span><span>Generating PDF Document...</span>`;
+  }
+
+  const opt = {
+    margin: [6, 6, 6, 6],
+    filename: filename,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { 
+      scale: 2, 
+      useCORS: true, 
+      backgroundColor: '#ffffff',
+      scrollY: 0,
+      windowWidth: 800
+    },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  };
+
+  if (typeof html2pdf !== 'undefined') {
+    html2pdf().set(opt).from(element).save().then(() => {
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = originalHtml;
+        if (window.lucide) window.lucide.createIcons();
+      }
+    }).catch(err => {
+      console.error('html2pdf generation error:', err);
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = originalHtml;
+        if (window.lucide) window.lucide.createIcons();
+      }
+      fallbackCleanPrint(element, filename);
+    });
+  } else {
+    fallbackCleanPrint(element, filename);
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = originalHtml;
+    }
+  }
+}
+
+function downloadWelcomeEmail() {
+  const element = document.getElementById('welcomeEmailPdfDoc');
+  if (!element) {
+    alert("Welcome email document not found.");
+    return;
+  }
+
+  const app = window.currentUserApp || {
+    regId: 'SY-2026-0842',
+    name: currentUser?.displayName || 'Candidate Name'
+  };
+
+  const regIdClean = (app.regId || '2026').replace(/[^a-zA-Z0-9_-]/g, '');
+  const filename = `SarlaYash-Welcome-Letter-${regIdClean}.pdf`;
+
+  const btn = document.getElementById('downloadWelcomePdfBtn');
+  const originalHtml = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = `<span class="inline-block animate-spin mr-1.5">⏳</span><span>Generating PDF Document...</span>`;
+  }
+
+  const opt = {
+    margin: [6, 6, 6, 6],
+    filename: filename,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { 
+      scale: 2, 
+      useCORS: true, 
+      backgroundColor: '#ffffff',
+      scrollY: 0,
+      windowWidth: 800
+    },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  };
+
+  if (typeof html2pdf !== 'undefined') {
+    html2pdf().set(opt).from(element).save().then(() => {
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = originalHtml;
+        if (window.lucide) window.lucide.createIcons();
+      }
+    }).catch(err => {
+      console.error('html2pdf generation error:', err);
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = originalHtml;
+        if (window.lucide) window.lucide.createIcons();
+      }
+      fallbackCleanPrint(element, filename);
+    });
+  } else {
+    fallbackCleanPrint(element, filename);
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = originalHtml;
+    }
+  }
+}
+
+function fallbackCleanPrint(element, filename) {
+  // Safe isolated print iframe with strict pure white styling
+  const iframe = document.createElement('iframe');
+  iframe.style.position = 'fixed';
+  iframe.style.right = '0';
+  iframe.style.bottom = '0';
+  iframe.style.width = '0';
+  iframe.style.height = '0';
+  iframe.style.border = '0';
+  document.body.appendChild(iframe);
+
+  const doc = iframe.contentWindow.document;
+  doc.open();
+  doc.write(`
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>${filename}</title>
+        <link rel="stylesheet" href="styles.css">
+        <style>
+          @page { size: A4 portrait; margin: 10mm; }
+          html, body { background: #ffffff !important; color: #0f172a !important; margin: 0; padding: 10px; font-family: 'Plus Jakarta Sans', sans-serif; }
+          img { max-width: 100%; height: auto; }
+        </style>
+      </head>
+      <body>
+        ${element.outerHTML}
+      </body>
+    </html>
+  `);
+  doc.close();
+
+  setTimeout(() => {
+    iframe.contentWindow.focus();
+    iframe.contentWindow.print();
+    setTimeout(() => {
+      if (iframe.parentNode) document.body.removeChild(iframe);
+    }, 2000);
+  }, 500);
+}
+
+function showOfferLetterModal(customApp) {
+  const app = customApp || window.currentUserApp || {
+    name: currentUser?.displayName || 'Candidate Name',
+    email: currentUser?.email || 'candidate@gmail.com',
+    phone: '+91 9873152277',
+    regId: 'SY-2026-0842',
+    track: 'Full-Stack Development',
+    slot: 'Evening Batch (6:00 PM – 7:00 PM IST)',
+    utr: 'Logged & Verified'
+  };
+
+  const refNo = 'SYLLP/HR/2026/OFFER-' + (app.regId ? app.regId.replace('SY-2026-', '') : '8842');
+  const today = new Date().toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
+
+  const refElem = document.getElementById('offerRefNo');
+  const dateElem = document.getElementById('offerDate');
+  const nameElem = document.getElementById('offerCandidateName');
+  const salutationElem = document.getElementById('offerCandidateSalutation');
+  const emailElem = document.getElementById('offerCandidateEmail');
+  const phoneElem = document.getElementById('offerCandidatePhone');
+  const regIdBadgeElem = document.getElementById('offerRegIdBadge');
+  const trackTitleElem = document.getElementById('offerTrackTitle');
+  const trackSummaryElem = document.getElementById('offerTrackSummary');
+  const slotSummaryElem = document.getElementById('offerSlotSummary');
+  const utrSummaryElem = document.getElementById('offerUtrSummary');
+
+  if (refElem) refElem.innerText = refNo;
+  if (dateElem) dateElem.innerText = today;
+  if (nameElem) nameElem.innerText = app.name;
+  if (salutationElem) salutationElem.innerText = app.name.split(' ')[0] || app.name;
+  if (emailElem) emailElem.innerText = app.email;
+  if (phoneElem) phoneElem.innerText = `Phone: ${app.phone || '+91 9873152277'}`;
+  if (regIdBadgeElem) regIdBadgeElem.innerText = app.regId || 'SY-2026-0842';
+  if (trackTitleElem) trackTitleElem.innerText = app.track || 'Full-Stack Development';
+  if (trackSummaryElem) trackSummaryElem.innerText = app.track || 'Full-Stack Development';
+  if (slotSummaryElem) slotSummaryElem.innerText = app.slot || 'Evening Batch (6:00 PM – 7:00 PM IST)';
+  if (utrSummaryElem) utrSummaryElem.innerText = app.utr ? `UTR: ${app.utr} (Confirmed)` : 'Logged & Verified in Cloud';
+
+  const modal = document.getElementById('offerLetterModal');
+  if (modal) modal.classList.remove('hidden');
+
+  if (window.lucide) window.lucide.createIcons();
+}
+
+function closeOfferLetterModal() {
+  const modal = document.getElementById('offerLetterModal');
+  if (modal) modal.classList.add('hidden');
+}
+
+function copyOfferLetterText() {
+  const app = window.currentUserApp || {
+    name: currentUser?.displayName || 'Candidate Name',
+    email: currentUser?.email || 'candidate@gmail.com',
+    regId: 'SY-2026-0842',
+    track: 'Full-Stack Development',
+    slot: 'Evening Batch (6:00 PM – 7:00 PM IST)',
+    utr: 'Confirmed'
+  };
+
+  const text = 
+    `SARLAYASH LEARNING SOLUTIONS LLP
+` +
+    `Dedicated to the Sacred Blessings of Maa Sarla & Paa Yash
+` +
+    `OFFICIAL LETTER OF INTERNSHIP APPOINTMENT
+
+` +
+    `Ref No: SYLLP/HR/2026/OFFER-${app.regId || '8842'}
+` +
+    `Date: ${new Date().toLocaleDateString()}
+
+` +
+    `To,
+${app.name}
+${app.email}
+Phone: ${app.phone || '+91 9873152277'}
+Registration ID: ${app.regId}
+
+` +
+    `Dear ${app.name},
+
+` +
+    `We are delighted to formally offer you appointment as a Graduate Intern – ${app.track} in the prestigious Anniversary Batch 2026.
+
+` +
+    `• Position: Graduate Intern – ${app.track}
+` +
+    `• Cohort: Anniversary Batch 2026 (Strictly 50 Selected Interns)
+` +
+    `• Schedule: 4 Weeks (20 Working Days, Mon–Fri, 1 Hour/Day)
+` +
+    `• Daily Window: ${app.slot}
+` +
+    `• Operating Formula: 10% Focused Micro-Theory, 90% Live Production Artifacts
+` +
+    `• Commitment Fee: Strictly ₹50 INR daily only (₹250/Wk, ₹1,000 Total)
+` +
+    `• Refund & Stipend Covenant: 100% Commitment Deposit Refunded to Merit Stipend Earners (₹5,000 to ₹15,000)
+` +
+    `• Reference / UTR: ${app.utr || 'Logged & Verified'}
+
+` +
+    `Authorized Signatory:
+Kapil Narula
+Founder & Lead Mentor | The One Rupee Full-Stack CEO
+SarlaYash Learning Solutions LLP
+https://sarlayash.com/ | namaste@sarlayash.com | WhatsApp: +91 9873152277`;
+
+  navigator.clipboard.writeText(text).then(() => {
+    alert("✓ Official Offer Letter text copied to clipboard!");
+  }).catch(() => {
+    prompt("Copy Offer Letter Text:", text);
+  });
+}
+
 // ----------------------------------------------------
 function downloadWelcomeEmail() {
   const container = document.getElementById('emailBodyContainer');
