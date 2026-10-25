@@ -33,6 +33,8 @@
 * **Stipend Opportunities**: Merit pool of **₹0 to ₹15,000** evaluated on an objective 100-point rubric
 * **SFE (Something For Everyone)**: 12 specialized domain tracks (Tech, AI, Data, Cloud, Business, Marketing, HR, Content, Startups)
 * **Official UPI ID**: `9873152277@kotakbank`
+* **Authentication**: **Only Verified Google Accounts** via Firebase Auth (zero fake logins, no spam or disposable emails)
+* **Cloud Database**: Real-time Firestore candidate records (`sarlayash-internships-2026`)
 
 ---
 

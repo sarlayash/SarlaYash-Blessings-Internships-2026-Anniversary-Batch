@@ -1,7 +1,40 @@
 /**
  * SarlaYash Blessings Internships 2026 — Interactive Application Controller
  * Powered by SarlaYash Learning Solutions LLP
+ * Firebase Authentication & Firestore Cloud Database Integration
  */
+
+// Firebase SDK Configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyD_NAsA4TgHEb5kbwHGbu9GQ14a_J9AUlI",
+  authDomain: "sarlayash-internships-2026.firebaseapp.com",
+  projectId: "sarlayash-internships-2026",
+  storageBucket: "sarlayash-internships-2026.firebasestorage.app",
+  messagingSenderId: "1041302522680",
+  appId: "1:1041302522680:web:c0a87ec23e530f1a308fcd",
+  measurementId: "G-JHSJSTV7DT"
+};
+
+let firebaseApp = null;
+let auth = null;
+let db = null;
+let currentUser = null;
+
+try {
+  if (typeof firebase !== 'undefined') {
+    firebaseApp = firebase.initializeApp(firebaseConfig);
+    auth = firebase.auth();
+    db = firebase.firestore();
+
+    // Observe Auth State (Persistent Session)
+    auth.onAuthStateChanged((user) => {
+      currentUser = user;
+      updateAuthUI(user);
+    });
+  }
+} catch (e) {
+  console.warn("Firebase Auth init note:", e);
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize Lucide Icons
@@ -644,12 +677,106 @@ function resetRubric() {
 }
 
 // ----------------------------------------------------
-// 5. APPLICATION & ENROLLMENT MODAL WORKFLOW
+// 5. GOOGLE AUTHENTICATION (ONLY REAL GOOGLE SIGNUPS)
+// ----------------------------------------------------
+async function loginWithGoogle() {
+  if (!auth) {
+    alert("Authentication service is initializing. Please wait a second and retry.");
+    return;
+  }
+  const provider = new firebase.auth.GoogleAuthProvider();
+  provider.setCustomParameters({ prompt: 'select_account' });
+
+  try {
+    const result = await auth.signInWithPopup(provider);
+    currentUser = result.user;
+    updateAuthUI(currentUser);
+
+    if (typeof confetti === 'function') {
+      confetti({
+        particleCount: 50,
+        spread: 60,
+        origin: { y: 0.3 }
+      });
+    }
+  } catch (error) {
+    console.error("Google Auth error:", error);
+    if (error.code === 'auth/unauthorized-domain') {
+      alert("Note: This domain needs to be added to Firebase Console > Authentication > Settings > Authorized Domains.\n(For local preview, localhost is supported; for GitHub Pages, add sarlayash.github.io).\n\n" + error.message);
+    } else if (error.code !== 'auth/popup-closed-by-user' && error.code !== 'auth/cancelled-popup-request') {
+      alert("Google Sign-In Error: " + error.message);
+    }
+  }
+}
+
+async function logoutGoogle() {
+  if (auth) {
+    await auth.signOut();
+    currentUser = null;
+    updateAuthUI(null);
+  }
+}
+
+function updateAuthUI(user) {
+  const loginBtn = document.getElementById('googleLoginBtn');
+  const userBadge = document.getElementById('googleUserBadge');
+  const userPhoto = document.getElementById('googleUserPhoto');
+  const userName = document.getElementById('googleUserName');
+
+  const gate = document.getElementById('googleAuthRequiredGate');
+  const authForm = document.getElementById('googleAuthenticatedForm');
+  const formPhoto = document.getElementById('formUserPhoto');
+  const formName = document.getElementById('formUserName');
+  const formEmail = document.getElementById('formUserEmail');
+  const inputName = document.getElementById('app_name');
+  const inputEmail = document.getElementById('app_email');
+
+  if (user) {
+    // Header UI
+    if (loginBtn) loginBtn.classList.add('hidden');
+    if (userBadge) {
+      userBadge.classList.remove('hidden');
+      userBadge.classList.add('flex');
+    }
+    if (userPhoto) userPhoto.src = user.photoURL || 'https://www.gstatic.com/images/branding/product/1x/avatar_square_grey_54dp.png';
+    if (userName) userName.innerText = user.displayName || 'Google User';
+
+    // Application Modal UI
+    if (gate) gate.classList.add('hidden');
+    if (authForm) authForm.classList.remove('hidden');
+    if (formPhoto) formPhoto.src = user.photoURL || 'https://www.gstatic.com/images/branding/product/1x/avatar_square_grey_54dp.png';
+    if (formName) formName.innerText = user.displayName || 'Verified Candidate';
+    if (formEmail) formEmail.innerText = user.email || '';
+    if (inputName) inputName.value = user.displayName || '';
+    if (inputEmail) inputEmail.value = user.email || '';
+  } else {
+    // Header UI
+    if (loginBtn) loginBtn.classList.remove('hidden');
+    if (userBadge) {
+      userBadge.classList.add('hidden');
+      userBadge.classList.remove('flex');
+    }
+
+    // Application Modal UI
+    if (gate) gate.classList.remove('hidden');
+    if (authForm) authForm.classList.add('hidden');
+    if (inputName) inputName.value = '';
+    if (inputEmail) inputEmail.value = '';
+  }
+
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
+}
+
+// ----------------------------------------------------
+// 6. APPLICATION & ENROLLMENT MODAL WORKFLOW
 // ----------------------------------------------------
 function openApplyModal() {
   const modal = document.getElementById('applyModal');
   if (modal) {
     modal.classList.remove('hidden');
+    updateAuthUI(currentUser);
     goToEnrollmentStep(1);
   }
 }
@@ -669,11 +796,16 @@ function goToEnrollmentStep(step) {
 
   if (step === 1) {
     document.getElementById('enrollmentStep1').classList.remove('hidden');
+    updateAuthUI(currentUser);
   } else if (step === 2) {
-    const name = document.getElementById('app_name').value.trim();
-    const email = document.getElementById('app_email').value.trim();
-    if (!name || !email) {
-      alert("Please enter your name and email to proceed to the payment step.");
+    if (!currentUser) {
+      alert("Authentic Verification Required: Please sign in with your Google account first. No fake logins are accepted.");
+      loginWithGoogle();
+      return;
+    }
+    const phone = document.getElementById('app_phone')?.value.trim();
+    if (!phone) {
+      alert("Please provide an active WhatsApp / Phone number for batch coordination and live session access.");
       document.getElementById('enrollmentStep1').classList.remove('hidden');
       document.getElementById('modalStepNum').innerText = 1;
       return;
@@ -698,19 +830,50 @@ function copyUpi() {
 }
 
 function submitApplication() {
+  if (!currentUser) {
+    alert("Authentic Verification Required: Please sign in with Google to confirm your enrollment.");
+    loginWithGoogle();
+    return;
+  }
+
   const utr = document.getElementById('app_utr').value.trim();
   if (!utr) {
     alert("Please enter your 12-digit UPI UTR / Transaction Reference ID from your payment receipt.");
     return;
   }
 
-  const name = document.getElementById('app_name').value.trim() || "Participant";
+  const name = currentUser.displayName || document.getElementById('app_name').value.trim() || "Participant";
+  const email = currentUser.email || "";
+  const phone = document.getElementById('app_phone')?.value.trim() || "";
   const track = document.getElementById('app_track').value;
+  const background = document.getElementById('app_background').value;
   const slot = document.getElementById('app_slot').value;
   const regId = 'SY-2026-' + Math.floor(1000 + Math.random() * 9000);
 
-  // Populate pass card
-  document.getElementById('pass_name').innerText = name;
+  // Firestore Cloud Database Record
+  if (db && currentUser) {
+    db.collection('internship_applications_2026').doc(currentUser.uid).set({
+      uid: currentUser.uid,
+      name: name,
+      email: email,
+      photoURL: currentUser.photoURL || '',
+      phone: phone,
+      track: track,
+      background: background,
+      slot: slot,
+      utr: utr,
+      regId: regId,
+      submittedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      feeInstallment: 250,
+      feeTotal: 1000,
+      status: 'verified_google_candidate'
+    }, { merge: true }).catch(err => {
+      console.warn("Firestore record save notice:", err);
+    });
+  }
+
+  // Populate pass card with verified Google details
+  document.getElementById('pass_name').innerText = name + " (Google Verified)";
   document.getElementById('pass_track').innerText = track;
   document.getElementById('pass_slot').innerText = slot;
   document.getElementById('pass_regId').innerText = regId;
@@ -718,10 +881,10 @@ function submitApplication() {
   // Trigger celebration confetti
   if (typeof confetti === 'function') {
     confetti({
-      particleCount: 80,
-      spread: 70,
+      particleCount: 90,
+      spread: 75,
       origin: { y: 0.6 },
-      colors: ['#E5A93C', '#880E1C', '#ffffff', '#F5D061']
+      colors: ['#E5A93C', '#4285F4', '#34A853', '#EA4335', '#ffffff']
     });
   }
 
