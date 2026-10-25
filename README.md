@@ -5,8 +5,12 @@
 
 ---
 
-## 🌐 Live Web Application
+## 🌐 Live Web Application & Official Ecosystem Links
 * **Live GitHub Pages URL**: [https://sarlayash.github.io/SarlaYash-Blessings-Internships-2026-Anniversary-Batch/](https://sarlayash.github.io/SarlaYash-Blessings-Internships-2026-Anniversary-Batch/)
+* **Official Corporate Website**: [https://sarlayash.com/](https://sarlayash.com/) | [https://www.sarlayash.com/](https://www.sarlayash.com/)
+* **Kapil Narula (LinkedIn)**: [https://www.linkedin.com/in/kapil-narula-63447026/](https://www.linkedin.com/in/kapil-narula-63447026/)
+* **GitHub Organization**: [https://github.com/sarlayash/](https://github.com/sarlayash/)
+* **SarlaYash Mission Day 2**: [https://sarlayash.github.io/sarlayash-mission-day-2/index.html](https://sarlayash.github.io/sarlayash-mission-day-2/index.html)
 
 ---
 
