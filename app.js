@@ -1370,3 +1370,117 @@ function copyWelcomeEmailText() {
     prompt("Copy Welcome Email Text:", text);
   });
 }
+
+// ----------------------------------------------------
+// 12. DOWNLOAD WELCOME EMAIL & OFFER LETTER ENGINE
+// ----------------------------------------------------
+function downloadWelcomeEmail() {
+  const container = document.getElementById('emailBodyContainer');
+  if (!container) return;
+  
+  // Tag printable container
+  document.querySelectorAll('.printable-active').forEach(el => el.classList.remove('printable-active'));
+  container.classList.add('printable-active');
+  
+  window.print();
+  
+  setTimeout(() => {
+    container.classList.remove('printable-active');
+  }, 1000);
+}
+
+function showOfferLetterModal(customApp) {
+  const app = customApp || window.currentUserApp || {
+    name: currentUser?.displayName || 'Candidate Name',
+    email: currentUser?.email || 'candidate@gmail.com',
+    phone: '+91 9873152277',
+    regId: 'SY-2026-0842',
+    track: 'Full-Stack Development',
+    slot: 'Evening Batch (6:00 PM – 7:00 PM IST)'
+  };
+
+  const refNo = 'SY-OFFER-2026-' + (app.regId ? app.regId.replace('SY-2026-', '') : '8842');
+  const today = new Date().toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
+
+  const refElem = document.getElementById('offerRefNo');
+  const dateElem = document.getElementById('offerDate');
+  const nameElem = document.getElementById('offerCandidateName');
+  const salutationElem = document.getElementById('offerCandidateSalutation');
+  const emailElem = document.getElementById('offerCandidateEmail');
+  const phoneElem = document.getElementById('offerCandidatePhone');
+  const trackTitleElem = document.getElementById('offerTrackTitle');
+  const trackSummaryElem = document.getElementById('offerTrackSummary');
+  const slotSummaryElem = document.getElementById('offerSlotSummary');
+
+  if (refElem) refElem.innerText = refNo;
+  if (dateElem) dateElem.innerText = today;
+  if (nameElem) nameElem.innerText = app.name;
+  if (salutationElem) salutationElem.innerText = app.name.split(' ')[0] || app.name;
+  if (emailElem) emailElem.innerText = app.email;
+  if (phoneElem) phoneElem.innerText = `Phone: ${app.phone || '+91 9873152277'}`;
+  if (trackTitleElem) trackTitleElem.innerText = app.track || 'Full-Stack Development';
+  if (trackSummaryElem) trackSummaryElem.innerText = app.track || 'Full-Stack Development';
+  if (slotSummaryElem) slotSummaryElem.innerText = app.slot || 'Evening Batch (6:00 PM – 7:00 PM IST)';
+
+  const modal = document.getElementById('offerLetterModal');
+  if (modal) modal.classList.remove('hidden');
+
+  if (window.lucide) window.lucide.createIcons();
+}
+
+function closeOfferLetterModal() {
+  const modal = document.getElementById('offerLetterModal');
+  if (modal) modal.classList.add('hidden');
+}
+
+function downloadOfferLetter() {
+  const container = document.getElementById('offerLetterPrintable');
+  if (!container) return;
+
+  // Tag printable container
+  document.querySelectorAll('.printable-active').forEach(el => el.classList.remove('printable-active'));
+  container.classList.add('printable-active');
+
+  window.print();
+
+  setTimeout(() => {
+    container.classList.remove('printable-active');
+  }, 1000);
+}
+
+function copyOfferLetterText() {
+  const app = window.currentUserApp || {
+    name: currentUser?.displayName || 'Candidate Name',
+    email: currentUser?.email || 'candidate@gmail.com',
+    regId: 'SY-2026-0842',
+    track: 'Full-Stack Development',
+    slot: 'Evening Batch (6:00 PM – 7:00 PM IST)'
+  };
+
+  const text = 
+    `SARLAYASH LEARNING SOLUTIONS LLP\n` +
+    `Dedicated to Maa Sarla & Paa Yash\n` +
+    `OFFICIAL LETTER OF INTERNSHIP APPOINTMENT\n\n` +
+    `Ref No: SY-OFFER-2026-${app.regId || '8842'}\n` +
+    `Date: ${new Date().toLocaleDateString()}\n\n` +
+    `To,\n${app.name}\n${app.email}\n\n` +
+    `Dear ${app.name},\n\n` +
+    `We are delighted to formally offer you appointment as a Graduate Intern — ${app.track} in the Anniversary Batch 2026.\n\n` +
+    `• Position: Graduate Intern — ${app.track}\n` +
+    `• Cohort: Anniversary Batch 2026 (Strictly 50 Selected Interns)\n` +
+    `• Schedule: 22 Working Days (Strictly 1 Hour / Day, Mon-Fri)\n` +
+    `• Operating Model: 10% Micro-Theory, 90% Hands-on Artifact Creation\n` +
+    `• Commitment Deposit: ₹50/Day (₹250/Wk, ₹1,000 Total)\n` +
+    `• Refund & Stipend Covenant: 100% Commitment Deposit Refunded to Merit Stipend Earners (₹5,000 to ₹15,000)\n\n` +
+    `Signed by:\nKapil — The One Rupee Full-Stack CEO & Lead Mentor\nSarlaYash Learning Solutions LLP\nhttps://sarlayash.com/ | namaste@sarlayash.com | WhatsApp: +91 9873152277`;
+
+  navigator.clipboard.writeText(text).then(() => {
+    alert("✓ Official Offer Letter text copied to clipboard!");
+  }).catch(() => {
+    prompt("Copy Offer Letter Text:", text);
+  });
+}

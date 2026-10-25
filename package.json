@@ -1,0 +1,24 @@
+{
+  "name": "sarlayash-blessings-internship-2026",
+  "version": "1.0.0",
+  "description": "> **\"22 working days. One hour daily. Real work. Measurable growth. A legacy of gratitude.\"**   > *Powered by SarlaYash Learning Solutions LLP | Legacy of Values • Future of Learning*",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sarlayash/SarlaYash-Blessings-Internships-2026-Anniversary-Batch.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/sarlayash/SarlaYash-Blessings-Internships-2026-Anniversary-Batch/issues"
+  },
+  "homepage": "https://github.com/sarlayash/SarlaYash-Blessings-Internships-2026-Anniversary-Batch#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  }
+}

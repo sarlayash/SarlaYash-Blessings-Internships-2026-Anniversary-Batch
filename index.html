@@ -6,15 +6,21 @@
   <title>SarlaYash Blessings Internships 2026 | Anniversary Batch</title>
   <meta name="description" content="22 working days. One hour daily. Real work. Measurable growth. A legacy of gratitude. Virtual 30-day outcome-driven internship by SarlaYash Learning Solutions LLP.">
   
+  <!-- Base URL for reliable relative assets resolution on GitHub Pages -->
+  <base href="./">
+
+  <!-- Primary Compiled High-Performance Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind CSS Configuration & Runtime -->
   <script>
-    tailwind.config = {
+    window.tailwind = window.tailwind || {};
+    window.tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
@@ -45,8 +51,9 @@
           }
         }
       }
-    }
+    };
   </script>
+  <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Firebase SDK v10 (Compat for Browser SPA) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -2307,12 +2314,21 @@
           </div>
         </div>
 
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-          <button onclick="window.print()" class="w-full sm:w-auto px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5">
-            <i data-lucide="printer" class="w-4 h-4"></i> Print / Save Pass
+        <div class="flex flex-wrap items-center justify-center gap-3">
+          <button onclick="showOfferLetterModal()" class="w-full sm:w-auto px-5 py-2.5 bg-gradient-to-r from-brand-gold via-amber-300 to-brand-gold text-brand-dark rounded-xl text-xs font-bold hover:brightness-110 flex items-center justify-center gap-1.5 shadow-gold-glow">
+            <i data-lucide="award" class="w-4 h-4"></i>
+            <span>Download Offer Letter</span>
           </button>
-          <button onclick="closeApplyModal()" class="w-full sm:w-auto px-6 py-2.5 bg-brand-gold text-brand-dark rounded-xl text-xs font-bold hover:brightness-110">
-            Done & Return to Webapp
+          <button onclick="showWelcomeEmailModal()" class="w-full sm:w-auto px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 border border-white/15">
+            <i data-lucide="mail-check" class="w-4 h-4 text-brand-gold"></i>
+            <span>Download Welcome Email</span>
+          </button>
+          <button onclick="window.print()" class="w-full sm:w-auto px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 border border-white/15">
+            <i data-lucide="printer" class="w-4 h-4 text-emerald-400"></i>
+            <span>Print Pass</span>
+          </button>
+          <button onclick="closeApplyModal()" class="w-full sm:w-auto px-5 py-2.5 bg-white/5 hover:bg-white/10 text-slate-300 rounded-xl text-xs font-semibold">
+            Done
           </button>
         </div>
       </div>
@@ -2413,14 +2429,18 @@
         </div>
 
         <!-- Quick Action Buttons -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-          <button onclick="showWelcomeEmailModal()" class="w-full py-2.5 px-4 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 border border-white/10 transition-all">
-            <i data-lucide="mail-check" class="w-4 h-4 text-brand-gold"></i>
-            <span>View Welcome Email</span>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2">
+          <button onclick="showOfferLetterModal()" class="w-full py-2.5 px-3 bg-gradient-to-r from-brand-gold via-amber-300 to-brand-gold text-brand-dark rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-gold-glow hover:brightness-110">
+            <i data-lucide="award" class="w-4 h-4"></i>
+            <span>Offer Letter</span>
           </button>
-          <button onclick="window.print()" class="w-full py-2.5 px-4 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 border border-white/10 transition-all">
+          <button onclick="showWelcomeEmailModal()" class="w-full py-2.5 px-3 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 border border-white/10 transition-all">
+            <i data-lucide="mail-check" class="w-4 h-4 text-brand-gold"></i>
+            <span>Welcome Email</span>
+          </button>
+          <button onclick="window.print()" class="w-full py-2.5 px-3 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 border border-white/10 transition-all">
             <i data-lucide="printer" class="w-4 h-4 text-emerald-400"></i>
-            <span>Print Admission Pass</span>
+            <span>Print Pass</span>
           </button>
         </div>
 
@@ -2465,8 +2485,13 @@
         <!-- Email Body Content -->
         <div class="p-6 space-y-5 text-sm text-slate-300 leading-relaxed font-sans" id="emailBodyContainer">
           
+          <!-- SarlaYash Official Theatrical Banner -->
+          <div class="w-full rounded-xl overflow-hidden border border-brand-gold/40 shadow-gold-glow bg-black">
+            <img src="assets/banner.png" alt="SarlaYash Learning Solutions LLP" class="w-full h-auto max-h-52 object-cover mx-auto">
+          </div>
+
           <!-- Brand Badge -->
-          <div class="text-center pb-4 border-b border-brand-gold/20">
+          <div class="text-center pb-2 border-b border-brand-gold/20">
             <div class="font-heading font-bold text-lg text-white tracking-wider">
               SARLAYASH LEARNING SOLUTIONS LLP
             </div>
@@ -2533,18 +2558,174 @@
 
       <!-- Action Bar -->
       <div class="flex flex-wrap items-center justify-between gap-3 mt-5">
-        <a id="emailMailtoBtn" href="#" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs flex items-center gap-1.5 border border-white/15">
-          <i data-lucide="external-link" class="w-4 h-4 text-blue-400"></i>
-          <span>Open in Gmail / Email Client</span>
-        </a>
-        <button onclick="copyWelcomeEmailText()" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs flex items-center gap-1.5 border border-white/15">
-          <i data-lucide="copy" class="w-4 h-4 text-amber-300"></i>
-          <span>Copy Email Text</span>
+        <button onclick="downloadWelcomeEmail()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-gold via-amber-300 to-brand-gold text-brand-dark font-bold text-xs flex items-center gap-2 shadow-gold-glow hover:brightness-110 active:scale-95 transition-all">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>Download Welcome Email (PDF / Print)</span>
         </button>
-        <button onclick="closeWelcomeEmailModal()" class="px-6 py-2.5 rounded-xl bg-brand-gold text-brand-dark font-bold text-xs hover:brightness-110 ml-auto">
+
+        <button onclick="showOfferLetterModal()" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs flex items-center gap-1.5 border border-white/15">
+          <i data-lucide="award" class="w-4 h-4 text-brand-gold"></i>
+          <span>View Offer Letter</span>
+        </button>
+
+        <a id="emailMailtoBtn" href="#" class="px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs flex items-center gap-1.5 border border-white/15">
+          <i data-lucide="external-link" class="w-4 h-4 text-blue-400"></i>
+          <span>Gmail</span>
+        </a>
+
+        <button onclick="copyWelcomeEmailText()" class="px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs flex items-center gap-1.5 border border-white/15">
+          <i data-lucide="copy" class="w-4 h-4 text-amber-300"></i>
+          <span>Copy</span>
+        </button>
+
+        <button onclick="closeWelcomeEmailModal()" class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white font-bold text-xs ml-auto">
           Done
         </button>
       </div>
+
+    </div>
+  </div>
+
+  <!-- OFFICIAL INTERNSHIP OFFER LETTER MODAL -->
+  <div id="offerLetterModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/90 backdrop-blur-md overflow-y-auto">
+    <div class="relative w-full max-w-3xl bg-[#0F0F14] border-2 border-brand-gold/60 rounded-2xl shadow-2xl p-6 sm:p-8 my-8 text-slate-200 max-h-[92vh] overflow-y-auto">
+      
+      <!-- Close Button -->
+      <button onclick="closeOfferLetterModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 rounded-lg bg-white/5 hover:bg-white/10 z-10">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Printable Offer Letter Container -->
+      <div id="offerLetterPrintable" class="bg-black/80 rounded-xl p-6 sm:p-8 border border-white/10 space-y-6 text-left">
+        
+        <!-- Official Banner Header -->
+        <div class="w-full rounded-xl overflow-hidden border border-brand-gold/50 shadow-gold-glow bg-black">
+          <img src="assets/banner.png" alt="SarlaYash Learning Solutions LLP" class="w-full h-auto max-h-56 object-cover mx-auto">
+        </div>
+
+        <!-- Reference & Date Header -->
+        <div class="flex flex-wrap items-center justify-between border-b border-white/10 pb-4 text-xs font-mono text-slate-400">
+          <div>
+            <span>Ref No: </span>
+            <strong id="offerRefNo" class="text-brand-gold font-bold">SY-OFFER-2026-8842</strong>
+          </div>
+          <div>
+            <span>Issue Date: </span>
+            <strong id="offerDate" class="text-white">October 25, 2026</strong>
+          </div>
+          <div class="w-full sm:w-auto mt-1 sm:mt-0">
+            <span class="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-bold">
+              OFFICIALLY APPOINTED
+            </span>
+          </div>
+        </div>
+
+        <!-- Dedication & Title -->
+        <div class="text-center space-y-1">
+          <p class="text-[11px] uppercase tracking-widest text-brand-gold font-mono font-semibold">
+            With the Sacred Blessings of Maa Sarla & Paa Yash
+          </p>
+          <h3 class="font-heading font-extrabold text-2xl sm:text-3xl text-white tracking-wide">
+            LETTER OF INTERNSHIP APPOINTMENT
+          </h3>
+          <p class="text-xs text-slate-400 font-mono">Anniversary Batch 2026 • Limited to Strictly 50 Selected Interns</p>
+        </div>
+
+        <!-- Recipient Information -->
+        <div class="p-4 rounded-xl bg-white/5 border border-white/10 text-xs space-y-1">
+          <div class="text-slate-400">To,</div>
+          <div class="text-base font-bold text-white font-sans" id="offerCandidateName">Candidate Name</div>
+          <div class="text-slate-300 font-mono" id="offerCandidateEmail">candidate@gmail.com</div>
+          <div class="text-amber-300 font-mono" id="offerCandidatePhone">Phone: +91 9873152277</div>
+        </div>
+
+        <!-- Appointment Body -->
+        <div class="space-y-4 text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
+          <p>
+            <strong>Dear <span id="offerCandidateSalutation">Candidate</span>,</strong>
+          </p>
+          <p>
+            On behalf of <strong>SarlaYash Learning Solutions LLP</strong>, we take immense pride in formally offering you appointment as a <strong>Graduate Intern — <span id="offerTrackTitle" class="text-brand-gold font-bold">Full-Stack Development</span></strong> in the prestigious <strong>Anniversary Batch 2026</strong>.
+          </p>
+          <p>
+            You are one of strictly <strong>50 selected candidates</strong> chosen for this outcome-driven, human-mentored cohort. Guided by our foundational ethos of <em>"Legacy of Values, Future of Learning"</em>, this appointment confers upon you direct daily access to lead mentor <strong>Kapil (The One Rupee Full-Stack CEO)</strong> and our senior engineering leadership.
+          </p>
+
+          <!-- Appointment Terms Matrix -->
+          <div class="rounded-xl border border-brand-gold/40 bg-black/60 p-4 space-y-2.5 font-mono text-xs">
+            <div class="text-brand-gold font-bold uppercase text-[11px] border-b border-white/10 pb-1">
+              Summary of Appointment Terms & Schedule
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-slate-300">
+              <div>• <strong>Assigned Track:</strong> <span id="offerTrackSummary" class="text-white">Full-Stack Development</span></div>
+              <div>• <strong>Daily Working Slot:</strong> <span id="offerSlotSummary" class="text-white">Evening Batch (6:00–7:00 PM IST)</span></div>
+              <div>• <strong>Cohort Duration:</strong> <span class="text-white">22 Working Days (Strictly 1 Hour / Day)</span></div>
+              <div>• <strong>Working Rhythm:</strong> <span class="text-white">Monday through Friday (No Weekend Overtime)</span></div>
+              <div>• <strong>Operating Formula:</strong> <span class="text-white">10% Micro-Theory, 90% Practical Artifacts</span></div>
+              <div>• <strong>Credential Tier:</strong> <span class="text-white">ID-Tracked Verifiable Portfolio & Certificate</span></div>
+            </div>
+          </div>
+
+          <!-- Financial & Refund Covenant -->
+          <div class="rounded-xl border border-brand-gold/30 bg-brand-velvet/40 p-4 space-y-2 text-xs">
+            <h5 class="text-brand-gold font-bold uppercase text-[11px] flex items-center gap-1.5">
+              <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+              Financial Covenant & Commitment Deposit Refund Guarantee
+            </h5>
+            <ul class="space-y-1 text-slate-300 list-disc list-inside">
+              <li><strong>Commitment Deposit:</strong> Strictly ₹50 INR daily only (₹250 per week, ₹1,000 total across 20 working days) to eliminate casual dropouts and protect our 50 cohort seats.</li>
+              <li><strong>100% Deposit Refund for Stipend Achievers:</strong> Candidates who achieve performance benchmarks under our transparent 100-point rubric qualify for performance stipends (<strong>₹5,000 to ₹15,000</strong>) and will receive their <strong>₹1,000 commitment deposit 100% refunded alongside their stipend payout</strong>.</li>
+              <li><strong>Strict No-Refund Rule for Dropouts:</strong> Casual abandonment or failure to submit deliverables forfeits the deposit to cover administrative and mentor review allocation.</li>
+            </ul>
+          </div>
+
+          <p>
+            Please treat this appointment letter as official documentation of your admission. Your Google Classroom, domain starter templates, and Git repository allocations will be delivered 48 hours prior to Day 1.
+          </p>
+        </div>
+
+        <!-- Signatures & Official Stamp -->
+        <div class="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div class="text-center sm:text-left">
+            <div class="font-heading font-bold text-base text-white">Kapil</div>
+            <p class="text-xs text-brand-gold font-medium">The One Rupee Full-Stack CEO • Lead Mentor</p>
+            <p class="text-[10px] text-slate-400 font-mono">SarlaYash Learning Solutions LLP</p>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div class="w-20 h-20 rounded-full border-2 border-brand-gold/50 flex flex-col items-center justify-center text-center p-1 bg-brand-velvet/30 shadow-gold-glow">
+              <span class="text-[8px] font-mono text-brand-gold uppercase font-bold leading-tight">OFFICIAL<br>SEAL<br>2026</span>
+              <span class="text-[7px] text-slate-300">SARLAYASH</span>
+            </div>
+            <div class="text-right text-[11px] text-slate-400 font-mono">
+              <div>WhatsApp: +91 9873152277</div>
+              <div>Email: namaste@sarlayash.com</div>
+              <div>Web: https://sarlayash.com/</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap items-center justify-between gap-3 mt-6">
+        <button onclick="downloadOfferLetter()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-gold via-amber-300 to-brand-gold text-brand-dark font-bold text-xs flex items-center gap-2 shadow-gold-glow hover:brightness-110 active:scale-95 transition-all">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>Download Offer Letter (PDF / Print)</span>
+        </button>
+
+        <button onclick="copyOfferLetterText()" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs flex items-center gap-1.5 border border-white/15">
+          <i data-lucide="copy" class="w-4 h-4 text-brand-gold"></i>
+          <span>Copy Letter Text</span>
+        </button>
+
+        <button onclick="closeOfferLetterModal()" class="px-6 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white font-bold text-xs ml-auto">
+          Close
+        </button>
+      </div>
+
+    </div>
+  </div>
 
     </div>
   </div>
