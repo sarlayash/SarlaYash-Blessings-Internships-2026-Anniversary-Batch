@@ -1418,7 +1418,7 @@ async function downloadOfferLetter() {
   clone.style.width = '794px';
   clone.style.maxWidth = '794px';
   clone.style.margin = '0';
-  clone.style.padding = '18px 24px';
+  clone.style.padding = '0';
   clone.style.boxSizing = 'border-box';
   clone.style.backgroundColor = '#ffffff';
   clone.style.color = '#0f172a';
@@ -1427,7 +1427,7 @@ async function downloadOfferLetter() {
   document.body.appendChild(container);
 
   const opt = {
-    margin: [4, 4, 4, 4],
+    margin: [0, 0, 0, 0],
     filename: filename,
     image: { type: 'jpeg', quality: 0.98 },
     html2canvas: { 
@@ -1436,7 +1436,8 @@ async function downloadOfferLetter() {
       backgroundColor: '#ffffff',
       logging: false
     },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak: { mode: ['css', 'legacy'] }
   };
 
   try {
