@@ -18,6 +18,9 @@
 
 * **Maa Sarla and Paa Yash**: The living foundation of values, truth, and blessings.
 * **The One Rupee Full-Stack CEO (Kapil)**: Lead Mentor & driving force dedicated to outcome-driven, honest education.
+  * **WhatsApp**: [+91 9873152277](https://wa.me/919873152277)
+  * **Email**: [namaste@sarlayash.com](mailto:namaste@sarlayash.com)
+  * **LinkedIn**: [https://www.linkedin.com/in/kapil-narula-63447026/](https://www.linkedin.com/in/kapil-narula-63447026/)
 
 ---
 
