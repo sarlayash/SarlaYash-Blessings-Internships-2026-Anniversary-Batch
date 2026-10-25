@@ -42,6 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
     window.lucide.createIcons();
   }
 
+  // Initialize Sidebar State (Expand/Collapse)
+  initSidebarState();
+
   // Render initial sections
   renderTracks('all');
   selectRoadmapWeek(1);
@@ -723,6 +726,11 @@ function updateAuthUI(user) {
   const userPhoto = document.getElementById('googleUserPhoto');
   const userName = document.getElementById('googleUserName');
 
+  const sidebarLoginBtn = document.getElementById('sidebarLoginBtn');
+  const sidebarUserCard = document.getElementById('sidebarUserCard');
+  const sidebarUserPhoto = document.getElementById('sidebarUserPhoto');
+  const sidebarUserName = document.getElementById('sidebarUserName');
+
   const gate = document.getElementById('googleAuthRequiredGate');
   const authForm = document.getElementById('googleAuthenticatedForm');
   const formPhoto = document.getElementById('formUserPhoto');
@@ -741,6 +749,15 @@ function updateAuthUI(user) {
     if (userPhoto) userPhoto.src = user.photoURL || 'https://www.gstatic.com/images/branding/product/1x/avatar_square_grey_54dp.png';
     if (userName) userName.innerText = user.displayName || 'Google User';
 
+    // Sidebar UI
+    if (sidebarLoginBtn) sidebarLoginBtn.classList.add('hidden');
+    if (sidebarUserCard) {
+      sidebarUserCard.classList.remove('hidden');
+      sidebarUserCard.classList.add('flex');
+    }
+    if (sidebarUserPhoto) sidebarUserPhoto.src = user.photoURL || 'https://www.gstatic.com/images/branding/product/1x/avatar_square_grey_54dp.png';
+    if (sidebarUserName) sidebarUserName.innerText = user.displayName || 'Google User';
+
     // Application Modal UI
     if (gate) gate.classList.add('hidden');
     if (authForm) authForm.classList.remove('hidden');
@@ -755,6 +772,13 @@ function updateAuthUI(user) {
     if (userBadge) {
       userBadge.classList.add('hidden');
       userBadge.classList.remove('flex');
+    }
+
+    // Sidebar UI
+    if (sidebarLoginBtn) sidebarLoginBtn.classList.remove('hidden');
+    if (sidebarUserCard) {
+      sidebarUserCard.classList.add('hidden');
+      sidebarUserCard.classList.remove('flex');
     }
 
     // Application Modal UI
@@ -942,5 +966,81 @@ function setupMobileMenu() {
         menu.classList.add('hidden');
       });
     });
+  }
+}
+
+// ----------------------------------------------------
+// 9. COLLAPSIBLE LEFT SIDEBAR NAVIGATION
+// ----------------------------------------------------
+function initSidebarState() {
+  const isCollapsed = localStorage.getItem('sarlayash_sidebar_collapsed') === 'true';
+  setSidebarCollapsed(isCollapsed, false);
+}
+
+function toggleSidebarCollapse() {
+  const sidebar = document.getElementById('leftSidebar');
+  if (!sidebar) return;
+  const willCollapse = !sidebar.classList.contains('collapsed');
+  setSidebarCollapsed(willCollapse, true);
+}
+
+function setSidebarCollapsed(collapsed, save = true) {
+  const sidebar = document.getElementById('leftSidebar');
+  const content = document.getElementById('mainContentWrapper');
+  const icon = document.getElementById('collapseIcon');
+  const headerLabel = document.getElementById('headerToggleLabel');
+  if (!sidebar) return;
+
+  if (collapsed) {
+    sidebar.classList.add('collapsed');
+    if (content) {
+      content.classList.remove('lg:pl-64');
+      content.classList.add('lg:pl-20');
+    }
+    if (icon) {
+      icon.classList.add('rotate-180');
+    }
+    if (headerLabel) {
+      headerLabel.innerText = 'Expand Sidebar';
+    }
+  } else {
+    sidebar.classList.remove('collapsed');
+    if (content) {
+      content.classList.remove('lg:pl-20');
+      content.classList.add('lg:pl-64');
+    }
+    if (icon) {
+      icon.classList.remove('rotate-180');
+    }
+    if (headerLabel) {
+      headerLabel.innerText = 'Collapse Sidebar';
+    }
+  }
+
+  if (save) {
+    localStorage.setItem('sarlayash_sidebar_collapsed', collapsed ? 'true' : 'false');
+  }
+}
+
+function toggleMobileSidebar(open) {
+  const sidebar = document.getElementById('leftSidebar');
+  const backdrop = document.getElementById('sidebarBackdrop');
+  if (!sidebar) return;
+
+  if (open) {
+    sidebar.classList.remove('-translate-x-full');
+    if (backdrop) backdrop.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  } else {
+    sidebar.classList.add('-translate-x-full');
+    if (backdrop) backdrop.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+}
+
+function handleNavClick() {
+  // If on mobile / smaller viewports, automatically close drawer on selection
+  if (window.innerWidth < 1024) {
+    toggleMobileSidebar(false);
   }
 }

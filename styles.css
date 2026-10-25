@@ -80,6 +80,29 @@ input[type=range]::-moz-range-thumb {
   box-shadow: 0 0 10px rgba(229, 169, 60, 0.6);
 }
 
+/* Left Sidebar Collapsed Rail Styles */
+#leftSidebar.collapsed {
+  width: 5rem !important; /* w-20 */
+}
+
+#leftSidebar.collapsed .sidebar-text {
+  display: none !important;
+}
+
+#leftSidebar.collapsed .sidebar-nav-item {
+  justify-content: center !important;
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+}
+
+#leftSidebar.collapsed #sidebarCollapseBtn {
+  margin: 0 auto;
+}
+
+#leftSidebar.collapsed .sidebar-header-box {
+  justify-content: center !important;
+}
+
 /* Print styling for provisional pass */
 @media print {
   body * {
