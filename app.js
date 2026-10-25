@@ -754,7 +754,7 @@ function updateAuthUI(user) {
       userBadge.classList.remove('hidden');
       userBadge.classList.add('flex');
     }
-    if (userPhoto) userPhoto.src = user.photoURL || 'https://www.gstatic.com/images/branding/product/1x/avatar_square_grey_54dp.png';
+    if (userPhoto) userPhoto.src = user.photoURL || "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23E5A93C'><circle cx='12' cy='8' r='4'/><path d='M4 20c0-4 4-6 8-6s8 2 8 6'/></svg>";
     if (userName) userName.innerText = user.displayName || 'Google User';
 
     // Sidebar UI
@@ -763,7 +763,7 @@ function updateAuthUI(user) {
       sidebarUserCard.classList.remove('hidden');
       sidebarUserCard.classList.add('flex');
     }
-    if (sidebarUserPhoto) sidebarUserPhoto.src = user.photoURL || 'https://www.gstatic.com/images/branding/product/1x/avatar_square_grey_54dp.png';
+    if (sidebarUserPhoto) sidebarUserPhoto.src = user.photoURL || "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23E5A93C'><circle cx='12' cy='8' r='4'/><path d='M4 20c0-4 4-6 8-6s8 2 8 6'/></svg>";
     if (sidebarUserName) sidebarUserName.innerText = user.displayName || 'Google User';
     if (navManageAppBtn) {
       navManageAppBtn.classList.remove('hidden');
@@ -773,7 +773,7 @@ function updateAuthUI(user) {
     // Application Modal UI
     if (gate) gate.classList.add('hidden');
     if (authForm) authForm.classList.remove('hidden');
-    if (formPhoto) formPhoto.src = user.photoURL || 'https://www.gstatic.com/images/branding/product/1x/avatar_square_grey_54dp.png';
+    if (formPhoto) formPhoto.src = user.photoURL || "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23E5A93C'><circle cx='12' cy='8' r='4'/><path d='M4 20c0-4 4-6 8-6s8 2 8 6'/></svg>";
     if (formName) formName.innerText = user.displayName || 'Verified Candidate';
     if (formEmail) formEmail.innerText = user.email || '';
     if (inputName) inputName.value = user.displayName || '';
@@ -1136,7 +1136,7 @@ function openManageApplicationModal() {
   const utrInput = document.getElementById('manageUtrInput');
   const utrBadge = document.getElementById('manageUtrBadge');
 
-  if (photoElem) photoElem.src = currentUser.photoURL || app.photoURL || 'https://www.gstatic.com/images/branding/product/1x/avatar_square_grey_54dp.png';
+  if (photoElem) photoElem.src = currentUser.photoURL || app.photoURL || "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23E5A93C'><circle cx='12' cy='8' r='4'/><path d='M4 20c0-4 4-6 8-6s8 2 8 6'/></svg>";
   if (nameElem) nameElem.innerText = currentUser.displayName || app.name || 'Candidate';
   if (emailElem) emailElem.innerText = currentUser.email || app.email || '';
   if (regIdElem) regIdElem.innerText = app.regId || ('SY-2026-' + (currentUser.uid.slice(0, 4).toUpperCase()));
