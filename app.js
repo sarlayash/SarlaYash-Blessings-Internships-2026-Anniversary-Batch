@@ -1403,7 +1403,7 @@ async function downloadOfferLetter() {
   }
 
   const opt = {
-    margin: [8, 8, 8, 8],
+    margin: [0, 0, 0, 0],
     filename: filename,
     image: { type: 'jpeg', quality: 0.98 },
     html2canvas: { 
@@ -1411,10 +1411,12 @@ async function downloadOfferLetter() {
       useCORS: true, 
       backgroundColor: '#ffffff',
       scrollY: 0,
+      scrollX: 0,
+      windowWidth: 800,
       logging: false
     },
     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+    pagebreak: { mode: ['css', 'legacy'] }
   };
 
   try {
@@ -1485,7 +1487,7 @@ async function downloadWelcomeEmail() {
   }
 
   const opt = {
-    margin: [8, 8, 8, 8],
+    margin: [6, 6, 6, 6],
     filename: filename,
     image: { type: 'jpeg', quality: 0.98 },
     html2canvas: { 
@@ -1493,10 +1495,12 @@ async function downloadWelcomeEmail() {
       useCORS: true, 
       backgroundColor: '#ffffff',
       scrollY: 0,
+      scrollX: 0,
+      windowWidth: 800,
       logging: false
     },
     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+    pagebreak: { mode: ['css', 'legacy'] }
   };
 
   try {
@@ -1620,6 +1624,15 @@ function showOfferLetterModal(customApp) {
   if (trackSummaryElem) trackSummaryElem.innerText = app.track || 'Full-Stack Development';
   if (slotSummaryElem) slotSummaryElem.innerText = app.slot || 'Evening Batch (6:00 PM – 7:00 PM IST)';
   if (utrSummaryElem) utrSummaryElem.innerText = app.utr ? `UTR: ${app.utr} (Confirmed)` : 'Logged & Verified in Cloud';
+
+  const refPage2Elem = document.getElementById('offerPage2RefNo');
+  const acceptNameElem = document.getElementById('offerCandidateAcceptName');
+  const acceptRegIdElem = document.getElementById('offerCandidateAcceptRegId');
+
+  if (refPage2Elem) refPage2Elem.innerText = refNo;
+  if (acceptNameElem) acceptNameElem.innerText = app.name;
+  if (acceptRegIdElem) acceptRegIdElem.innerText = app.regId || 'SY-2026-0842';
+
   if (statusContainer) {
     statusContainer.classList.add('hidden');
     statusContainer.innerHTML = '';

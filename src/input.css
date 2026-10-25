@@ -110,6 +110,19 @@ input[type=range]::-moz-range-thumb {
   justify-content: center !important;
 }
 
+/* PDF & Print Page Breaks */
+.html2pdf__page-break {
+  page-break-before: always !important;
+  break-before: page !important;
+  clear: both !important;
+}
+
+.offer-pdf-page {
+  box-sizing: border-box;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
 @media print {
   html, body {
     background: #ffffff !important;
@@ -135,5 +148,9 @@ input[type=range]::-moz-range-thumb {
     padding: 12px !important;
     box-shadow: none !important;
     border: none !important;
+  }
+  .html2pdf__page-break {
+    page-break-before: always !important;
+    break-before: page !important;
   }
 }
