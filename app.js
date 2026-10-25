@@ -1399,29 +1399,49 @@ async function downloadOfferLetter() {
   }
   if (statusContainer) {
     statusContainer.classList.remove('hidden');
-    statusContainer.innerHTML = `<div class="p-2.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2"><span class="animate-pulse">⚡</span><span>Rendering executive appointment document for download...</span></div>`;
+    statusContainer.innerHTML = `<div class="p-2.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2"><span class="animate-pulse">📜</span><span>Rendering executive appointment document for download...</span></div>`;
   }
 
+  // Create clean isolated render container at (0, 0)
+  const container = document.createElement('div');
+  container.style.position = 'fixed';
+  container.style.left = '0';
+  container.style.top = '0';
+  container.style.width = '794px';
+  container.style.margin = '0';
+  container.style.padding = '0';
+  container.style.zIndex = '999999';
+  container.style.backgroundColor = '#ffffff';
+  container.style.overflow = 'visible';
+
+  const clone = element.cloneNode(true);
+  clone.style.width = '794px';
+  clone.style.maxWidth = '794px';
+  clone.style.margin = '0';
+  clone.style.padding = '18px 24px';
+  clone.style.boxSizing = 'border-box';
+  clone.style.backgroundColor = '#ffffff';
+  clone.style.color = '#0f172a';
+
+  container.appendChild(clone);
+  document.body.appendChild(container);
+
   const opt = {
-    margin: [0, 0, 0, 0],
+    margin: [4, 4, 4, 4],
     filename: filename,
     image: { type: 'jpeg', quality: 0.98 },
     html2canvas: { 
       scale: 2, 
       useCORS: true, 
       backgroundColor: '#ffffff',
-      scrollY: 0,
-      scrollX: 0,
-      windowWidth: 800,
       logging: false
     },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-    pagebreak: { mode: ['css', 'legacy'] }
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
   };
 
   try {
     if (typeof html2pdf !== 'undefined') {
-      const worker = html2pdf().set(opt).from(element);
+      const worker = html2pdf().set(opt).from(clone);
       const blob = await worker.outputPdf('blob');
       const blobUrl = URL.createObjectURL(blob);
 
@@ -1431,7 +1451,9 @@ async function downloadOfferLetter() {
       a.download = filename;
       document.body.appendChild(a);
       a.click();
-      setTimeout(() => { document.body.removeChild(a); }, 1000);
+      setTimeout(() => { 
+        if (document.body.contains(a)) document.body.removeChild(a); 
+      }, 1000);
 
       if (statusContainer) {
         statusContainer.innerHTML = `
@@ -1450,6 +1472,9 @@ async function downloadOfferLetter() {
     console.error('PDF generation error:', err);
     fallbackCleanPrint(element, filename);
   } finally {
+    if (document.body.contains(container)) {
+      document.body.removeChild(container);
+    }
     if (btn) {
       btn.disabled = false;
       btn.innerHTML = originalHtml;
@@ -1483,29 +1508,49 @@ async function downloadWelcomeEmail() {
   }
   if (statusContainer) {
     statusContainer.classList.remove('hidden');
-    statusContainer.innerHTML = `<div class="p-2.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2"><span class="animate-pulse">⚡</span><span>Rendering welcome correspondence for download...</span></div>`;
+    statusContainer.innerHTML = `<div class="p-2.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2"><span class="animate-pulse">📜</span><span>Rendering welcome correspondence for download...</span></div>`;
   }
 
+  // Create clean isolated render container at (0, 0)
+  const container = document.createElement('div');
+  container.style.position = 'fixed';
+  container.style.left = '0';
+  container.style.top = '0';
+  container.style.width = '794px';
+  container.style.margin = '0';
+  container.style.padding = '0';
+  container.style.zIndex = '999999';
+  container.style.backgroundColor = '#ffffff';
+  container.style.overflow = 'visible';
+
+  const clone = element.cloneNode(true);
+  clone.style.width = '794px';
+  clone.style.maxWidth = '794px';
+  clone.style.margin = '0';
+  clone.style.padding = '18px 24px';
+  clone.style.boxSizing = 'border-box';
+  clone.style.backgroundColor = '#ffffff';
+  clone.style.color = '#0f172a';
+
+  container.appendChild(clone);
+  document.body.appendChild(container);
+
   const opt = {
-    margin: [6, 6, 6, 6],
+    margin: [4, 4, 4, 4],
     filename: filename,
     image: { type: 'jpeg', quality: 0.98 },
     html2canvas: { 
       scale: 2, 
       useCORS: true, 
       backgroundColor: '#ffffff',
-      scrollY: 0,
-      scrollX: 0,
-      windowWidth: 800,
       logging: false
     },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-    pagebreak: { mode: ['css', 'legacy'] }
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
   };
 
   try {
     if (typeof html2pdf !== 'undefined') {
-      const worker = html2pdf().set(opt).from(element);
+      const worker = html2pdf().set(opt).from(clone);
       const blob = await worker.outputPdf('blob');
       const blobUrl = URL.createObjectURL(blob);
 
@@ -1515,7 +1560,9 @@ async function downloadWelcomeEmail() {
       a.download = filename;
       document.body.appendChild(a);
       a.click();
-      setTimeout(() => { document.body.removeChild(a); }, 1000);
+      setTimeout(() => { 
+        if (document.body.contains(a)) document.body.removeChild(a); 
+      }, 1000);
 
       if (statusContainer) {
         statusContainer.innerHTML = `
@@ -1534,6 +1581,9 @@ async function downloadWelcomeEmail() {
     console.error('PDF generation error:', err);
     fallbackCleanPrint(element, filename);
   } finally {
+    if (document.body.contains(container)) {
+      document.body.removeChild(container);
+    }
     if (btn) {
       btn.disabled = false;
       btn.innerHTML = originalHtml;
