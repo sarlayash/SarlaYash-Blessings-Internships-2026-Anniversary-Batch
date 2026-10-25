@@ -1374,7 +1374,7 @@ function copyWelcomeEmailText() {
 // ----------------------------------------------------
 // 12. HIGH-FIDELITY PDF GENERATION & DOWNLOAD ENGINE
 // ----------------------------------------------------
-function downloadOfferLetter() {
+async function downloadOfferLetter() {
   const element = document.getElementById('offerLetterPdfDoc');
   if (!element) {
     alert("Offer letter document not found.");
@@ -1390,14 +1390,20 @@ function downloadOfferLetter() {
   const filename = `SarlaYash-Internship-Offer-Letter-${regIdClean}.pdf`;
 
   const btn = document.getElementById('downloadOfferPdfBtn');
+  const statusContainer = document.getElementById('offerPdfStatusMsg');
   const originalHtml = btn ? btn.innerHTML : '';
+
   if (btn) {
     btn.disabled = true;
     btn.innerHTML = `<span class="inline-block animate-spin mr-1.5">⏳</span><span>Generating PDF Document...</span>`;
   }
+  if (statusContainer) {
+    statusContainer.classList.remove('hidden');
+    statusContainer.innerHTML = `<div class="p-2.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2"><span class="animate-pulse">⚡</span><span>Rendering executive appointment document for download...</span></div>`;
+  }
 
   const opt = {
-    margin: [6, 6, 6, 6],
+    margin: [8, 8, 8, 8],
     filename: filename,
     image: { type: 'jpeg', quality: 0.98 },
     html2canvas: { 
@@ -1405,37 +1411,52 @@ function downloadOfferLetter() {
       useCORS: true, 
       backgroundColor: '#ffffff',
       scrollY: 0,
-      windowWidth: 800
+      logging: false
     },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
   };
 
-  if (typeof html2pdf !== 'undefined') {
-    html2pdf().set(opt).from(element).save().then(() => {
-      if (btn) {
-        btn.disabled = false;
-        btn.innerHTML = originalHtml;
-        if (window.lucide) window.lucide.createIcons();
+  try {
+    if (typeof html2pdf !== 'undefined') {
+      const worker = html2pdf().set(opt).from(element);
+      const blob = await worker.outputPdf('blob');
+      const blobUrl = URL.createObjectURL(blob);
+
+      // Direct trigger
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => { document.body.removeChild(a); }, 1000);
+
+      if (statusContainer) {
+        statusContainer.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs">
+            <span>✅ <strong>Offer Letter PDF Generated!</strong> If download didn't start:</span>
+            <a href="${blobUrl}" download="${filename}" target="_blank" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-bold underline shadow">
+              Click Here to Open / Save PDF
+            </a>
+          </div>
+        `;
       }
-    }).catch(err => {
-      console.error('html2pdf generation error:', err);
-      if (btn) {
-        btn.disabled = false;
-        btn.innerHTML = originalHtml;
-        if (window.lucide) window.lucide.createIcons();
-      }
+    } else {
       fallbackCleanPrint(element, filename);
-    });
-  } else {
+    }
+  } catch (err) {
+    console.error('PDF generation error:', err);
     fallbackCleanPrint(element, filename);
+  } finally {
     if (btn) {
       btn.disabled = false;
       btn.innerHTML = originalHtml;
+      if (window.lucide) window.lucide.createIcons();
     }
   }
 }
 
-function downloadWelcomeEmail() {
+async function downloadWelcomeEmail() {
   const element = document.getElementById('welcomeEmailPdfDoc');
   if (!element) {
     alert("Welcome email document not found.");
@@ -1451,14 +1472,20 @@ function downloadWelcomeEmail() {
   const filename = `SarlaYash-Welcome-Letter-${regIdClean}.pdf`;
 
   const btn = document.getElementById('downloadWelcomePdfBtn');
+  const statusContainer = document.getElementById('welcomePdfStatusMsg');
   const originalHtml = btn ? btn.innerHTML : '';
+
   if (btn) {
     btn.disabled = true;
     btn.innerHTML = `<span class="inline-block animate-spin mr-1.5">⏳</span><span>Generating PDF Document...</span>`;
   }
+  if (statusContainer) {
+    statusContainer.classList.remove('hidden');
+    statusContainer.innerHTML = `<div class="p-2.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2"><span class="animate-pulse">⚡</span><span>Rendering welcome correspondence for download...</span></div>`;
+  }
 
   const opt = {
-    margin: [6, 6, 6, 6],
+    margin: [8, 8, 8, 8],
     filename: filename,
     image: { type: 'jpeg', quality: 0.98 },
     html2canvas: { 
@@ -1466,38 +1493,52 @@ function downloadWelcomeEmail() {
       useCORS: true, 
       backgroundColor: '#ffffff',
       scrollY: 0,
-      windowWidth: 800
+      logging: false
     },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
   };
 
-  if (typeof html2pdf !== 'undefined') {
-    html2pdf().set(opt).from(element).save().then(() => {
-      if (btn) {
-        btn.disabled = false;
-        btn.innerHTML = originalHtml;
-        if (window.lucide) window.lucide.createIcons();
+  try {
+    if (typeof html2pdf !== 'undefined') {
+      const worker = html2pdf().set(opt).from(element);
+      const blob = await worker.outputPdf('blob');
+      const blobUrl = URL.createObjectURL(blob);
+
+      // Direct trigger
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => { document.body.removeChild(a); }, 1000);
+
+      if (statusContainer) {
+        statusContainer.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs">
+            <span>✅ <strong>Welcome Letter PDF Generated!</strong> If download didn't start:</span>
+            <a href="${blobUrl}" download="${filename}" target="_blank" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-bold underline shadow">
+              Click Here to Open / Save PDF
+            </a>
+          </div>
+        `;
       }
-    }).catch(err => {
-      console.error('html2pdf generation error:', err);
-      if (btn) {
-        btn.disabled = false;
-        btn.innerHTML = originalHtml;
-        if (window.lucide) window.lucide.createIcons();
-      }
+    } else {
       fallbackCleanPrint(element, filename);
-    });
-  } else {
+    }
+  } catch (err) {
+    console.error('PDF generation error:', err);
     fallbackCleanPrint(element, filename);
+  } finally {
     if (btn) {
       btn.disabled = false;
       btn.innerHTML = originalHtml;
+      if (window.lucide) window.lucide.createIcons();
     }
   }
 }
 
 function fallbackCleanPrint(element, filename) {
-  // Safe isolated print iframe with strict pure white styling
   const iframe = document.createElement('iframe');
   iframe.style.position = 'fixed';
   iframe.style.right = '0';
@@ -1566,6 +1607,7 @@ function showOfferLetterModal(customApp) {
   const trackSummaryElem = document.getElementById('offerTrackSummary');
   const slotSummaryElem = document.getElementById('offerSlotSummary');
   const utrSummaryElem = document.getElementById('offerUtrSummary');
+  const statusContainer = document.getElementById('offerPdfStatusMsg');
 
   if (refElem) refElem.innerText = refNo;
   if (dateElem) dateElem.innerText = today;
@@ -1578,6 +1620,10 @@ function showOfferLetterModal(customApp) {
   if (trackSummaryElem) trackSummaryElem.innerText = app.track || 'Full-Stack Development';
   if (slotSummaryElem) slotSummaryElem.innerText = app.slot || 'Evening Batch (6:00 PM – 7:00 PM IST)';
   if (utrSummaryElem) utrSummaryElem.innerText = app.utr ? `UTR: ${app.utr} (Confirmed)` : 'Logged & Verified in Cloud';
+  if (statusContainer) {
+    statusContainer.classList.add('hidden');
+    statusContainer.innerHTML = '';
+  }
 
   const modal = document.getElementById('offerLetterModal');
   if (modal) modal.classList.remove('hidden');
@@ -1601,165 +1647,23 @@ function copyOfferLetterText() {
   };
 
   const text = 
-    `SARLAYASH LEARNING SOLUTIONS LLP
-` +
-    `Dedicated to the Sacred Blessings of Maa Sarla & Paa Yash
-` +
-    `OFFICIAL LETTER OF INTERNSHIP APPOINTMENT
-
-` +
-    `Ref No: SYLLP/HR/2026/OFFER-${app.regId || '8842'}
-` +
-    `Date: ${new Date().toLocaleDateString()}
-
-` +
-    `To,
-${app.name}
-${app.email}
-Phone: ${app.phone || '+91 9873152277'}
-Registration ID: ${app.regId}
-
-` +
-    `Dear ${app.name},
-
-` +
-    `We are delighted to formally offer you appointment as a Graduate Intern – ${app.track} in the prestigious Anniversary Batch 2026.
-
-` +
-    `• Position: Graduate Intern – ${app.track}
-` +
-    `• Cohort: Anniversary Batch 2026 (Strictly 50 Selected Interns)
-` +
-    `• Schedule: 4 Weeks (20 Working Days, Mon–Fri, 1 Hour/Day)
-` +
-    `• Daily Window: ${app.slot}
-` +
-    `• Operating Formula: 10% Focused Micro-Theory, 90% Live Production Artifacts
-` +
-    `• Commitment Fee: Strictly ₹50 INR daily only (₹250/Wk, ₹1,000 Total)
-` +
-    `• Refund & Stipend Covenant: 100% Commitment Deposit Refunded to Merit Stipend Earners (₹5,000 to ₹15,000)
-` +
-    `• Reference / UTR: ${app.utr || 'Logged & Verified'}
-
-` +
-    `Authorized Signatory:
-Kapil Narula
-Founder & Lead Mentor | The One Rupee Full-Stack CEO
-SarlaYash Learning Solutions LLP
-https://sarlayash.com/ | namaste@sarlayash.com | WhatsApp: +91 9873152277`;
-
-  navigator.clipboard.writeText(text).then(() => {
-    alert("✓ Official Offer Letter text copied to clipboard!");
-  }).catch(() => {
-    prompt("Copy Offer Letter Text:", text);
-  });
-}
-
-// ----------------------------------------------------
-function downloadWelcomeEmail() {
-  const container = document.getElementById('emailBodyContainer');
-  if (!container) return;
-  
-  // Tag printable container
-  document.querySelectorAll('.printable-active').forEach(el => el.classList.remove('printable-active'));
-  container.classList.add('printable-active');
-  
-  window.print();
-  
-  setTimeout(() => {
-    container.classList.remove('printable-active');
-  }, 1000);
-}
-
-function showOfferLetterModal(customApp) {
-  const app = customApp || window.currentUserApp || {
-    name: currentUser?.displayName || 'Candidate Name',
-    email: currentUser?.email || 'candidate@gmail.com',
-    phone: '+91 9873152277',
-    regId: 'SY-2026-0842',
-    track: 'Full-Stack Development',
-    slot: 'Evening Batch (6:00 PM – 7:00 PM IST)'
-  };
-
-  const refNo = 'SY-OFFER-2026-' + (app.regId ? app.regId.replace('SY-2026-', '') : '8842');
-  const today = new Date().toLocaleDateString('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric'
-  });
-
-  const refElem = document.getElementById('offerRefNo');
-  const dateElem = document.getElementById('offerDate');
-  const nameElem = document.getElementById('offerCandidateName');
-  const salutationElem = document.getElementById('offerCandidateSalutation');
-  const emailElem = document.getElementById('offerCandidateEmail');
-  const phoneElem = document.getElementById('offerCandidatePhone');
-  const trackTitleElem = document.getElementById('offerTrackTitle');
-  const trackSummaryElem = document.getElementById('offerTrackSummary');
-  const slotSummaryElem = document.getElementById('offerSlotSummary');
-
-  if (refElem) refElem.innerText = refNo;
-  if (dateElem) dateElem.innerText = today;
-  if (nameElem) nameElem.innerText = app.name;
-  if (salutationElem) salutationElem.innerText = app.name.split(' ')[0] || app.name;
-  if (emailElem) emailElem.innerText = app.email;
-  if (phoneElem) phoneElem.innerText = `Phone: ${app.phone || '+91 9873152277'}`;
-  if (trackTitleElem) trackTitleElem.innerText = app.track || 'Full-Stack Development';
-  if (trackSummaryElem) trackSummaryElem.innerText = app.track || 'Full-Stack Development';
-  if (slotSummaryElem) slotSummaryElem.innerText = app.slot || 'Evening Batch (6:00 PM – 7:00 PM IST)';
-
-  const modal = document.getElementById('offerLetterModal');
-  if (modal) modal.classList.remove('hidden');
-
-  if (window.lucide) window.lucide.createIcons();
-}
-
-function closeOfferLetterModal() {
-  const modal = document.getElementById('offerLetterModal');
-  if (modal) modal.classList.add('hidden');
-}
-
-function downloadOfferLetter() {
-  const container = document.getElementById('offerLetterPrintable');
-  if (!container) return;
-
-  // Tag printable container
-  document.querySelectorAll('.printable-active').forEach(el => el.classList.remove('printable-active'));
-  container.classList.add('printable-active');
-
-  window.print();
-
-  setTimeout(() => {
-    container.classList.remove('printable-active');
-  }, 1000);
-}
-
-function copyOfferLetterText() {
-  const app = window.currentUserApp || {
-    name: currentUser?.displayName || 'Candidate Name',
-    email: currentUser?.email || 'candidate@gmail.com',
-    regId: 'SY-2026-0842',
-    track: 'Full-Stack Development',
-    slot: 'Evening Batch (6:00 PM – 7:00 PM IST)'
-  };
-
-  const text = 
     `SARLAYASH LEARNING SOLUTIONS LLP\n` +
-    `Dedicated to Maa Sarla & Paa Yash\n` +
+    `Dedicated to the Sacred Blessings of Maa Sarla & Paa Yash\n` +
     `OFFICIAL LETTER OF INTERNSHIP APPOINTMENT\n\n` +
-    `Ref No: SY-OFFER-2026-${app.regId || '8842'}\n` +
+    `Ref No: SYLLP/HR/2026/OFFER-${app.regId || '8842'}\n` +
     `Date: ${new Date().toLocaleDateString()}\n\n` +
-    `To,\n${app.name}\n${app.email}\n\n` +
+    `To,\n${app.name}\n${app.email}\nPhone: ${app.phone || '+91 9873152277'}\nRegistration ID: ${app.regId}\n\n` +
     `Dear ${app.name},\n\n` +
-    `We are delighted to formally offer you appointment as a Graduate Intern — ${app.track} in the Anniversary Batch 2026.\n\n` +
-    `• Position: Graduate Intern — ${app.track}\n` +
+    `We are delighted to formally offer you appointment as a Graduate Intern – ${app.track} in the prestigious Anniversary Batch 2026.\n\n` +
+    `• Position: Graduate Intern – ${app.track}\n` +
     `• Cohort: Anniversary Batch 2026 (Strictly 50 Selected Interns)\n` +
-    `• Schedule: 22 Working Days (Strictly 1 Hour / Day, Mon-Fri)\n` +
-    `• Operating Model: 10% Micro-Theory, 90% Hands-on Artifact Creation\n` +
-    `• Commitment Deposit: ₹50/Day (₹250/Wk, ₹1,000 Total)\n` +
-    `• Refund & Stipend Covenant: 100% Commitment Deposit Refunded to Merit Stipend Earners (₹5,000 to ₹15,000)\n\n` +
-    `Signed by:\nKapil — The One Rupee Full-Stack CEO & Lead Mentor\nSarlaYash Learning Solutions LLP\nhttps://sarlayash.com/ | namaste@sarlayash.com | WhatsApp: +91 9873152277`;
+    `• Schedule: 4 Weeks (20 Working Days, Mon–Fri, 1 Hour/Day)\n` +
+    `• Daily Window: ${app.slot}\n` +
+    `• Operating Formula: 10% Focused Micro-Theory, 90% Live Production Artifacts\n` +
+    `• Commitment Fee: Strictly ₹50 INR daily only (₹250/Wk, ₹1,000 Total)\n` +
+    `• Refund & Stipend Covenant: 100% Commitment Deposit Refunded to Merit Stipend Earners (₹5,000 to ₹15,000)\n` +
+    `• Reference / UTR: ${app.utr || 'Logged & Verified'}\n\n` +
+    `Authorized Signatory:\nKapil Narula\nFounder & Lead Mentor | The One Rupee Full-Stack CEO\nSarlaYash Learning Solutions LLP\nhttps://sarlayash.com/ | namaste@sarlayash.com | WhatsApp: +91 9873152277`;
 
   navigator.clipboard.writeText(text).then(() => {
     alert("✓ Official Offer Letter text copied to clipboard!");
@@ -1767,3 +1671,4 @@ function copyOfferLetterText() {
     prompt("Copy Offer Letter Text:", text);
   });
 }
+

@@ -20,5 +20,8 @@
   "homepage": "https://github.com/sarlayash/SarlaYash-Blessings-Internships-2026-Anniversary-Batch#readme",
   "devDependencies": {
     "tailwindcss": "^3.4.19"
+  },
+  "dependencies": {
+    "puppeteer-core": "^25.16.0"
   }
 }
