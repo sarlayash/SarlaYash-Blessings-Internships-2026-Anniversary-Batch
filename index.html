@@ -185,18 +185,24 @@
         </button>
 
         <!-- Logged In Profile Card -->
-        <div id="sidebarUserCard" class="hidden items-center justify-between p-1.5 rounded-xl bg-brand-surface border border-brand-gold/30">
-          <div class="flex items-center gap-2 overflow-hidden">
-            <img id="sidebarUserPhoto" src="" alt="Google Profile" class="w-7 h-7 rounded-full border border-brand-gold object-cover shrink-0">
-            <div class="sidebar-text text-left overflow-hidden">
-              <div id="sidebarUserName" class="text-xs font-bold text-white leading-tight truncate">User</div>
-              <span class="text-[9px] text-emerald-400 font-mono flex items-center gap-0.5">
-                <i data-lucide="check-circle" class="w-2.5 h-2.5"></i> Verified
-              </span>
+        <div id="sidebarUserCard" class="hidden flex-col p-2 rounded-xl bg-brand-surface border border-brand-gold/30">
+          <div class="flex items-center justify-between w-full">
+            <div class="flex items-center gap-2 overflow-hidden">
+              <img id="sidebarUserPhoto" src="" alt="Google Profile" class="w-7 h-7 rounded-full border border-brand-gold object-cover shrink-0">
+              <div class="sidebar-text text-left overflow-hidden">
+                <div id="sidebarUserName" class="text-xs font-bold text-white leading-tight truncate">User</div>
+                <span class="text-[9px] text-emerald-400 font-mono flex items-center gap-0.5">
+                  <i data-lucide="check-circle" class="w-2.5 h-2.5"></i> Verified
+                </span>
+              </div>
             </div>
+            <button onclick="logoutGoogle()" title="Sign Out" class="sidebar-text text-slate-400 hover:text-rose-400 p-1">
+              <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+            </button>
           </div>
-          <button onclick="logoutGoogle()" title="Sign Out" class="sidebar-text text-slate-400 hover:text-rose-400 p-1">
-            <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+          <button onclick="openManageApplicationModal()" title="View & Update UTR" class="sidebar-text w-full mt-2 py-1.5 px-2 rounded-lg bg-brand-gold/15 hover:bg-brand-gold/25 border border-brand-gold/40 text-[10px] text-brand-gold font-bold flex items-center justify-center gap-1.5 transition-all">
+            <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
+            <span>My Application & UTR</span>
           </button>
         </div>
       </div>
@@ -300,6 +306,13 @@
               <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
             </button>
           </div>
+
+          <!-- Manage / Update UTR Button (Shown when logged in) -->
+          <button id="navManageAppBtn" onclick="openManageApplicationModal()" class="hidden items-center gap-1.5 ml-2 px-3 py-2 text-xs font-semibold text-amber-300 bg-brand-gold/15 hover:bg-brand-gold/25 border border-brand-gold/40 rounded-lg transition-all shadow-sm">
+            <i data-lucide="receipt" class="w-4 h-4 text-brand-gold"></i>
+            <span class="hidden sm:inline">My Application & UTR</span>
+            <span class="sm:hidden">My UTR</span>
+          </button>
         </div>
 
         <button onclick="openApplyModal()" class="relative inline-flex items-center justify-center px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold tracking-wide text-brand-dark transition-all duration-300 bg-gradient-to-r from-brand-gold via-amber-300 to-brand-gold rounded-lg shadow-gold-glow hover:shadow-lg hover:brightness-110 active:scale-95 group overflow-hidden">
@@ -2307,6 +2320,235 @@
     </div>
   </div>
 
+  <!-- MANAGE APPLICATION & UPDATE UTR MODAL -->
+  <div id="manageAppModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
+    <div class="relative w-full max-w-xl bg-brand-surface border border-brand-gold/50 rounded-2xl shadow-2xl p-6 sm:p-8 my-8 text-slate-200">
+      
+      <!-- Close Button -->
+      <button onclick="closeManageApplicationModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 rounded-lg bg-white/5 hover:bg-white/10">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Header -->
+      <div class="flex items-center gap-3 mb-6 border-b border-white/10 pb-4">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-crimson to-black border border-brand-gold/40 flex items-center justify-center text-brand-gold shadow-gold-glow">
+          <i data-lucide="file-check-2" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <h3 class="font-heading font-bold text-xl text-white">My Candidate Portal & UTR Management</h3>
+          <p class="text-xs text-slate-400">SarlaYash Blessings Internships 2026 • Anniversary Batch</p>
+        </div>
+      </div>
+
+      <!-- Content Container -->
+      <div id="manageAppContent" class="space-y-5">
+        <!-- Verified Candidate Badge -->
+        <div class="p-4 rounded-xl bg-black/50 border border-brand-gold/30 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <img id="manageUserPhoto" src="https://www.gstatic.com/images/branding/product/1x/avatar_square_grey_54dp.png" alt="Candidate" class="w-12 h-12 rounded-full border-2 border-brand-gold object-cover">
+            <div>
+              <div class="flex items-center gap-2">
+                <span id="manageUserName" class="text-sm font-bold text-white leading-tight">Candidate Name</span>
+                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                  Google Verified
+                </span>
+              </div>
+              <div id="manageUserEmail" class="text-xs text-slate-300 font-mono mt-0.5">email@example.com</div>
+            </div>
+          </div>
+          <div class="text-right">
+            <span class="text-[10px] uppercase text-slate-400 block font-mono">Registration ID</span>
+            <span id="manageRegId" class="text-sm font-bold font-mono text-brand-gold">SY-2026-0000</span>
+          </div>
+        </div>
+
+        <!-- Application Details Summary -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 rounded-xl bg-white/5 border border-white/10 text-xs">
+          <div>
+            <span class="text-slate-400 block">Assigned Track:</span>
+            <strong id="manageTrack" class="text-white text-sm">Full-Stack Development</strong>
+          </div>
+          <div>
+            <span class="text-slate-400 block">Daily 1-Hour Slot:</span>
+            <strong id="manageSlot" class="text-white text-sm">Evening Batch (6:00 PM – 7:00 PM IST)</strong>
+          </div>
+          <div>
+            <span class="text-slate-400 block">Phone / WhatsApp:</span>
+            <strong id="managePhone" class="text-amber-300 font-mono">+91 98765 43210</strong>
+          </div>
+          <div>
+            <span class="text-slate-400 block">Deposit Covenant:</span>
+            <span class="text-emerald-400 font-bold">₹50/Day (100% Refundable with Stipend)</span>
+          </div>
+        </div>
+
+        <!-- UTR / Payment Status Box -->
+        <div class="p-4 rounded-xl bg-brand-card border border-brand-gold/40 space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-1.5">
+              <i data-lucide="receipt" class="w-4 h-4 text-brand-gold"></i>
+              <span class="text-xs uppercase tracking-wider font-bold text-slate-200">UPI UTR / Reference Number</span>
+            </div>
+            <span id="manageUtrBadge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+              Needs UTR
+            </span>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+            <input type="text" id="manageUtrInput" placeholder="Enter or update 12-digit UPI UTR" class="flex-1 bg-black/60 border border-brand-gold/40 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-gold font-mono tracking-wider">
+            <button onclick="updateCandidateUtr()" class="px-5 py-2.5 bg-gradient-to-r from-brand-gold to-amber-300 text-brand-dark font-bold text-xs rounded-xl shadow-gold-glow hover:brightness-110 flex items-center justify-center gap-1.5 whitespace-nowrap active:scale-95 transition-all">
+              <i data-lucide="save" class="w-4 h-4"></i>
+              <span>Update UTR</span>
+            </button>
+          </div>
+          <p class="text-[11px] text-slate-400 leading-relaxed">
+            Need to pay? Send ₹250 to UPI: <strong class="text-brand-gold font-mono">9873152277@kotakbank</strong>. Enter your receipt UTR number above to update your enrollment and automatically dispatch your Welcome Email.
+          </p>
+        </div>
+
+        <!-- Toast Feedback -->
+        <div id="utrUpdateToast" class="hidden p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs flex items-center gap-2">
+          <i data-lucide="check-circle" class="w-4 h-4 shrink-0"></i>
+          <span id="utrUpdateMsg">UTR successfully saved in cloud! Automatic Welcome Email dispatched.</span>
+        </div>
+
+        <!-- Quick Action Buttons -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+          <button onclick="showWelcomeEmailModal()" class="w-full py-2.5 px-4 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 border border-white/10 transition-all">
+            <i data-lucide="mail-check" class="w-4 h-4 text-brand-gold"></i>
+            <span>View Welcome Email</span>
+          </button>
+          <button onclick="window.print()" class="w-full py-2.5 px-4 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 border border-white/10 transition-all">
+            <i data-lucide="printer" class="w-4 h-4 text-emerald-400"></i>
+            <span>Print Admission Pass</span>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- AUTOMATIC WELCOME EMAIL DISPATCHED MODAL -->
+  <div id="welcomeEmailModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
+    <div class="relative w-full max-w-2xl bg-[#0D0D12] border border-brand-gold/60 rounded-2xl shadow-2xl p-6 sm:p-8 my-8 text-slate-200 max-h-[90vh] overflow-y-auto">
+      
+      <!-- Close Button -->
+      <button onclick="closeWelcomeEmailModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 rounded-lg bg-white/5 hover:bg-white/10">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Dispatched Notification Header -->
+      <div class="flex items-center gap-3 mb-4 p-3 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-medium">
+        <i data-lucide="send" class="w-4 h-4 shrink-0 text-emerald-400"></i>
+        <span>Automatic Welcome Email Dispatched to: <strong id="emailTargetAddress" class="text-white font-mono">user@gmail.com</strong></span>
+      </div>
+
+      <!-- Email Client Simulation Frame -->
+      <div class="rounded-xl border border-white/15 overflow-hidden bg-brand-surface shadow-2xl text-left">
+        <!-- Email Metadata Header -->
+        <div class="p-4 bg-black/60 border-b border-white/10 space-y-1.5 text-xs font-mono">
+          <div class="flex items-center justify-between">
+            <span class="text-slate-400">From:</span>
+            <span class="text-brand-gold font-semibold">Kapil • SarlaYash Mission &lt;namaste@sarlayash.com&gt;</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-slate-400">To:</span>
+            <span id="emailHeaderTo" class="text-white font-semibold">candidate@gmail.com</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-slate-400">Subject:</span>
+            <span id="emailHeaderSubject" class="text-amber-200 font-bold truncate">🎉 Welcome to SarlaYash Blessings Internships 2026 (Anniversary Batch) — Reg ID: SY-2026-XXXX</span>
+          </div>
+        </div>
+
+        <!-- Email Body Content -->
+        <div class="p-6 space-y-5 text-sm text-slate-300 leading-relaxed font-sans" id="emailBodyContainer">
+          
+          <!-- Brand Badge -->
+          <div class="text-center pb-4 border-b border-brand-gold/20">
+            <div class="font-heading font-bold text-lg text-white tracking-wider">
+              SARLAYASH LEARNING SOLUTIONS LLP
+            </div>
+            <p class="text-[10px] uppercase tracking-widest text-brand-gold font-mono">Legacy of Values • Future of Learning • Dedicated to Maa Sarla & Paa Yash</p>
+          </div>
+
+          <!-- Greeting -->
+          <div>
+            <h4 class="font-heading font-bold text-lg text-white">
+              Namaste, <span id="emailCandidateName" class="text-brand-gold">Candidate</span>! 🙏
+            </h4>
+            <p class="text-xs text-slate-300 mt-2">
+              With the sacred blessings of <strong>Maa Sarla and Paa Yash</strong>, we warmly welcome you to the <strong>SarlaYash Blessings Internships 2026 (Anniversary Batch)</strong>. Your application and seat confirmation have been officially logged in our system.
+            </p>
+          </div>
+
+          <!-- Key Enrollment Data Card -->
+          <div class="bg-black/50 p-4 rounded-xl border border-brand-gold/30 font-mono text-xs space-y-2">
+            <div class="text-brand-gold font-bold uppercase text-[11px] border-b border-white/10 pb-1 flex justify-between">
+              <span>Official Cohort Credentials</span>
+              <span id="emailRegId" class="text-emerald-400">SY-2026-XXXX</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-slate-300">
+              <div>Domain Track: <strong class="text-white" id="emailTrack">Full-Stack Development</strong></div>
+              <div>Daily 1-Hour Focus: <strong class="text-white" id="emailSlot">Evening (6:00 PM – 7:00 PM IST)</strong></div>
+              <div>UPI UTR Reference: <strong class="text-amber-300" id="emailUtr">Logged / Confirmed</strong></div>
+              <div>Commitment Deposit: <strong class="text-emerald-400">₹50/Day (100% Refundable with Stipend)</strong></div>
+            </div>
+          </div>
+
+          <!-- The Mentor's Direct Message -->
+          <div class="p-4 rounded-xl bg-brand-velvet/40 border border-brand-gold/30 text-xs space-y-2">
+            <div class="text-brand-gold font-bold flex items-center gap-1.5">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+              <span>A Personal Note from Lead Mentor Kapil (The One Rupee Full-Stack CEO):</span>
+            </div>
+            <p class="italic text-slate-200">
+              "We have strictly 50 interns in this cohort. We are here to help you build real, demonstrable proof-of-work. Show up for 60 focused minutes every single working day, follow the 10% theory / 90% hands-on formula, and we guarantee you will graduate with immense pride, tangible artifacts, and top merit stipend qualification."
+            </p>
+          </div>
+
+          <!-- What Happens Next / Day 1 Preparation -->
+          <div class="space-y-2 text-xs">
+            <h5 class="font-bold text-white uppercase tracking-wider text-[11px]">Immediate Next Steps:</h5>
+            <ul class="space-y-1.5 text-slate-300 list-disc list-inside">
+              <li><strong>Google Classroom & Workspace:</strong> You will receive a direct invitation to the Google Classroom and domain starter templates 48 hours before Day 1.</li>
+              <li><strong>Daily 1-Hour Cadence:</strong> Please ensure your calendar is reserved for your selected 1-hour slot (Mon–Fri).</li>
+              <li><strong>Mentor Direct Coordination:</strong> You may directly connect with Kapil on WhatsApp at <a href="https://wa.me/919873152277" class="text-emerald-400 font-mono underline">+91 9873152277</a> or email <a href="mailto:namaste@sarlayash.com" class="text-rose-300 font-mono underline">namaste@sarlayash.com</a>.</li>
+            </ul>
+          </div>
+
+          <!-- Email Signoff -->
+          <div class="pt-2 text-xs text-slate-400 border-t border-white/10 flex justify-between items-center">
+            <div>
+              With gratitude & blessings,<br>
+              <strong class="text-white">Kapil & SarlaYash Mission Team</strong><br>
+              <span class="text-[10px]">SarlaYash Learning Solutions LLP</span>
+            </div>
+            <img src="assets/banner.png" alt="SarlaYash" class="w-12 h-12 object-cover rounded-lg border border-brand-gold/40">
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Action Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-3 mt-5">
+        <a id="emailMailtoBtn" href="#" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs flex items-center gap-1.5 border border-white/15">
+          <i data-lucide="external-link" class="w-4 h-4 text-blue-400"></i>
+          <span>Open in Gmail / Email Client</span>
+        </a>
+        <button onclick="copyWelcomeEmailText()" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs flex items-center gap-1.5 border border-white/15">
+          <i data-lucide="copy" class="w-4 h-4 text-amber-300"></i>
+          <span>Copy Email Text</span>
+        </button>
+        <button onclick="closeWelcomeEmailModal()" class="px-6 py-2.5 rounded-xl bg-brand-gold text-brand-dark font-bold text-xs hover:brightness-110 ml-auto">
+          Done
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- PROGRAM HANDBOOK MODAL -->
   <div id="handbookModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
     <div class="relative w-full max-w-3xl bg-brand-surface border border-brand-gold/40 rounded-2xl shadow-2xl p-6 sm:p-8 my-8 text-slate-200 max-h-[85vh] overflow-y-auto">
@@ -2333,16 +2575,10 @@
         </section>
 
         <section>
-          <h4 class="font-bold text-white text-base text-brand-gold mb-1">2. Refund Eligibility Criteria (₹1,000)</h4>
+          <h4 class="font-bold text-white text-base text-brand-gold mb-1">2. Deposit Covenant & Refund Policy (₹50/Day)</h4>
           <p class="text-xs text-slate-300">
-            The ₹1,000 participation fee (₹250 per week) is 100% refundable to participants who:
+            The commitment deposit is strictly ₹50 INR daily (₹250 per week, ₹1,000 total across 20 working days). There are strictly <strong>NO REFUNDS for casual dropouts, no-shows, or uncommitted candidates</strong>. However, <strong>100% of the ₹1,000 deposit is refunded to all participants who qualify for performance stipends (₹5,000 to ₹15,000)</strong> directly with their stipend disbursement!
           </p>
-          <ul class="list-disc list-inside text-xs text-slate-300 space-y-1 mt-1">
-            <li>Maintain a minimum attendance of 90% across the 22 working days.</li>
-            <li>Submit all required daily practical deliverables on the participant tracking portal.</li>
-            <li>Demonstrate and submit their final domain capstone project.</li>
-            <li>Uphold the academic integrity and professional code of conduct.</li>
-          </ul>
         </section>
 
         <section>

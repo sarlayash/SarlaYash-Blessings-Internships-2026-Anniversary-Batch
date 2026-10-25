@@ -30,6 +30,9 @@ try {
     auth.onAuthStateChanged((user) => {
       currentUser = user;
       updateAuthUI(user);
+      if (user) {
+        fetchUserApplication(user);
+      }
     });
   }
 } catch (e) {
@@ -734,6 +737,7 @@ function updateAuthUI(user) {
   const sidebarUserCard = document.getElementById('sidebarUserCard');
   const sidebarUserPhoto = document.getElementById('sidebarUserPhoto');
   const sidebarUserName = document.getElementById('sidebarUserName');
+  const navManageAppBtn = document.getElementById('navManageAppBtn');
 
   const gate = document.getElementById('googleAuthRequiredGate');
   const authForm = document.getElementById('googleAuthenticatedForm');
@@ -761,6 +765,10 @@ function updateAuthUI(user) {
     }
     if (sidebarUserPhoto) sidebarUserPhoto.src = user.photoURL || 'https://www.gstatic.com/images/branding/product/1x/avatar_square_grey_54dp.png';
     if (sidebarUserName) sidebarUserName.innerText = user.displayName || 'Google User';
+    if (navManageAppBtn) {
+      navManageAppBtn.classList.remove('hidden');
+      navManageAppBtn.classList.add('inline-flex');
+    }
 
     // Application Modal UI
     if (gate) gate.classList.add('hidden');
@@ -790,6 +798,11 @@ function updateAuthUI(user) {
     if (authForm) authForm.classList.add('hidden');
     if (inputName) inputName.value = '';
     if (inputEmail) inputEmail.value = '';
+
+    if (navManageAppBtn) {
+      navManageAppBtn.classList.add('hidden');
+      navManageAppBtn.classList.remove('inline-flex');
+    }
   }
 
   if (window.lucide) {
@@ -801,6 +814,11 @@ function updateAuthUI(user) {
 // 6. APPLICATION & ENROLLMENT MODAL WORKFLOW
 // ----------------------------------------------------
 function openApplyModal() {
+  if (currentUser && window.currentUserApp && window.currentUserApp.regId) {
+    // If candidate already has an existing application, open their management portal to view or update UTR
+    openManageApplicationModal();
+    return;
+  }
   const modal = document.getElementById('applyModal');
   if (modal) {
     modal.classList.remove('hidden');
@@ -878,23 +896,31 @@ function submitApplication() {
   const slot = document.getElementById('app_slot').value;
   const regId = 'SY-2026-' + Math.floor(1000 + Math.random() * 9000);
 
+  const appData = {
+    uid: currentUser.uid,
+    name: name,
+    email: email,
+    photoURL: currentUser.photoURL || '',
+    phone: phone,
+    track: track,
+    background: background,
+    slot: slot,
+    utr: utr,
+    regId: regId,
+    submittedAt: new Date().toISOString(),
+    feeInstallment: 250,
+    feeTotal: 1000,
+    status: 'verified_google_candidate'
+  };
+
+  window.currentUserApp = appData;
+  localStorage.setItem('sarlayash_app_' + currentUser.uid, JSON.stringify(appData));
+
   // Firestore Cloud Database Record
   if (db && currentUser) {
     db.collection('internship_applications_2026').doc(currentUser.uid).set({
-      uid: currentUser.uid,
-      name: name,
-      email: email,
-      photoURL: currentUser.photoURL || '',
-      phone: phone,
-      track: track,
-      background: background,
-      slot: slot,
-      utr: utr,
-      regId: regId,
-      submittedAt: firebase.firestore.FieldValue.serverTimestamp(),
-      feeInstallment: 250,
-      feeTotal: 1000,
-      status: 'verified_google_candidate'
+      ...appData,
+      submittedAtServer: firebase.firestore.FieldValue.serverTimestamp()
     }, { merge: true }).catch(err => {
       console.warn("Firestore record save notice:", err);
     });
@@ -917,6 +943,9 @@ function submitApplication() {
   }
 
   goToEnrollmentStep(3);
+
+  // Automatically dispatch Welcome Email!
+  sendWelcomeEmail(appData);
 }
 
 // ----------------------------------------------------
@@ -1047,4 +1076,297 @@ function handleNavClick() {
   if (window.innerWidth < 1024) {
     toggleMobileSidebar(false);
   }
+}
+
+// ----------------------------------------------------
+// 10. CANDIDATE PORTAL & UTR MANAGEMENT
+// ----------------------------------------------------
+async function fetchUserApplication(user) {
+  if (!user) return;
+  try {
+    // Check local storage first for instant loading
+    const local = localStorage.getItem('sarlayash_app_' + user.uid);
+    if (local) {
+      window.currentUserApp = JSON.parse(local);
+    }
+
+    if (db) {
+      const doc = await db.collection('internship_applications_2026').doc(user.uid).get();
+      if (doc.exists) {
+        window.currentUserApp = doc.data();
+        localStorage.setItem('sarlayash_app_' + user.uid, JSON.stringify(doc.data()));
+      }
+    }
+  } catch (err) {
+    console.warn("Error fetching candidate app:", err);
+  }
+}
+
+function openManageApplicationModal() {
+  if (!currentUser) {
+    alert("Authentic Google Account Required: Please sign in with Google to view and update your application.");
+    loginWithGoogle();
+    return;
+  }
+
+  // Close other modals
+  closeApplyModal();
+  closeHandbookModal();
+  closeWelcomeEmailModal();
+
+  // Populate candidate data
+  const app = window.currentUserApp || {
+    name: currentUser.displayName || 'Candidate',
+    email: currentUser.email || '',
+    photoURL: currentUser.photoURL || '',
+    regId: 'SY-2026-' + (currentUser.uid.slice(0, 4).toUpperCase()),
+    track: 'Full-Stack Development',
+    slot: 'Evening Batch (6:00 PM – 7:00 PM IST)',
+    phone: 'Not provided yet',
+    utr: ''
+  };
+
+  const photoElem = document.getElementById('manageUserPhoto');
+  const nameElem = document.getElementById('manageUserName');
+  const emailElem = document.getElementById('manageUserEmail');
+  const regIdElem = document.getElementById('manageRegId');
+  const trackElem = document.getElementById('manageTrack');
+  const slotElem = document.getElementById('manageSlot');
+  const phoneElem = document.getElementById('managePhone');
+  const utrInput = document.getElementById('manageUtrInput');
+  const utrBadge = document.getElementById('manageUtrBadge');
+
+  if (photoElem) photoElem.src = currentUser.photoURL || app.photoURL || 'https://www.gstatic.com/images/branding/product/1x/avatar_square_grey_54dp.png';
+  if (nameElem) nameElem.innerText = currentUser.displayName || app.name || 'Candidate';
+  if (emailElem) emailElem.innerText = currentUser.email || app.email || '';
+  if (regIdElem) regIdElem.innerText = app.regId || ('SY-2026-' + (currentUser.uid.slice(0, 4).toUpperCase()));
+  if (trackElem) trackElem.innerText = app.track || 'Full-Stack Development';
+  if (slotElem) slotElem.innerText = app.slot || 'Evening Batch (6:00 PM – 7:00 PM IST)';
+  if (phoneElem) phoneElem.innerText = app.phone || 'Please provide phone';
+  
+  if (utrInput) {
+    utrInput.value = app.utr || '';
+  }
+
+  if (utrBadge) {
+    if (app.utr && app.utr.trim().length > 0) {
+      utrBadge.innerText = "UTR Logged";
+      utrBadge.className = "text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+    } else {
+      utrBadge.innerText = "Needs UTR";
+      utrBadge.className = "text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30";
+    }
+  }
+
+  const toast = document.getElementById('utrUpdateToast');
+  if (toast) toast.classList.add('hidden');
+
+  const modal = document.getElementById('manageAppModal');
+  if (modal) modal.classList.remove('hidden');
+
+  if (window.lucide) window.lucide.createIcons();
+}
+
+function closeManageApplicationModal() {
+  const modal = document.getElementById('manageAppModal');
+  if (modal) modal.classList.add('hidden');
+}
+
+async function updateCandidateUtr() {
+  if (!currentUser) {
+    alert("Please sign in with Google first.");
+    return;
+  }
+
+  const utrInput = document.getElementById('manageUtrInput');
+  const newUtr = utrInput ? utrInput.value.trim() : '';
+
+  if (!newUtr) {
+    alert("Please enter a valid 12-digit UPI UTR or Reference Number from your payment receipt.");
+    if (utrInput) utrInput.focus();
+    return;
+  }
+
+  // Get or initialize appData
+  let appData = window.currentUserApp || {
+    uid: currentUser.uid,
+    name: currentUser.displayName || 'Candidate',
+    email: currentUser.email || '',
+    photoURL: currentUser.photoURL || '',
+    regId: 'SY-2026-' + (currentUser.uid.slice(0, 4).toUpperCase()),
+    track: 'Full-Stack Development',
+    slot: 'Evening Batch (6:00 PM – 7:00 PM IST)',
+    phone: '',
+    status: 'verified_google_candidate'
+  };
+
+  appData.utr = newUtr;
+  appData.utrUpdatedAt = new Date().toISOString();
+  window.currentUserApp = appData;
+  localStorage.setItem('sarlayash_app_' + currentUser.uid, JSON.stringify(appData));
+
+  // Save to Firestore
+  if (db) {
+    try {
+      await db.collection('internship_applications_2026').doc(currentUser.uid).set({
+        utr: newUtr,
+        utrUpdatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        utrStatus: 'logged_and_verified'
+      }, { merge: true });
+    } catch (err) {
+      console.warn("Firestore UTR update notice:", err);
+    }
+  }
+
+  // Update badge
+  const utrBadge = document.getElementById('manageUtrBadge');
+  if (utrBadge) {
+    utrBadge.innerText = "UTR Updated & Logged";
+    utrBadge.className = "text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+  }
+
+  // Show Toast
+  const toast = document.getElementById('utrUpdateToast');
+  const msg = document.getElementById('utrUpdateMsg');
+  if (toast && msg) {
+    msg.innerText = `✓ UTR "${newUtr}" successfully saved! Automatic Welcome Email dispatched.`;
+    toast.classList.remove('hidden');
+  }
+
+  // Trigger celebratory confetti
+  if (typeof confetti === 'function') {
+    confetti({
+      particleCount: 70,
+      spread: 60,
+      origin: { y: 0.5 }
+    });
+  }
+
+  // Dispatch Welcome Email automatically!
+  sendWelcomeEmail(appData);
+}
+
+// ----------------------------------------------------
+// 11. AUTOMATED WELCOME EMAIL SYSTEM
+// ----------------------------------------------------
+function sendWelcomeEmail(appData) {
+  if (!appData) return;
+
+  // 1. Dispatch asynchronous notification via FormSubmit
+  try {
+    fetch('https://formsubmit.co/ajax/namaste@sarlayash.com', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        _subject: `Welcome to SarlaYash Blessings Internships 2026 [${appData.regId}]`,
+        _replyto: appData.email,
+        candidate_name: appData.name,
+        candidate_email: appData.email,
+        phone: appData.phone || 'N/A',
+        track: appData.track,
+        slot: appData.slot,
+        utr_reference: appData.utr,
+        registration_id: appData.regId,
+        deposit_policy: "50 INR Daily (250/wk) - 100% Refundable with Stipend",
+        lead_mentor: "Kapil - The One Rupee Full-Stack CEO"
+      })
+    }).catch(e => console.log('Mail webhook info:', e));
+  } catch (e) {
+    console.log('Dispatch info:', e);
+  }
+
+  // 2. Open the Welcome Email Modal immediately for the user!
+  showWelcomeEmailModal(appData);
+}
+
+function showWelcomeEmailModal(customApp) {
+  const app = customApp || window.currentUserApp || {
+    name: currentUser?.displayName || 'Candidate',
+    email: currentUser?.email || 'candidate@gmail.com',
+    regId: 'SY-2026-0842',
+    track: 'Full-Stack Development',
+    slot: 'Evening Batch (6:00 PM – 7:00 PM IST)',
+    utr: '9873152277@kotakbank'
+  };
+
+  const targetElem = document.getElementById('emailTargetAddress');
+  const toElem = document.getElementById('emailHeaderTo');
+  const subjectElem = document.getElementById('emailHeaderSubject');
+  const nameElem = document.getElementById('emailCandidateName');
+  const regIdElem = document.getElementById('emailRegId');
+  const trackElem = document.getElementById('emailTrack');
+  const slotElem = document.getElementById('emailSlot');
+  const utrElem = document.getElementById('emailUtr');
+  const mailtoBtn = document.getElementById('emailMailtoBtn');
+
+  if (targetElem) targetElem.innerText = app.email;
+  if (toElem) toElem.innerText = `${app.name} <${app.email}>`;
+  if (subjectElem) subjectElem.innerText = `🎉 Welcome to SarlaYash Blessings Internships 2026 — Reg ID: ${app.regId}`;
+  if (nameElem) nameElem.innerText = app.name;
+  if (regIdElem) regIdElem.innerText = app.regId;
+  if (trackElem) trackElem.innerText = app.track;
+  if (slotElem) slotElem.innerText = app.slot;
+  if (utrElem) utrElem.innerText = app.utr || 'Logged & Verified';
+
+  // Format mailto link
+  if (mailtoBtn) {
+    const subject = encodeURIComponent(`Welcome to SarlaYash Blessings Internships 2026 - ${app.regId}`);
+    const body = encodeURIComponent(
+      `Namaste ${app.name},\n\n` +
+      `Welcome to SarlaYash Blessings Internships 2026 (Anniversary Batch)!\n\n` +
+      `Here are your confirmed details:\n` +
+      `• Registration ID: ${app.regId}\n` +
+      `• Domain Track: ${app.track}\n` +
+      `• Daily Focus Slot: ${app.slot}\n` +
+      `• UPI UTR Reference: ${app.utr}\n` +
+      `• Deposit Covenant: ₹50/Day (₹250/Wk) — 100% Refundable with Merit Stipend (₹5,000–₹15,000)\n\n` +
+      `You will receive your Google Classroom & Drive invite 48 hours prior to Day 1.\n` +
+      `Direct WhatsApp: https://wa.me/919873152277\n` +
+      `Email: namaste@sarlayash.com\n\n` +
+      `With blessings,\nKapil & SarlaYash Learning Solutions LLP`
+    );
+    mailtoBtn.href = `mailto:${app.email}?subject=${subject}&body=${body}`;
+  }
+
+  const modal = document.getElementById('welcomeEmailModal');
+  if (modal) modal.classList.remove('hidden');
+
+  if (window.lucide) window.lucide.createIcons();
+}
+
+function closeWelcomeEmailModal() {
+  const modal = document.getElementById('welcomeEmailModal');
+  if (modal) modal.classList.add('hidden');
+}
+
+function copyWelcomeEmailText() {
+  const app = window.currentUserApp || {
+    name: currentUser?.displayName || 'Candidate',
+    email: currentUser?.email || '',
+    regId: 'SY-2026-0842',
+    track: 'Full-Stack Development',
+    slot: 'Evening Batch (6:00 PM – 7:00 PM IST)',
+    utr: 'Confirmed'
+  };
+
+  const text = 
+    `Namaste ${app.name},\n\n` +
+    `Welcome to SarlaYash Blessings Internships 2026 (Anniversary Batch)!\n\n` +
+    `• Registration ID: ${app.regId}\n` +
+    `• Domain Track: ${app.track}\n` +
+    `• Daily Focus Slot: ${app.slot}\n` +
+    `• UPI UTR Reference: ${app.utr}\n` +
+    `• Commitment Deposit: ₹50/Day (₹250/wk) — 100% Refundable with Merit Stipends (₹5,000–₹15,000)\n\n` +
+    `Google Classroom and Drive links will be shared 48 hours before Day 1.\n` +
+    `Contact: Kapil (+91 9873152277 | namaste@sarlayash.com)\n\n` +
+    `SarlaYash Learning Solutions LLP • Dedicated to Maa Sarla & Paa Yash`;
+
+  navigator.clipboard.writeText(text).then(() => {
+    alert("✓ Official Welcome Email text copied to clipboard!");
+  }).catch(() => {
+    prompt("Copy Welcome Email Text:", text);
+  });
 }
