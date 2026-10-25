@@ -627,40 +627,44 @@ function updateRubric() {
   if (total >= 92) {
     badgeElem.className = "mt-3 inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-purple-500/20 text-purple-300 border border-purple-500/30";
     badgeElem.innerText = "Exceptional Performance (Tier 1)";
-    stipendAmountElem.innerText = "₹15,000 Award Tier";
-    stipendAmountElem.className = "text-2xl sm:text-3xl font-bold font-mono text-purple-300 mt-1";
-    stipendDescElem.innerText = "Top candidate pool eligible for the maximum ₹15,000 merit stipend award.";
+    stipendAmountElem.innerText = "₹15,000 Stipend + ₹1,000 Deposit = ₹16,000 Total";
+    stipendAmountElem.className = "text-xl sm:text-2xl font-bold font-mono text-purple-300 mt-1";
+    stipendDescElem.innerText = "Top candidate pool eligible for the maximum ₹15,000 merit stipend + 100% Commitment Deposit Refund!";
+    refundElem.innerHTML = `<i data-lucide="check-check" class="w-4 h-4"></i> 100% Refunded with Stipend (₹1,000)`;
+    refundElem.className = "font-bold text-emerald-400 flex items-center gap-1";
   } else if (total >= 82) {
     badgeElem.className = "mt-3 inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
     badgeElem.innerText = "Outstanding Candidate (Tier 2)";
-    stipendAmountElem.innerText = "₹10,000 Award Tier";
-    stipendAmountElem.className = "text-2xl sm:text-3xl font-bold font-mono text-emerald-400 mt-1";
-    stipendDescElem.innerText = "Outstanding performance bracket eligible for the ₹10,000 stipend award.";
+    stipendAmountElem.innerText = "₹10,000 Stipend + ₹1,000 Deposit = ₹11,000 Total";
+    stipendAmountElem.className = "text-xl sm:text-2xl font-bold font-mono text-emerald-400 mt-1";
+    stipendDescElem.innerText = "Outstanding performance bracket eligible for the ₹10,000 stipend award + 100% Commitment Deposit Refund!";
+    refundElem.innerHTML = `<i data-lucide="check-check" class="w-4 h-4"></i> 100% Refunded with Stipend (₹1,000)`;
+    refundElem.className = "font-bold text-emerald-400 flex items-center gap-1";
   } else if (total >= 75) {
     badgeElem.className = "mt-3 inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-500/20 text-blue-300 border border-blue-500/30";
     badgeElem.innerText = "Strong Performance (Tier 3)";
-    stipendAmountElem.innerText = "₹5,000 Award Tier";
-    stipendAmountElem.className = "text-2xl sm:text-3xl font-bold font-mono text-blue-300 mt-1";
-    stipendDescElem.innerText = "Strong performance bracket eligible for the ₹5,000 stipend award.";
+    stipendAmountElem.innerText = "₹5,000 Stipend + ₹1,000 Deposit = ₹6,000 Total";
+    stipendAmountElem.className = "text-xl sm:text-2xl font-bold font-mono text-blue-300 mt-1";
+    stipendDescElem.innerText = "Strong performance bracket eligible for the ₹5,000 stipend award + 100% Commitment Deposit Refund!";
+    refundElem.innerHTML = `<i data-lucide="check-check" class="w-4 h-4"></i> 100% Refunded with Stipend (₹1,000)`;
+    refundElem.className = "font-bold text-emerald-400 flex items-center gap-1";
   } else {
     badgeElem.className = "mt-3 inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/30";
-    badgeElem.innerText = "Participation / Growth Tier";
-    stipendAmountElem.innerText = "₹0 Stipend Bracket";
-    stipendAmountElem.className = "text-2xl sm:text-3xl font-bold font-mono text-slate-400 mt-1";
-    stipendDescElem.innerText = "Meets foundational criteria. Requires score of 75+ for merit stipend pool.";
+    badgeElem.innerText = "Foundational / Participation Tier";
+    stipendAmountElem.innerText = "₹0 Stipend • Deposit Non-Refundable";
+    stipendAmountElem.className = "text-xl sm:text-2xl font-bold font-mono text-slate-400 mt-1";
+    stipendDescElem.innerText = "Below 75 points. Stipend not earned; commitment deposit non-refundable per policy.";
+    refundElem.innerHTML = `<i data-lucide="x-circle" class="w-4 h-4"></i> No Refund (Stipend Not Earned)`;
+    refundElem.className = "font-bold text-slate-400 flex items-center gap-1";
   }
 
   // Completion Threshold Status
   if (total >= 75 && attendance >= 7) {
     thresholdElem.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> Qualified (${total}/100)`;
     thresholdElem.className = "font-bold text-emerald-400 flex items-center gap-1";
-    refundElem.innerHTML = `<i data-lucide="check-check" class="w-4 h-4"></i> 100% Eligible (₹1,000)`;
-    refundElem.className = "font-bold text-emerald-400 flex items-center gap-1";
   } else {
     thresholdElem.innerHTML = `<i data-lucide="alert-circle" class="w-4 h-4"></i> Below 75 Pts Threshold`;
     thresholdElem.className = "font-bold text-amber-400 flex items-center gap-1";
-    refundElem.innerHTML = `Needs Completion Verification`;
-    refundElem.className = "font-bold text-slate-400 flex items-center gap-1";
   }
 
   if (window.lucide) {
