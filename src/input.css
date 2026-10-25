@@ -29,6 +29,16 @@ body {
   background: #E5A93C;
 }
 
+/* Hero Headline strictly 2 individual lines */
+.hero-headline-2lines {
+  font-size: clamp(1.12rem, 4.25vw, 3.65rem);
+  line-height: 1.15;
+}
+.hero-line {
+  display: block;
+  white-space: nowrap;
+}
+
 /* Theatrical Stage Glow and Border Animation */
 .theatre-border {
   position: relative;
