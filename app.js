@@ -1,0 +1,783 @@
+/**
+ * SarlaYash Blessings Internships 2026 — Interactive Application Controller
+ * Powered by SarlaYash Learning Solutions LLP
+ */
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize Lucide Icons
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
+
+  // Render initial sections
+  renderTracks('all');
+  selectRoadmapWeek(1);
+  updateRubric();
+  setupMobileMenu();
+});
+
+// ----------------------------------------------------
+// 1. THE DAILY 1-HOUR FORMULA INTERACTIVE VISUALIZER
+// ----------------------------------------------------
+const formulaSteps = [
+  {
+    timeRange: "0–5 Minutes",
+    durationText: "5 min",
+    percentText: "8% of hour",
+    phaseLabel: "PHASE 1 OF 5",
+    dashOffset: 334,
+    title: "Check-in and Daily Objective",
+    purpose: "Establish razor-sharp focus for the hour. Review the day's singular objective, align on the expected deliverable, and eliminate distractions before opening tools.",
+    actions: [
+      "Log in to the cohort channel and mark prompt attendance.",
+      "Read the 1-sentence outcome definition for the day.",
+      "Open the starter template or domain workspace."
+    ]
+  },
+  {
+    timeRange: "5–15 Minutes",
+    durationText: "10 min",
+    percentText: "17% of hour",
+    phaseLabel: "PHASE 2 OF 5",
+    dashOffset: 300,
+    title: "Micro-Learning",
+    purpose: "Learn exactly one practical concept needed for the day's build. No bloated theories, no rambling lectures—only immediately actionable methodology.",
+    actions: [
+      "Inspect the daily code snippet, design pattern, or operational framework.",
+      "Identify the core problem the concept solves.",
+      "Formulate your implementation approach."
+    ]
+  },
+  {
+    timeRange: "15–40 Minutes",
+    durationText: "25 min",
+    percentText: "42% of hour",
+    phaseLabel: "PHASE 3 OF 5",
+    dashOffset: 210,
+    title: "Hands-on Task (Active Building)",
+    purpose: "The core engine of the day: 90% hands-on practice. Apply the micro-learning directly to your real repository, document, or analytical model.",
+    actions: [
+      "Write actual code, configure cloud resources, or draft marketing/business assets.",
+      "Debug syntax and resolve immediate execution blockers.",
+      "Produce the concrete deliverable for the day's milestone."
+    ]
+  },
+  {
+    timeRange: "40–50 Minutes",
+    durationText: "10 min",
+    percentText: "17% of hour",
+    phaseLabel: "PHASE 4 OF 5",
+    dashOffset: 300,
+    title: "Evidence & Documentation",
+    purpose: "Professional hygiene: record what was accomplished with tangible proof of work. Commit git changes, take screenshots, or log outputs.",
+    actions: [
+      "Commit progress to your track Git repository or Google Drive folder.",
+      "Write a concise 2-sentence summary of what works and what remains.",
+      "Capture screenshot or log output as proof of execution."
+    ]
+  },
+  {
+    timeRange: "50–60 Minutes",
+    durationText: "10 min",
+    percentText: "17% of hour",
+    phaseLabel: "PHASE 5 OF 5",
+    dashOffset: 300,
+    title: "Reflection, Submission, or Feedback",
+    purpose: "Demonstrate progress, submit the daily checkpoint, and receive rapid mentor feedback or peer review before closing the laptop.",
+    actions: [
+      "Submit the daily deliverable link via the submission portal.",
+      "Post a short reflection in the peer discussion channel.",
+      "Log off knowing today's 1-hour commitment is 100% complete."
+    ]
+  }
+];
+
+function setFormulaStep(index) {
+  const step = formulaSteps[index];
+  if (!step) return;
+
+  // Update tabs visual state
+  const buttons = document.querySelectorAll('.formula-tab-btn');
+  buttons.forEach((btn, i) => {
+    if (i === index) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+
+  // Update DOM elements
+  document.getElementById('formulaTimeRange').innerText = step.timeRange;
+  document.getElementById('formulaDurationText').innerText = step.durationText;
+  document.getElementById('formulaPercentText').innerText = step.percentText;
+  document.getElementById('formulaPhaseLabel').innerText = step.phaseLabel;
+  document.getElementById('formulaTitle').innerText = step.title;
+  document.getElementById('formulaPurpose').innerHTML = `<strong>Core Purpose:</strong> ${step.purpose}`;
+
+  const circle = document.getElementById('formulaProgressCircle');
+  if (circle) {
+    circle.style.strokeDashoffset = step.dashOffset;
+  }
+
+  const list = document.getElementById('formulaActionList');
+  if (list) {
+    list.innerHTML = step.actions.map(a => `<li>${a}</li>`).join('');
+  }
+}
+
+// ----------------------------------------------------
+// 2. SFE — 12 DOMAIN TRACKS DATA & RENDERING
+// ----------------------------------------------------
+const tracksData = [
+  {
+    id: 'fullstack',
+    title: 'Full-Stack Development',
+    category: 'tech',
+    icon: 'code-2',
+    suitableFor: 'Beginners & aspiring software engineers',
+    capstone: 'Responsive portfolio or functional web application',
+    tools: 'HTML5, Tailwind, Modern JS, GitHub',
+    badge: 'Popular Track'
+  },
+  {
+    id: 'python',
+    title: 'Python Programming',
+    category: 'tech',
+    icon: 'terminal',
+    suitableFor: 'Beginners and practical programmers',
+    capstone: 'Practical Python CLI utility & automation script',
+    tools: 'Python 3, Virtualenv, Requests, Rich CLI',
+    badge: 'Foundational'
+  },
+  {
+    id: 'java-dsa',
+    title: 'Java + Data Structures & Algorithms',
+    category: 'tech',
+    icon: 'binary',
+    suitableFor: 'Students preparing for technical interviews',
+    capstone: 'Structured problem-solving portfolio & algorithmic benchmarks',
+    tools: 'Java 17+, JUnit, Visual Algorithm Tracing',
+    badge: 'Interview Prep'
+  },
+  {
+    id: 'data-analytics',
+    title: 'Data Analytics',
+    category: 'ai-data',
+    icon: 'bar-chart-3',
+    suitableFor: 'Students, professionals, and career switchers',
+    capstone: 'Interactive data analysis report & business dashboard',
+    tools: 'SQL, Python Pandas, Sheets, Looker Studio',
+    badge: 'High Demand'
+  },
+  {
+    id: 'generative-ai',
+    title: 'Generative AI',
+    category: 'ai-data',
+    icon: 'bot',
+    suitableFor: 'Learners from technical & non-technical backgrounds',
+    capstone: 'AI-assisted workflow or research assistant prototype',
+    tools: 'Gemini API, Prompt Engineering, Agentic Workflows',
+    badge: 'Trending 2026'
+  },
+  {
+    id: 'cybersecurity',
+    title: 'Cybersecurity Fundamentals',
+    category: 'tech',
+    icon: 'shield-alert',
+    suitableFor: 'Interested beginners & future security analysts',
+    capstone: 'Security-awareness guide and authorized lab exercises',
+    tools: 'Wireshark basics, OWASP Top 10, Auth protocols',
+    badge: 'Essential'
+  },
+  {
+    id: 'cloud',
+    title: 'Cloud Fundamentals',
+    category: 'ai-data',
+    icon: 'cloud',
+    suitableFor: 'Aspiring cloud architects & DevOps learners',
+    capstone: 'Cloud architecture proposal and sandbox demonstration',
+    tools: 'GCP / AWS free tier, IAM, Storage, Compute engines',
+    badge: 'Infrastructure'
+  },
+  {
+    id: 'marketing',
+    title: 'Digital Marketing',
+    category: 'business',
+    icon: 'trending-up',
+    suitableFor: 'Creative and business-oriented learners',
+    capstone: 'Omnichannel campaign plan & performance measurement framework',
+    tools: 'Meta Ads Manager concepts, Google Analytics, SEO tools',
+    badge: 'No Code'
+  },
+  {
+    id: 'business-analysis',
+    title: 'Business Analysis',
+    category: 'business',
+    icon: 'file-check-2',
+    suitableFor: 'Management students & non-technical analytical thinkers',
+    capstone: 'Requirements document (BRD/PRD) and process-improvement proposal',
+    tools: 'Figma wireframes, User stories, BPMN flowcharts',
+    badge: 'Strategic'
+  },
+  {
+    id: 'content-research',
+    title: 'Research and Content',
+    category: 'people',
+    icon: 'feather',
+    suitableFor: 'Writers, educators, researchers, and communicators',
+    capstone: 'Evidence-based research brief or comprehensive learning resource',
+    tools: 'Notion, Open Access databases, Technical copywriting',
+    badge: 'Creative'
+  },
+  {
+    id: 'hr-talent',
+    title: 'HR and Talent Acquisition',
+    category: 'people',
+    icon: 'users',
+    suitableFor: 'Aspiring HR professionals & team builders',
+    capstone: 'Sample recruitment workflow, rubric, and interview scorecard',
+    tools: 'ATS workflows, LinkedIn talent search, Evaluation matrices',
+    badge: 'People Ops'
+  },
+  {
+    id: 'entrepreneurship',
+    title: 'Entrepreneurship and Innovation',
+    category: 'people',
+    icon: 'lightbulb',
+    suitableFor: 'Founders and aspiring startup entrepreneurs',
+    capstone: 'Validated business model canvas & customer problem statement',
+    tools: 'Lean Canvas, Pitch deck, Unit economics modeling',
+    badge: 'Venture'
+  }
+];
+
+function renderTracks(filterCategory) {
+  const container = document.getElementById('tracksGrid');
+  if (!container) return;
+
+  const filtered = filterCategory === 'all' 
+    ? tracksData 
+    : tracksData.filter(t => t.category === filterCategory);
+
+  container.innerHTML = filtered.map(track => `
+    <div class="theatre-border rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 group">
+      <div>
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-10 h-10 rounded-xl bg-brand-crimson/30 border border-brand-gold/30 flex items-center justify-center text-brand-gold group-hover:scale-110 transition-transform">
+            <i data-lucide="${track.icon}" class="w-5 h-5"></i>
+          </div>
+          <span class="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-brand-gold/10 text-brand-gold border border-brand-gold/30">
+            ${track.badge}
+          </span>
+        </div>
+
+        <h3 class="font-bold text-white text-lg mb-1 group-hover:text-brand-gold transition-colors">
+          ${track.title}
+        </h3>
+        <p class="text-xs text-slate-400 mb-4">
+          <strong class="text-slate-300">Ideal for:</strong> ${track.suitableFor}
+        </p>
+
+        <div class="space-y-2 text-xs bg-black/40 p-3.5 rounded-xl border border-white/5">
+          <div>
+            <span class="text-slate-400 block text-[10px] uppercase tracking-wider">Example 30-Day Capstone:</span>
+            <span class="text-white font-medium">${track.capstone}</span>
+          </div>
+          <div class="pt-2 border-t border-white/5">
+            <span class="text-slate-400 block text-[10px] uppercase tracking-wider">Core Tools & Stack:</span>
+            <span class="text-brand-gold font-mono">${track.tools}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-5 pt-4 border-t border-white/10 flex items-center justify-between">
+        <button onclick="selectTrackAndApply('${track.title}')" class="text-xs font-semibold text-brand-gold hover:text-amber-300 flex items-center gap-1 group/btn">
+          <span>Enroll in this track</span>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform"></i>
+        </button>
+        <span class="text-[11px] text-slate-500 font-mono">1 hr/day</span>
+      </div>
+    </div>
+  `).join('');
+
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
+}
+
+function filterTracks(category) {
+  const buttons = document.querySelectorAll('.track-filter-btn');
+  buttons.forEach(btn => {
+    btn.classList.remove('active');
+    btn.classList.remove('bg-brand-gold', 'text-brand-dark');
+  });
+
+  const activeBtn = event.currentTarget;
+  if (activeBtn) {
+    activeBtn.classList.add('active');
+  }
+
+  renderTracks(category);
+}
+
+function selectTrackAndApply(trackTitle) {
+  openApplyModal();
+  const trackSelect = document.getElementById('app_track');
+  if (trackSelect) {
+    trackSelect.value = trackTitle;
+  }
+}
+
+// ----------------------------------------------------
+// 3. COMPLETE 22-WORKING-DAY ROADMAP DATA & TABS
+// ----------------------------------------------------
+const roadmapWeeks = {
+  1: {
+    title: "Week 1 — Discover, Orient, and Establish Foundations",
+    theme: "From participant to purposeful learner",
+    checkpoint: "Each participant should understand the program, have a clear learning objective, and identify a problem worth solving.",
+    days: [
+      {
+        day: 1,
+        focus: "Welcome and Orientation",
+        activity: "Introduce SarlaYash, program rules, expectations, and the learning journey.",
+        deliverable: "Personal learning profile"
+      },
+      {
+        day: 2,
+        focus: "Goal Setting",
+        activity: "Identify current skills, interests, strengths, and desired outcomes.",
+        deliverable: "Individual growth plan"
+      },
+      {
+        day: 3,
+        focus: "Professional Communication",
+        activity: "Practice written communication, digital etiquette, and professional introductions.",
+        deliverable: "Professional introduction"
+      },
+      {
+        day: 4,
+        focus: "Digital Productivity",
+        activity: "Learn file organization, document creation, collaboration, and responsible AI use.",
+        deliverable: "Organized digital workspace"
+      },
+      {
+        day: 5,
+        focus: "Problem Identification",
+        activity: "Identify a real problem relevant to the chosen domain track.",
+        deliverable: "Problem statement"
+      }
+    ]
+  },
+  2: {
+    title: "Week 2 — Build Practical Skills",
+    theme: "From learning to execution",
+    checkpoint: "Participants should have completed at least one practical exercise and received structured mentor feedback.",
+    days: [
+      {
+        day: 6,
+        focus: "Domain Selection",
+        activity: "Confirm the participant's learning track and its required tools.",
+        deliverable: "Track-selection record"
+      },
+      {
+        day: 7,
+        focus: "Tool Mastery",
+        activity: "Explore the primary tool or platform used in the selected track.",
+        deliverable: "Tool-practice exercise"
+      },
+      {
+        day: 8,
+        focus: "Guided Implementation",
+        activity: "Complete a small, mentor-guided practical task.",
+        deliverable: "First working artifact"
+      },
+      {
+        day: 9,
+        focus: "Research and Verification",
+        activity: "Research the problem and verify relevant information with credible sources.",
+        deliverable: "Research notes with sources"
+      },
+      {
+        day: 10,
+        focus: "Quality and Iteration",
+        activity: "Test the work, identify mistakes, and improve the result.",
+        deliverable: "Revised artifact and feedback"
+      }
+    ]
+  },
+  3: {
+    title: "Week 3 — Build Something Meaningful",
+    theme: "From execution to contribution",
+    checkpoint: "Participants should have a demonstrable project or equivalent practical work appropriate to their track.",
+    days: [
+      {
+        day: 11,
+        focus: "Project Planning",
+        activity: "Break the identified problem into manageable tasks.",
+        deliverable: "Mini-project plan"
+      },
+      {
+        day: 12,
+        focus: "Prototype Development",
+        activity: "Begin building the proposed solution.",
+        deliverable: "Initial prototype"
+      },
+      {
+        day: 13,
+        focus: "Implementation",
+        activity: "Add the primary functionality or complete the main project task.",
+        deliverable: "Working project component"
+      },
+      {
+        day: 14,
+        focus: "Testing and Validation",
+        activity: "Test outputs, verify assumptions, and identify limitations.",
+        deliverable: "Test and validation report"
+      },
+      {
+        day: 15,
+        focus: "Mid-project Review",
+        activity: "Demonstrate progress and receive structured mentor feedback.",
+        deliverable: "Progress demonstration"
+      }
+    ]
+  },
+  4: {
+    title: "Week 4 — Complete, Demonstrate, and Evaluate",
+    theme: "From contribution to professional readiness",
+    checkpoint: "Participants have an end-to-end polished project portfolio and practiced pitch.",
+    days: [
+      {
+        day: 16,
+        focus: "Improvement",
+        activity: "Address review feedback and refine the solution.",
+        deliverable: "Improved project"
+      },
+      {
+        day: 17,
+        focus: "Documentation",
+        activity: "Document the problem, process, tools, and results.",
+        deliverable: "Project documentation"
+      },
+      {
+        day: 18,
+        focus: "Presentation Skills",
+        activity: "Prepare a concise explanation or demonstration.",
+        deliverable: "Project presentation"
+      },
+      {
+        day: 19,
+        focus: "Final Project Review",
+        activity: "Demonstrate the completed work and explain decisions.",
+        deliverable: "Final submission"
+      },
+      {
+        day: 20,
+        focus: "Professional Readiness",
+        activity: "Practice reflection, interview questions, and communicating project experience.",
+        deliverable: "Personal project pitch"
+      }
+    ]
+  },
+  5: {
+    title: "Final Two Working Days — Assessment and Recognition",
+    theme: "From completion to the next opportunity",
+    checkpoint: "Final evaluation completed, recognition confirmed, and ₹1,000 refund processing triggered.",
+    days: [
+      {
+        day: 21,
+        focus: "Performance Assessment",
+        activity: "Review submissions, project quality, consistency, collaboration, and learning progress.",
+        deliverable: "Assessed performance record"
+      },
+      {
+        day: 22,
+        focus: "Closing and Next Steps",
+        activity: "Conduct the final reflection, share feedback, and explain completion and recognition procedures.",
+        deliverable: "Individual development summary"
+      }
+    ]
+  }
+};
+
+function selectRoadmapWeek(weekNumber) {
+  const week = roadmapWeeks[weekNumber];
+  if (!week) return;
+
+  const buttons = document.querySelectorAll('.roadmap-tab-btn');
+  buttons.forEach((btn, index) => {
+    if (index === weekNumber - 1) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+
+  const container = document.getElementById('roadmapDaysContainer');
+  if (!container) return;
+
+  container.innerHTML = `
+    <div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-2 pb-4 border-b border-white/10">
+      <div>
+        <h3 class="font-heading font-bold text-xl text-white">${week.title}</h3>
+        <p class="text-xs text-brand-gold font-mono mt-0.5">Theme: ${week.theme}</p>
+      </div>
+      <div class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs text-slate-300">
+        <strong class="text-amber-300">Milestone Checkpoint:</strong> ${week.checkpoint}
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${week.days.length > 3 ? '3' : '2'} gap-4">
+      ${week.days.map(d => `
+        <div class="p-4 rounded-xl bg-brand-surface border border-white/10 hover:border-brand-gold/40 transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-mono font-bold px-2.5 py-0.5 rounded-md bg-brand-crimson/50 text-rose-200 border border-brand-crimson">
+                DAY ${d.day}
+              </span>
+              <span class="text-[10px] text-slate-400 font-mono">1 Hour Focus</span>
+            </div>
+            <h4 class="font-bold text-white text-base mb-1">${d.focus}</h4>
+            <p class="text-xs text-slate-300 leading-relaxed mb-3">${d.activity}</p>
+          </div>
+          <div class="pt-3 border-t border-white/10 flex items-center gap-1.5 text-xs text-brand-gold">
+            <i data-lucide="check-square" class="w-3.5 h-3.5"></i>
+            <span class="font-medium text-slate-300">Daily Deliverable:</span>
+            <span class="font-mono font-semibold">${d.deliverable}</span>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
+}
+
+// ----------------------------------------------------
+// 4. 100-POINT RUBRIC & STIPEND SIMULATOR
+// ----------------------------------------------------
+function updateRubric() {
+  const attendance = parseInt(document.getElementById('slider_attendance')?.value || 9);
+  const consistency = parseInt(document.getElementById('slider_consistency')?.value || 13);
+  const tasks = parseInt(document.getElementById('slider_tasks')?.value || 18);
+  const quality = parseInt(document.getElementById('slider_quality')?.value || 22);
+  const problem = parseInt(document.getElementById('slider_problem')?.value || 9);
+  const docs = parseInt(document.getElementById('slider_docs')?.value || 8);
+  const demo = parseInt(document.getElementById('slider_demo')?.value || 9);
+
+  // Update label displays
+  document.getElementById('val_attendance').innerText = `${attendance} / 10 pts`;
+  document.getElementById('val_consistency').innerText = `${consistency} / 15 pts`;
+  document.getElementById('val_tasks').innerText = `${tasks} / 20 pts`;
+  document.getElementById('val_quality').innerText = `${quality} / 25 pts`;
+  document.getElementById('val_problem').innerText = `${problem} / 10 pts`;
+  document.getElementById('val_docs').innerText = `${docs} / 10 pts`;
+  document.getElementById('val_demo').innerText = `${demo} / 10 pts`;
+
+  const total = attendance + consistency + tasks + quality + problem + docs + demo;
+  const scoreElem = document.getElementById('totalRubricScore');
+  if (scoreElem) scoreElem.innerText = total;
+
+  const badgeElem = document.getElementById('scoreBadge');
+  const thresholdElem = document.getElementById('thresholdStatus');
+  const refundElem = document.getElementById('refundEligibilityText');
+  const stipendAmountElem = document.getElementById('stipendAmountDisplay');
+  const stipendDescElem = document.getElementById('stipendDescDisplay');
+
+  // Check Qualification & Tier
+  if (total >= 92) {
+    badgeElem.className = "mt-3 inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-purple-500/20 text-purple-300 border border-purple-500/30";
+    badgeElem.innerText = "Exceptional Performance (Tier 1)";
+    stipendAmountElem.innerText = "₹15,000 Award Tier";
+    stipendAmountElem.className = "text-2xl sm:text-3xl font-bold font-mono text-purple-300 mt-1";
+    stipendDescElem.innerText = "Top candidate pool eligible for the maximum ₹15,000 merit stipend award.";
+  } else if (total >= 82) {
+    badgeElem.className = "mt-3 inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+    badgeElem.innerText = "Outstanding Candidate (Tier 2)";
+    stipendAmountElem.innerText = "₹10,000 Award Tier";
+    stipendAmountElem.className = "text-2xl sm:text-3xl font-bold font-mono text-emerald-400 mt-1";
+    stipendDescElem.innerText = "Outstanding performance bracket eligible for the ₹10,000 stipend award.";
+  } else if (total >= 75) {
+    badgeElem.className = "mt-3 inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-500/20 text-blue-300 border border-blue-500/30";
+    badgeElem.innerText = "Strong Performance (Tier 3)";
+    stipendAmountElem.innerText = "₹5,000 Award Tier";
+    stipendAmountElem.className = "text-2xl sm:text-3xl font-bold font-mono text-blue-300 mt-1";
+    stipendDescElem.innerText = "Strong performance bracket eligible for the ₹5,000 stipend award.";
+  } else {
+    badgeElem.className = "mt-3 inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/30";
+    badgeElem.innerText = "Participation / Growth Tier";
+    stipendAmountElem.innerText = "₹0 Stipend Bracket";
+    stipendAmountElem.className = "text-2xl sm:text-3xl font-bold font-mono text-slate-400 mt-1";
+    stipendDescElem.innerText = "Meets foundational criteria. Requires score of 75+ for merit stipend pool.";
+  }
+
+  // Completion Threshold Status
+  if (total >= 75 && attendance >= 7) {
+    thresholdElem.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> Qualified (${total}/100)`;
+    thresholdElem.className = "font-bold text-emerald-400 flex items-center gap-1";
+    refundElem.innerHTML = `<i data-lucide="check-check" class="w-4 h-4"></i> 100% Eligible (₹1,000)`;
+    refundElem.className = "font-bold text-emerald-400 flex items-center gap-1";
+  } else {
+    thresholdElem.innerHTML = `<i data-lucide="alert-circle" class="w-4 h-4"></i> Below 75 Pts Threshold`;
+    thresholdElem.className = "font-bold text-amber-400 flex items-center gap-1";
+    refundElem.innerHTML = `Needs Completion Verification`;
+    refundElem.className = "font-bold text-slate-400 flex items-center gap-1";
+  }
+
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
+}
+
+function resetRubric() {
+  document.getElementById('slider_attendance').value = 9;
+  document.getElementById('slider_consistency').value = 13;
+  document.getElementById('slider_tasks').value = 18;
+  document.getElementById('slider_quality').value = 22;
+  document.getElementById('slider_problem').value = 9;
+  document.getElementById('slider_docs').value = 8;
+  document.getElementById('slider_demo').value = 9;
+  updateRubric();
+}
+
+// ----------------------------------------------------
+// 5. APPLICATION & ENROLLMENT MODAL WORKFLOW
+// ----------------------------------------------------
+function openApplyModal() {
+  const modal = document.getElementById('applyModal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    goToEnrollmentStep(1);
+  }
+}
+
+function closeApplyModal() {
+  const modal = document.getElementById('applyModal');
+  if (modal) {
+    modal.classList.add('hidden');
+  }
+}
+
+function goToEnrollmentStep(step) {
+  document.getElementById('modalStepNum').innerText = step;
+  document.getElementById('enrollmentStep1').classList.add('hidden');
+  document.getElementById('enrollmentStep2').classList.add('hidden');
+  document.getElementById('enrollmentStep3').classList.add('hidden');
+
+  if (step === 1) {
+    document.getElementById('enrollmentStep1').classList.remove('hidden');
+  } else if (step === 2) {
+    const name = document.getElementById('app_name').value.trim();
+    const email = document.getElementById('app_email').value.trim();
+    if (!name || !email) {
+      alert("Please enter your name and email to proceed to the payment step.");
+      document.getElementById('enrollmentStep1').classList.remove('hidden');
+      document.getElementById('modalStepNum').innerText = 1;
+      return;
+    }
+    document.getElementById('enrollmentStep2').classList.remove('hidden');
+  } else if (step === 3) {
+    document.getElementById('enrollmentStep3').classList.remove('hidden');
+  }
+
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
+}
+
+function copyUpi() {
+  const upi = "9873152277@kotakbank";
+  navigator.clipboard.writeText(upi).then(() => {
+    alert("Official UPI ID copied: " + upi);
+  }).catch(() => {
+    prompt("Copy UPI ID:", upi);
+  });
+}
+
+function submitApplication() {
+  const utr = document.getElementById('app_utr').value.trim();
+  if (!utr) {
+    alert("Please enter your 12-digit UPI UTR / Transaction Reference ID from your payment receipt.");
+    return;
+  }
+
+  const name = document.getElementById('app_name').value.trim() || "Participant";
+  const track = document.getElementById('app_track').value;
+  const slot = document.getElementById('app_slot').value;
+  const regId = 'SY-2026-' + Math.floor(1000 + Math.random() * 9000);
+
+  // Populate pass card
+  document.getElementById('pass_name').innerText = name;
+  document.getElementById('pass_track').innerText = track;
+  document.getElementById('pass_slot').innerText = slot;
+  document.getElementById('pass_regId').innerText = regId;
+
+  // Trigger celebration confetti
+  if (typeof confetti === 'function') {
+    confetti({
+      particleCount: 80,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ['#E5A93C', '#880E1C', '#ffffff', '#F5D061']
+    });
+  }
+
+  goToEnrollmentStep(3);
+}
+
+// ----------------------------------------------------
+// 6. PROGRAM HANDBOOK MODAL
+// ----------------------------------------------------
+function showHandbookModal() {
+  const modal = document.getElementById('handbookModal');
+  if (modal) {
+    modal.classList.remove('hidden');
+  }
+}
+
+function closeHandbookModal() {
+  const modal = document.getElementById('handbookModal');
+  if (modal) {
+    modal.classList.add('hidden');
+  }
+}
+
+// ----------------------------------------------------
+// 7. FAQ ACCORDION TOGGLING
+// ----------------------------------------------------
+function toggleFaq(id) {
+  const answer = document.getElementById(`faq-answer-${id}`);
+  const icon = document.getElementById(`faq-icon-${id}`);
+  if (!answer) return;
+
+  const isHidden = answer.classList.contains('hidden');
+  if (isHidden) {
+    answer.classList.remove('hidden');
+    if (icon) icon.classList.add('rotate-180');
+  } else {
+    answer.classList.add('hidden');
+    if (icon) icon.classList.remove('rotate-180');
+  }
+}
+
+// ----------------------------------------------------
+// 8. MOBILE MENU TOGGLE
+// ----------------------------------------------------
+function setupMobileMenu() {
+  const btn = document.getElementById('mobileMenuBtn');
+  const menu = document.getElementById('mobileMenu');
+  if (btn && menu) {
+    btn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+
+    menu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menu.classList.add('hidden');
+      });
+    });
+  }
+}
