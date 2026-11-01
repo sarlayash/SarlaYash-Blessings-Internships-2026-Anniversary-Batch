@@ -8311,3 +8311,94 @@ window.addEventListener('DOMContentLoaded', () => {
     switchPbiPage('overview', false);
   }
 });
+
+
+// ----------------------------------------------------
+// 13. ORGANIZATIONAL ANNOUNCEMENT & VOUCHER LIGHTBOX
+// ----------------------------------------------------
+
+function openAnnouncementModal(type) {
+  const modal = document.getElementById('announcementModal');
+  const img = document.getElementById('announcementModalImg');
+  const title = document.getElementById('announcementModalTitle');
+  const subtitle = document.getElementById('announcementModalSubtitle');
+  const note = document.getElementById('announcementModalNote');
+  const downloadBtn = document.getElementById('announcementDownloadBtn');
+
+  if (!modal || !img) return;
+
+  if (type === 'voucher') {
+    img.src = 'assets/joining_bonus_amazon_voucher.png';
+    if (title) title.innerText = 'SarlaYash Blessings Amazon Gift Voucher';
+    if (subtitle) subtitle.innerText = 'Code: BLESSINGS • Powered by Kapil • A Blessing from Maa Sarla & Paa Yash';
+    if (note) note.innerText = 'Active interns receive Amazon vouchers based on milestones and value additions.';
+    if (downloadBtn) {
+      downloadBtn.href = 'assets/joining_bonus_amazon_voucher.png';
+      downloadBtn.download = 'SarlaYash-Amazon-Gift-Voucher-BLESSINGS.png';
+    }
+  } else {
+    img.src = 'assets/announcement_stipend_amazon_vouchers.jpg';
+    if (title) title.innerText = 'Organizational Announcement (Effective Dec 2026)';
+    if (subtitle) subtitle.innerText = 'Stipends & Amazon Vouchers for Active SarlaYash Interns';
+    if (note) note.innerText = 'Official policy memo released by SarlaYash Learning Solutions LLP.';
+    if (downloadBtn) {
+      downloadBtn.href = 'assets/announcement_stipend_amazon_vouchers.jpg';
+      downloadBtn.download = 'SarlaYash-Organizational-Announcement-Dec2026.jpg';
+    }
+  }
+
+  modal.classList.remove('hidden');
+  if (window.lucide) window.lucide.createIcons();
+}
+
+function closeAnnouncementModal() {
+  const modal = document.getElementById('announcementModal');
+  if (modal) modal.classList.add('hidden');
+}
+
+function copyVoucherCode(code) {
+  if (!code) code = 'BLESSINGS';
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(code).then(() => {
+      showVoucherCopyToast();
+    }).catch(() => {
+      fallbackCopyVoucherCode(code);
+    });
+  } else {
+    fallbackCopyVoucherCode(code);
+  }
+}
+
+function fallbackCopyVoucherCode(code) {
+  const tempInput = document.createElement('input');
+  tempInput.value = code;
+  document.body.appendChild(tempInput);
+  tempInput.select();
+  document.execCommand('copy');
+  document.body.removeChild(tempInput);
+  showVoucherCopyToast();
+}
+
+function showVoucherCopyToast() {
+  const textEl = document.getElementById('copyVoucherText');
+  const btnEl = document.getElementById('copyVoucherBtn');
+  if (textEl) textEl.innerText = 'Copied!';
+  if (btnEl) {
+    btnEl.classList.remove('bg-emerald-500/20', 'text-emerald-300');
+    btnEl.classList.add('bg-emerald-500', 'text-black');
+  }
+  setTimeout(() => {
+    if (textEl) textEl.innerText = 'Copy Code';
+    if (btnEl) {
+      btnEl.classList.add('bg-emerald-500/20', 'text-emerald-300');
+      btnEl.classList.remove('bg-emerald-500', 'text-black');
+    }
+  }, 2000);
+}
+
+// Global Escape listener for announcement modal
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeAnnouncementModal();
+  }
+});

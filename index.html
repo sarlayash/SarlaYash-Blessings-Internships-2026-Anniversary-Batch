@@ -1167,6 +1167,50 @@
               </p>
             </div>
           </div>
+        
+          <!-- Announcement Callout: Joining Bonus, Stipends & Amazon Vouchers -->
+          <div class="mt-8 p-6 rounded-3xl bg-gradient-to-r from-brand-crimson/30 via-black/80 to-brand-ruby/30 border-2 border-brand-gold/40 shadow-gold-glow/20 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-brand-gold/20 text-brand-gold flex items-center justify-center border border-brand-gold/30 shrink-0">
+                  <i data-lucide="megaphone" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <span class="text-[10px] font-mono uppercase tracking-widest text-brand-gold font-bold">Official Announcement • Dec 2026</span>
+                  <h4 class="font-heading font-extrabold text-lg sm:text-xl text-white">Active Interns Get Stipends & Amazon Gift Vouchers!</h4>
+                </div>
+              </div>
+              <button onclick="switchPbiPage('finance')" class="px-3.5 py-1.5 rounded-xl bg-brand-gold text-brand-dark font-extrabold text-xs flex items-center gap-1.5 hover:brightness-110 shadow transition-all">
+                <span>View Full Stipend Ledger</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="relative group cursor-pointer overflow-hidden rounded-2xl border border-brand-gold/30 bg-black/60 shadow-lg" onclick="openAnnouncementModal('announcement')">
+                <img src="assets/announcement_stipend_amazon_vouchers.jpg" alt="Organizational Announcement" class="w-full h-48 sm:h-56 object-cover object-top group-hover:scale-105 transition-transform duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex items-end p-4">
+                  <div class="text-left">
+                    <span class="px-2 py-0.5 rounded bg-brand-gold text-brand-dark text-[9px] font-bold uppercase">Official Memo</span>
+                    <p class="text-xs text-white font-bold mt-1">Stipends & Amazon Vouchers Announcement</p>
+                    <span class="text-[10px] text-amber-300 font-mono">Click to view full memo →</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="relative group cursor-pointer overflow-hidden rounded-2xl border border-brand-gold/30 bg-black/60 shadow-lg" onclick="openAnnouncementModal('voucher')">
+                <img src="assets/joining_bonus_amazon_voucher.png" alt="Amazon Gift Voucher - Code BLESSINGS" class="w-full h-48 sm:h-56 object-cover object-bottom group-hover:scale-105 transition-transform duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex items-end p-4">
+                  <div class="text-left">
+                    <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[9px] font-bold uppercase font-mono">Code: BLESSINGS</span>
+                    <p class="text-xs text-white font-bold mt-1">Joining Bonus & Amazon Gift Voucher</p>
+                    <span class="text-[10px] text-amber-300 font-mono">Click to claim / view voucher →</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         <!-- ============================================== -->
@@ -2567,6 +2611,168 @@
 <!-- POWER BI PAGE 5: STIPEND & LEDGER          -->
 <!-- ========================================== -->
 <div id="pbi-page-finance" class="pbi-page-container space-y-6 hidden">
+  <!-- Power BI Visual Card: finance-announcement -->
+  <div class="pbi-visual-card bg-[#0D111A] border border-brand-gold/40 rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 mb-8" data-pbi-card="finance-announcement">
+    <!-- Card Header -->
+    <div class="pbi-card-header bg-gradient-to-r from-[#1E1408] via-[#2A1C0A] to-[#1E1408] px-5 py-3.5 border-b border-brand-gold/30 flex items-center justify-between cursor-pointer select-none group" onclick="togglePbiCard('finance-announcement')">
+      <div class="flex items-center gap-3">
+        <div class="w-2.5 h-2.5 rounded-full bg-brand-gold animate-pulse"></div>
+        <i data-lucide="gift" class="w-5 h-5 text-amber-300 shrink-0"></i>
+        <h3 class="font-heading font-bold text-sm sm:text-base text-white tracking-wide group-hover:text-amber-200 transition-colors flex items-center gap-2">
+          <span>Organizational Announcement: Joining Bonus, Stipends & Amazon Vouchers</span>
+          <span class="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-mono font-bold border border-emerald-500/40">OFFICIAL • DEC 2026</span>
+        </h3>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-[11px] text-amber-300/80 font-mono hidden sm:inline" id="status-finance-announcement">Expanded</span>
+        <button type="button" class="p-1 rounded-lg hover:bg-white/10 text-slate-400 group-hover:text-white transition-all" title="Toggle Section">
+          <i data-lucide="chevron-down" class="pbi-chevron w-4 h-4 transition-transform duration-300 text-amber-400" id="chevron-finance-announcement"></i>
+        </button>
+      </div>
+    </div>
+    <!-- Card Body -->
+    <div class="pbi-card-body transition-all duration-300" id="body-finance-announcement">
+      <div class="p-5 sm:p-8 bg-gradient-to-b from-[#131722] via-[#0F1420] to-[#0A0D15] space-y-6">
+        
+        <!-- Banner Heading -->
+        <div class="text-center max-w-3xl mx-auto space-y-2">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-gold/15 border border-brand-gold/40 text-brand-gold text-[11px] font-mono font-bold uppercase tracking-wider">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            <span>SarlaYash Blessings 2026 • Official Reward Policy</span>
+          </div>
+          <h2 class="font-heading text-2xl sm:text-3xl font-extrabold text-white">
+            Joining Bonus, Performance Stipends & Amazon Vouchers
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-300 font-light max-w-2xl mx-auto leading-relaxed">
+            Effective December 2026: All active SarlaYash Interns receive performance stipends and Amazon gift vouchers based on milestone delivery, technical excellence, and value additions.
+          </p>
+        </div>
+
+        <!-- 2-Column Showcase of Both Images -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+          
+          <!-- Image 1: Official Announcement Memo -->
+          <div class="flex flex-col justify-between bg-black/60 rounded-2xl p-5 border border-brand-gold/40 shadow-xl space-y-4">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-mono uppercase tracking-widest text-brand-gold font-bold flex items-center gap-1.5">
+                  <i data-lucide="megaphone" class="w-3.5 h-3.5"></i>
+                  Official Announcement Memo
+                </span>
+                <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[9.5px] font-mono font-bold">
+                  Effective Dec 2026
+                </span>
+              </div>
+
+              <!-- Clickable Image with Zoom Overlay -->
+              <div class="relative group cursor-pointer overflow-hidden rounded-xl border border-brand-gold/50 shadow-gold-glow bg-black flex items-center justify-center" onclick="openAnnouncementModal('announcement')">
+                <img src="assets/announcement_stipend_amazon_vouchers.jpg" alt="Organizational Announcement - Stipends and Amazon Vouchers" class="w-full h-auto max-h-[380px] object-contain transition-transform duration-500 group-hover:scale-102">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-4">
+                  <span class="px-3.5 py-1.5 rounded-lg bg-brand-gold text-brand-dark font-extrabold text-xs flex items-center gap-1.5 shadow-xl">
+                    <i data-lucide="maximize-2" class="w-4 h-4"></i>
+                    Click to Enlarge Official Memo
+                  </span>
+                </div>
+              </div>
+
+              <div class="p-3 rounded-xl bg-white/5 border border-white/5 text-xs text-slate-300 space-y-1">
+                <p class="font-semibold text-white">Memo Summary:</p>
+                <p class="text-slate-300 text-[11px] leading-relaxed">
+                  "All the active SarlaYash Interns will get stipends and amazon vouchers basis performance and value-additions. Code: <strong class="text-amber-300 font-mono">BLESSINGS</strong>."
+                </p>
+              </div>
+            </div>
+
+            <button onclick="openAnnouncementModal('announcement')" class="w-full py-2.5 px-4 rounded-xl bg-white/10 hover:bg-brand-gold hover:text-brand-dark font-bold text-xs flex items-center justify-center gap-2 transition-all border border-white/10 hover:border-brand-gold shadow">
+              <i data-lucide="zoom-in" class="w-4 h-4"></i>
+              <span>View Full Memo High-Res</span>
+            </button>
+          </div>
+
+          <!-- Image 2: Amazon Gift Voucher & Joining Bonus -->
+          <div class="flex flex-col justify-between bg-black/60 rounded-2xl p-5 border border-brand-gold/40 shadow-xl space-y-4">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-mono uppercase tracking-widest text-emerald-400 font-bold flex items-center gap-1.5">
+                  <i data-lucide="gift" class="w-3.5 h-3.5"></i>
+                  Joining Bonus & Amazon Gift Voucher
+                </span>
+                <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[9.5px] font-mono font-bold">
+                  Code: BLESSINGS
+                </span>
+              </div>
+
+              <!-- Clickable Image with Zoom Overlay -->
+              <div class="relative group cursor-pointer overflow-hidden rounded-xl border border-brand-gold/50 shadow-ruby-glow bg-black flex items-center justify-center" onclick="openAnnouncementModal('voucher')">
+                <img src="assets/joining_bonus_amazon_voucher.png" alt="SarlaYash Blessings Amazon Gift Voucher" class="w-full h-auto max-h-[380px] object-contain transition-transform duration-500 group-hover:scale-102">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-4">
+                  <span class="px-3.5 py-1.5 rounded-lg bg-brand-gold text-brand-dark font-extrabold text-xs flex items-center gap-1.5 shadow-xl">
+                    <i data-lucide="maximize-2" class="w-4 h-4"></i>
+                    Click to Enlarge Voucher
+                  </span>
+                </div>
+              </div>
+
+              <!-- Voucher Code Copy Box -->
+              <div class="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/40 flex items-center justify-between gap-3">
+                <div>
+                  <span class="text-[9.5px] font-mono uppercase tracking-wider text-emerald-400 font-bold block">Gift Voucher Code</span>
+                  <strong class="font-mono text-base text-amber-300 font-bold tracking-widest">BLESSINGS</strong>
+                </div>
+                <button onclick="copyVoucherCode('BLESSINGS')" id="copyVoucherBtn" class="py-1.5 px-3 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 text-xs font-bold flex items-center gap-1.5 transition-all">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                  <span id="copyVoucherText">Copy Code</span>
+                </button>
+              </div>
+            </div>
+
+            <button onclick="openAnnouncementModal('voucher')" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-brand-gold via-amber-300 to-brand-gold text-brand-dark font-extrabold text-xs flex items-center justify-center gap-2 shadow-gold-glow hover:brightness-110 active:scale-95 transition-all">
+              <i data-lucide="gift" class="w-4 h-4"></i>
+              <span>Claim / View Voucher Card</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- 3 Feature Highlights of Reward Architecture -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-white/10">
+          
+          <div class="p-4 rounded-xl bg-black/40 border border-white/5 space-y-1.5">
+            <div class="flex items-center gap-2 text-brand-gold">
+              <i data-lucide="gift" class="w-4 h-4"></i>
+              <strong class="text-xs font-heading font-bold text-white">Amazon Gift Vouchers</strong>
+            </div>
+            <p class="text-[11px] text-slate-300 leading-relaxed">
+              Awarded for active participation, milestone velocity, and day-to-day value contributions with voucher code <strong>BLESSINGS</strong>.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-black/40 border border-white/5 space-y-1.5">
+            <div class="flex items-center gap-2 text-emerald-400">
+              <i data-lucide="banknote" class="w-4 h-4"></i>
+              <strong class="text-xs font-heading font-bold text-white">₹5,000 - ₹15,000 Stipends</strong>
+            </div>
+            <p class="text-[11px] text-slate-300 leading-relaxed">
+              Merit stipends awarded to top benchmark qualifiers evaluated via our objective 100-Point Rubric on Day 21-22.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-black/40 border border-white/5 space-y-1.5">
+            <div class="flex items-center gap-2 text-purple-300">
+              <i data-lucide="shield-check" class="w-4 h-4"></i>
+              <strong class="text-xs font-heading font-bold text-white">100% Deposit Refund</strong>
+            </div>
+            <p class="text-[11px] text-slate-300 leading-relaxed">
+              All stipend earners receive their complete ₹1,000 commitment deposit 100% refunded directly along with their payout.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <!-- Power BI Visual Card: finance-rubric -->
 <div class="pbi-visual-card bg-[#0D111A] border border-white/10 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 mb-8" data-pbi-card="finance-rubric">
   <!-- Card Header -->
@@ -6982,6 +7188,56 @@
           <i data-lucide="globe" class="w-4 h-4"></i>
           <span>Official Corporate Site</span>
         </a>
+      </div>
+
+    </div>
+  </div>
+
+    <!-- ============================================== -->
+  <!-- ANNOUNCEMENT & VOUCHER LIGHTBOX MODAL          -->
+  <!-- ============================================== -->
+  <div id="announcementModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-3 sm:p-4 bg-black/90 backdrop-blur-md overflow-y-auto" onclick="if(event.target===this) closeAnnouncementModal()">
+    <div class="relative w-full max-w-2xl bg-[#0D111A] border-2 border-brand-gold/60 rounded-3xl shadow-2xl p-4 sm:p-6 my-6 text-slate-200 shadow-gold-glow">
+      
+      <!-- Close Button -->
+      <button onclick="closeAnnouncementModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 rounded-xl bg-white/10 hover:bg-white/20 transition-all z-20" title="Close">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Modal Header -->
+      <div class="flex items-center gap-3 mb-4 pb-3 border-b border-white/10 pr-10">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-crimson to-brand-ruby border border-brand-gold/50 flex items-center justify-center text-brand-gold shrink-0 shadow">
+          <i data-lucide="megaphone" id="announcementModalIcon" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 id="announcementModalTitle" class="font-heading font-bold text-base sm:text-lg text-white">
+            Organizational Announcement
+          </h3>
+          <p id="announcementModalSubtitle" class="text-xs text-amber-300/90 font-mono">
+            SarlaYash Blessings 2026 • Powered by Kapil
+          </p>
+        </div>
+      </div>
+
+      <!-- Image Display -->
+      <div class="rounded-2xl overflow-hidden border border-brand-gold/40 bg-black flex items-center justify-center p-2 mb-4 shadow-inner">
+        <img id="announcementModalImg" src="assets/announcement_stipend_amazon_vouchers.jpg" alt="Announcement Preview" class="w-full h-auto max-h-[60vh] object-contain rounded-xl">
+      </div>
+
+      <!-- Action Footer -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-white/10">
+        <div class="text-xs text-slate-300">
+          <span id="announcementModalNote" class="text-slate-400">Official authenticated release for SarlaYash Anniversary Batch 2026</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <a id="announcementDownloadBtn" href="assets/announcement_stipend_amazon_vouchers.jpg" download="SarlaYash-Announcement-Stipends-Vouchers.jpg" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs flex items-center gap-1.5 border border-white/10 transition-all">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>Save Image</span>
+          </a>
+          <button onclick="closeAnnouncementModal()" class="px-4 py-2 rounded-xl bg-brand-gold text-brand-dark font-extrabold text-xs hover:brightness-110 shadow transition-all">
+            Close
+          </button>
+        </div>
       </div>
 
     </div>
