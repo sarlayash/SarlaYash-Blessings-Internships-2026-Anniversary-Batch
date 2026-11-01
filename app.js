@@ -115,9 +115,9 @@ try {
 
 
     auth.onAuthStateChanged((user) => {
-
-
-
+      if (!user && currentUser && currentUser.uid && String(currentUser.uid).startsWith('demo')) {
+        return;
+      }
       currentUser = user;
 
 
@@ -5665,9 +5665,10 @@ async function renderDocumentToPdf(config) {
 
   try {
     if (document.fonts && document.fonts.ready) {
-      await document.fonts.ready;
+      try { await document.fonts.ready; } catch(e){}
     }
-    await new Promise(r => setTimeout(r, 150));
+    // Yield to let browser paint the loading state
+    await new Promise(r => requestAnimationFrame(() => setTimeout(r, 60)));
 
     // Identify pages
     let pages = pageSelector ? Array.from(element.querySelectorAll(pageSelector)) : [];
@@ -5689,8 +5690,11 @@ async function renderDocumentToPdf(config) {
 
       for (let i = 0; i < pages.length; i++) {
         const pageEl = pages[i];
+        if (i > 0) {
+          await new Promise(r => setTimeout(r, 40));
+        }
         const canvas = await window.html2canvas(pageEl, {
-          scale: 2,
+          scale: 1.5,
           useCORS: true,
           backgroundColor: '#ffffff',
           logging: false,
@@ -5698,7 +5702,17 @@ async function renderDocumentToPdf(config) {
           scrollY: 0,
           x: 0,
           y: 0,
-          windowWidth: pageEl.offsetWidth || (orientation === 'landscape' ? 1020 : 794)
+          windowWidth: pageEl.offsetWidth || (orientation === 'landscape' ? 1020 : 794),
+          removeContainer: true,
+          imageTimeout: 0,
+          ignoreElements: (node) => {
+            if (!node || node.nodeType !== 1) return false;
+            const tag = node.tagName;
+            if (tag === 'SCRIPT' || tag === 'IFRAME' || tag === 'CANVAS' || tag === 'NOSCRIPT') return true;
+            if (tag === 'HTML' || tag === 'HEAD' || tag === 'BODY' || tag === 'STYLE' || tag === 'LINK') return false;
+            if (node === pageEl || node.contains(pageEl) || pageEl.contains(node)) return false;
+            return true;
+          }
         });
 
         const imgData = canvas.toDataURL('image/jpeg', 0.98);
@@ -5799,11 +5813,14 @@ async function downloadOfferLetter() {
 
   // Ensure Offer QR Code is generated
   const offerQrImg = document.getElementById('offerQrImg');
-  if (offerQrImg && (!offerQrImg.src || !offerQrImg.src.startsWith('data:'))) {
+  if (offerQrImg && (!offerQrImg.src || !offerQrImg.src.startsWith('data:image/png'))) {
     if (typeof generateQrCodeDataUrl === 'function') {
       const verifyUrl = typeof getVerificationUrl === 'function' ? getVerificationUrl(regIdClean) : `https://sarlayash.com/verify/?id=${regIdClean}`;
       const qrData = await generateQrCodeDataUrl(verifyUrl, 120);
-      if (qrData) offerQrImg.src = qrData;
+      if (qrData) {
+        offerQrImg.src = qrData;
+        await new Promise(r => setTimeout(r, 60));
+      }
     }
   }
 
@@ -5843,11 +5860,14 @@ async function downloadWelcomeEmail() {
 
   // Ensure QR Code is generated
   const welcomeQrImg = document.getElementById('welcomeQrImg');
-  if (welcomeQrImg && (!welcomeQrImg.src || !welcomeQrImg.src.startsWith('data:'))) {
+  if (welcomeQrImg && (!welcomeQrImg.src || !welcomeQrImg.src.startsWith('data:image/png'))) {
     if (typeof generateQrCodeDataUrl === 'function') {
       const verifyUrl = typeof getVerificationUrl === 'function' ? getVerificationUrl(regIdClean) : `https://sarlayash.com/verify/?id=${regIdClean}`;
       const qrData = await generateQrCodeDataUrl(verifyUrl, 120);
-      if (qrData) welcomeQrImg.src = qrData;
+      if (qrData) {
+        welcomeQrImg.src = qrData;
+        await new Promise(r => setTimeout(r, 60));
+      }
     }
   }
 
@@ -7241,45 +7261,28 @@ async function downloadDay1Badge() {
 
 
     statusContainer.innerHTML = `<div class="p-2.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2"><span class="animate-pulse">🛡️</span><span>Generating high-resolution PNG badge...</span></div>`;
-
-
-
   }
 
-
-
-
-
-
+  // Yield to browser so button spinner renders immediately
+  await new Promise(r => requestAnimationFrame(() => setTimeout(r, 60)));
 
   try {
-
-
-
     if (typeof html2canvas !== 'undefined') {
-
-
-
       const canvas = await html2canvas(element, {
-
-
-
-        scale: 3,
-
-
-
+        scale: 2,
+        removeContainer: true,
+        imageTimeout: 0,
         useCORS: true,
-
-
-
         backgroundColor: '#0A0A0C',
-
-
-
-        logging: false
-
-
-
+        logging: false,
+        ignoreElements: (node) => {
+          if (!node || node.nodeType !== 1) return false;
+          const tag = node.tagName;
+          if (tag === 'SCRIPT' || tag === 'IFRAME' || tag === 'CANVAS' || tag === 'NOSCRIPT') return true;
+          if (tag === 'HTML' || tag === 'HEAD' || tag === 'BODY' || tag === 'STYLE' || tag === 'LINK') return false;
+          if (node === element || node.contains(element) || element.contains(node)) return false;
+          return true;
+        }
       });
 
 
@@ -7288,107 +7291,37 @@ async function downloadDay1Badge() {
 
 
 
-      canvas.toBlob((blob) => {
-
-
-
-        if (!blob) {
-
-
-
-          alert("Could not generate badge image.");
-
-
-
-          return;
-
-
-
-        }
-
-
-
-        const blobUrl = URL.createObjectURL(blob);
-
-
-
-        const a = document.createElement('a');
-
-
-
-        a.href = blobUrl;
-
-
-
-        a.download = filename;
-
-
-
-        document.body.appendChild(a);
-
-
-
-        a.click();
-
-
-
-        setTimeout(() => {
-
-
-
-          if (document.body.contains(a)) document.body.removeChild(a);
-
-
-
-        }, 1000);
-
-
-
-
-
-
-
-        if (statusContainer) {
-
-
-
-          statusContainer.innerHTML = `
-
-
-
-            <div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs">
-
-
-
-              <span>✅ <strong>Digital Badge Downloaded!</strong></span>
-
-
-
-              <a href="${blobUrl}" download="${filename}" target="_blank" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-bold underline shadow">
-
-
-
-                Save Image
-
-
-
-              </a>
-
-
-
-            </div>
-
-
-
-          `;
-
-
-
-        }
-
-
-
-      }, 'image/png');
+      await new Promise((resolve) => {
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            alert("Could not generate badge image.");
+            resolve();
+            return;
+          }
+
+          const blobUrl = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = blobUrl;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(() => {
+            if (document.body.contains(a)) document.body.removeChild(a);
+          }, 1000);
+
+          if (statusContainer) {
+            statusContainer.innerHTML = `
+              <div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs">
+                <span>✅ <strong>Digital Badge Downloaded!</strong></span>
+                <a href="${blobUrl}" download="${filename}" target="_blank" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-bold underline shadow">
+                  Save Image
+                </a>
+              </div>
+            `;
+          }
+          resolve();
+        }, 'image/png');
+      });
 
 
 
