@@ -147,6 +147,9 @@
   <script src="html2pdf.bundle.min.js"></script>
   <!-- HTML2Canvas for High-Resolution Badge PNG Export -->
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <!-- QR Code Generation for 100% Authentic Verifiable Credentials -->
+  <script src="qrcode.min.js"></script>
+  <script>if (typeof QRCode === 'undefined') { document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"><\/script>'); }</script>
 
 
 
@@ -1036,8 +1039,14 @@
                 <i data-lucide="log-in" class="w-3.5 h-3.5"></i>
                 <span>Google Sign-In</span>
               </button>
-              <button onclick="quickDemoLogin()" class="px-3 py-1.5 bg-white/10 hover:bg-white/20 text-amber-200 font-mono text-[11px] rounded-lg border border-amber-300/30">
-                ⚡ Demo User
+              <button onclick="quickDemoLogin(0)" class="px-2.5 py-1.5 bg-white/10 hover:bg-white/20 text-amber-200 font-mono text-[11px] rounded-lg border border-amber-300/30" title="Demo User 1: Aarav Sharma (Full-Stack)">
+                ⚡ Demo 1 (Aarav)
+              </button>
+              <button onclick="quickDemoLogin(1)" class="px-2.5 py-1.5 bg-white/10 hover:bg-white/20 text-amber-200 font-mono text-[11px] rounded-lg border border-amber-300/30" title="Demo User 2: Priya Patel (AI & Data Science)">
+                ⚡ Demo 2 (Priya)
+              </button>
+              <button onclick="quickDemoLogin(2)" class="px-2.5 py-1.5 bg-white/10 hover:bg-white/20 text-amber-200 font-mono text-[11px] rounded-lg border border-amber-300/30" title="Demo User 3: Rohan Verma (Cybersecurity)">
+                ⚡ Demo 3 (Rohan)
               </button>
             </div>
           </div>
@@ -6097,23 +6106,32 @@
             </div>
           </div>
 
-          <!-- Signatures & Official Stamp Footer -->
-          <div class="pt-3 border-t-2 border-slate-200 flex items-center justify-between gap-4 relative z-10">
+          <!-- Signatures, Verified QR & Official Stamp Footer -->
+          <div class="pt-2 border-t-2 border-slate-200 flex items-center justify-between gap-3 relative z-10">
             <div class="text-left space-y-0.5">
-              <div class="font-heading font-bold text-base text-slate-900">Kapil Narula</div>
-              <p class="text-xs text-amber-900 font-semibold">Founder & Lead Mentor | The One Rupee Full-Stack CEO</p>
-              <p class="text-[10px] text-slate-600 font-medium">SarlaYash Learning Solutions LLP</p>
-              <div class="text-[9px] text-slate-500 font-mono">
+              <div class="font-heading font-bold text-base text-slate-900 leading-tight">Kapil Narula</div>
+              <p class="text-[11px] text-amber-900 font-semibold leading-tight">Founder & Lead Mentor | The One Rupee Full-Stack CEO</p>
+              <p class="text-[9.5px] text-slate-600 font-medium">SarlaYash Learning Solutions LLP</p>
+              <div class="text-[8.5px] text-slate-500 font-mono">
                 Corporate: https://sarlayash.com/ • Verification: namaste@sarlayash.com
               </div>
             </div>
 
+            <!-- Verified QR Code Container -->
+            <div class="flex flex-col items-center justify-center shrink-0 text-center">
+              <div id="certQrContainer" class="w-14 h-14 p-0.5 bg-white border border-amber-600/70 rounded shadow-sm flex items-center justify-center overflow-hidden">
+                <img id="certQrImg" src="" alt="Scan to Verify" class="w-full h-full object-contain">
+              </div>
+              <span class="text-[6.5px] font-mono text-slate-700 font-bold uppercase mt-0.5 tracking-tight">Scan to Verify</span>
+              <span class="text-[5.5px] font-mono text-emerald-700 font-bold tracking-tight">100% AUTHENTIC</span>
+            </div>
+
             <!-- Official Seal Stamp -->
-            <div class="w-18 h-18 rounded-full border-2 border-dashed border-amber-600 p-0.5 flex items-center justify-center text-center bg-amber-50 shadow-sm shrink-0">
-              <div class="w-16 h-16 rounded-full border border-amber-700 flex flex-col items-center justify-center p-0.5 text-amber-900 select-none">
+            <div class="w-16 h-16 rounded-full border-2 border-dashed border-amber-600 p-0.5 flex items-center justify-center text-center bg-amber-50 shadow-sm shrink-0">
+              <div class="w-14 h-14 rounded-full border border-amber-700 flex flex-col items-center justify-center p-0.5 text-amber-900 select-none">
                 <span class="text-[5px] font-bold uppercase tracking-tight leading-tight">SARLAYASH LEARNING</span>
-                <span class="text-[7.5px] font-extrabold text-brand-ruby my-0.5">★ DAY 1 VERIFIED ★</span>
-                <span class="text-[5.5px] font-mono font-bold">BATCH 2026</span>
+                <span class="text-[7px] font-extrabold text-brand-ruby my-0.5">★ DAY 1 VERIFIED ★</span>
+                <span class="text-[5px] font-mono font-bold">BATCH 2026</span>
               </div>
             </div>
           </div>
@@ -6196,6 +6214,21 @@
             </div>
           </div>
 
+          <!-- Verified QR Code Container -->
+          <div class="p-2.5 rounded-2xl bg-black/80 border border-brand-gold/40 flex items-center justify-center gap-3 shadow-inner">
+            <div id="badgeQrContainer" class="w-14 h-14 bg-white p-1 rounded-xl shrink-0 shadow-sm flex items-center justify-center overflow-hidden">
+              <img id="badgeQrImg" src="" alt="Scan to Verify" class="w-full h-full object-contain">
+            </div>
+            <div class="text-left text-[9px] font-mono leading-tight">
+              <div class="text-brand-gold font-bold uppercase tracking-wider flex items-center gap-1">
+                <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i>
+                <span>100% Authentic</span>
+              </div>
+              <div class="text-slate-300 text-[8px] mt-0.5">Scan to verify credential authenticity in real-time</div>
+              <div class="text-emerald-400 text-[7.5px] font-mono mt-0.5 font-bold">SYM Verified Registry</div>
+            </div>
+          </div>
+
           <!-- Badge Footer -->
           <div class="pt-2 border-t border-white/10 text-[9px] text-slate-400 font-mono space-y-0.5">
             <div>SarlaYash Learning Solutions LLP</div>
@@ -6223,6 +6256,71 @@
 
 
   <!-- Custom Scripts -->
+
+  
+  <!-- ======================================================== -->
+  <!-- MODAL: OFFICIAL CREDENTIAL VERIFICATION PORTAL (?verify=) -->
+  <!-- ======================================================== -->
+  <div id="publicVerifyModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-3 sm:p-4 bg-black/90 backdrop-blur-md overflow-y-auto">
+    <div class="relative w-full max-w-lg bg-gradient-to-br from-[#18110b] via-brand-surface to-[#0a0604] border-2 border-brand-gold/70 rounded-3xl shadow-2xl p-6 sm:p-8 my-6 text-slate-200 space-y-5 animate-in fade-in zoom-in-95 duration-200 overflow-hidden">
+      
+      <!-- Radiant Background Lighting -->
+      <div class="absolute -top-24 -left-24 w-52 h-52 bg-brand-gold/15 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -right-24 w-52 h-52 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Close Button -->
+      <button onclick="closePublicVerifyModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 rounded-xl bg-white/5 hover:bg-white/10 transition-colors z-20">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Verification Header Emblem -->
+      <div class="text-center space-y-2 relative z-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/40 text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-widest">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span>100% Authentic Public Registry</span>
+        </div>
+
+        <div class="w-18 h-18 mx-auto my-2 rounded-2xl bg-gradient-to-br from-emerald-500/30 to-teal-500/10 border-2 border-emerald-400/80 shadow-[0_0_30px_rgba(16,185,129,0.3)] flex items-center justify-center text-emerald-400">
+          <i data-lucide="badge-check" class="w-10 h-10"></i>
+        </div>
+
+        <h3 class="font-heading font-extrabold text-2xl text-white tracking-wide">
+          Official Credential Verification
+        </h3>
+        <p class="text-xs text-amber-200/90 font-mono">
+          SarlaYash Learning Solutions LLP • Corporate Registry
+        </p>
+      </div>
+
+      <!-- Verification Status & Details Body -->
+      <div id="verifyDetailsContainer" class="p-4 rounded-2xl bg-black/70 border border-brand-gold/30 text-left space-y-3 text-xs relative z-10">
+        <!-- Injected via JavaScript -->
+      </div>
+
+      <!-- Founder & Mentor Guarantee -->
+      <div class="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-center space-y-1 relative z-10">
+        <p class="text-[11px] text-amber-100 font-serif italic">
+          "With the Sacred Blessings of Maa Sarla & Paa Yash • Legacy of Values, Future of Learning"
+        </p>
+        <p class="text-[10px] text-brand-gold font-sans font-bold">
+          Dual Mentor Assurance: Kapil Narula (Founder & Lead Mentor)
+        </p>
+      </div>
+
+      <!-- Modal Action Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2 relative z-10">
+        <button onclick="closePublicVerifyModal()" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-gold to-amber-300 text-brand-dark font-extrabold text-xs shadow-gold-glow hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2">
+          <i data-lucide="check" class="w-4 h-4"></i>
+          <span>Acknowledge & Continue</span>
+        </button>
+        <a href="https://sarlayash.com" target="_blank" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white font-bold text-xs transition-colors flex items-center justify-center gap-2">
+          <i data-lucide="globe" class="w-4 h-4"></i>
+          <span>Official Corporate Site</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
 
   <script src="app.js"></script>
 
