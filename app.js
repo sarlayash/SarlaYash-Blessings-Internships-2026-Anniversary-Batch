@@ -7262,6 +7262,9 @@ function quickDemoLogin(index = 0) {
   if (typeof populateDay1DashboardDetails === 'function') {
     populateDay1DashboardDetails();
   }
+  if (typeof renderCodeOfConductUI === 'function') {
+    renderCodeOfConductUI();
+  }
 
   if (typeof confetti === 'function') {
     confetti({
@@ -7492,6 +7495,9 @@ function switchOnboardingTab(tabName) {
 
 
 function populateDay1DashboardDetails() {
+  if (typeof renderCodeOfConductUI === 'function') {
+    renderCodeOfConductUI();
+  }
 
 
 
@@ -8574,4 +8580,651 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', checkUrlForVerification);
 } else {
   checkUrlForVerification();
+}
+
+
+// ============================================================================
+// SARLAYASH 15-TENET CODE OF CONDUCT & ETHICAL COVENANT SYSTEM
+// ============================================================================
+
+const SARLAYASH_CODE_OF_CONDUCT = [
+  {
+    id: 1,
+    title: "Sacred Foundation & Reverence",
+    category: "Values & Heritage",
+    icon: "heart-handshake",
+    principle: "Learning at SarlaYash is not a transaction; it is a sacred covenant of human transformation grounded in the blessings of Maa Sarla & Paa Yash.",
+    practice: "Enter every session with humility, deep respect for mentors, and gratitude towards family sacrifices. Treat every cohort member with the dignity of family.",
+    zeroTolerance: "Arrogance, entitlement, disrespect towards mentors or staff, or commercializing cohort interactions."
+  },
+  {
+    id: 2,
+    title: "100% Punctuality & The 1-Hour Daily Discipline",
+    category: "Professional Discipline",
+    icon: "clock",
+    principle: "Professional engineering excellence is built one focused hour every day. Showing up on time reflects self-respect and commitment to collective progress.",
+    practice: "Join live syncs 3 minutes prior. Ensure a functional camera, clear microphone, and active workstation for all 22 working days without unexcused absences.",
+    zeroTolerance: "Habitual tardiness, leaving sessions unannounced, or ghosting live milestone syncs without prior formal notification."
+  },
+  {
+    id: 3,
+    title: "Radical Ownership: 'It's On Me'",
+    category: "Engineering Integrity",
+    icon: "shield",
+    principle: "You are the primary author of your engineering destiny. Take total ownership of your commits, test cases, and production deployments.",
+    practice: "Take end-to-end responsibility for task deliverables. When a build breaks, diagnose it proactively, document the root cause, and drive the resolution.",
+    zeroTolerance: "Blaming external tools, teammates, internet glitches, or circumstances. No excuses; only ownership and solutions."
+  },
+  {
+    id: 4,
+    title: "Production-Grade Standards (Zero Mediocrity)",
+    category: "Craftsmanship",
+    icon: "award",
+    principle: "We build commercial-grade production systems, not toy tutorials. Every artifact you ship must be ready for live stakeholder evaluation.",
+    practice: "Adhere to strict linting, clean commits, comprehensive error handling, modular architectures, and responsive UI benchmarks.",
+    zeroTolerance: "Submitting buggy code, leaving unhandled console errors, copy-pasting code you don't understand, or delivering minimum-viable mediocrity."
+  },
+  {
+    id: 5,
+    title: "Dignified & Constructive Collaboration",
+    category: "Professionalism",
+    icon: "message-square",
+    principle: "Our cohort is an incubator for intellectual rigor and mutual elevation. Every word spoken or written must reflect professionalism and poise.",
+    practice: "Communicate with clarity, empathy, and professional etiquette across Slack, GitHub pull requests, WhatsApp channels, and live syncs.",
+    zeroTolerance: "Harassment, profanity, microaggressions, gender/caste/regional biases, condescending critique, or toxic venting."
+  },
+  {
+    id: 6,
+    title: "Absolute Academic Honesty & Zero Plagiarism",
+    category: "Ethics & Authenticity",
+    icon: "check-check",
+    principle: "Authentic capability cannot be faked or stolen. Your professional reputation is the single most valuable asset of your tech career.",
+    practice: "Write your own logic and test cases. When referencing open-source patterns or official documentation, credit the source transparently.",
+    zeroTolerance: "Copy-pasting another intern's repository, buying assignments, submitting forged Git commit histories, or claiming unauthored work."
+  },
+  {
+    id: 7,
+    title: "Responsible AI Usage: Augmentation Over Deception",
+    category: "Modern AI Engineering",
+    icon: "cpu",
+    principle: "AI copilots are your intellectual multipliers, not an intellectual substitute. If you cannot explain the architecture, you do not own the skill.",
+    practice: "Use AI to brainstorm architectures, debug edge cases, and accelerate boilerplate. Always review, refactor, and deeply comprehend every generated line.",
+    zeroTolerance: "Submitting unvetted AI hallucinations, blind copy-pasting, or inability to live-defend and live-code your submitted solutions during mentor viva."
+  },
+  {
+    id: 8,
+    title: "Strict Confidentiality & IP Safeguarding",
+    category: "Trust & Legal",
+    icon: "lock",
+    principle: "Trust is non-negotiable. You are granted access to proprietary mentor playbooks, enterprise problem statements, and private internal assets.",
+    practice: "Keep all private repositories, internal lecture recordings, evaluation rubrics, and API keys strictly confidential within the cohort.",
+    zeroTolerance: "Leaking cohort curriculum, sharing credentials or API keys on public forums, or distributing internal materials outside SarlaYash."
+  },
+  {
+    id: 9,
+    title: "Humility in Feedback & Rapid Growth Agility",
+    category: "Growth Mindset",
+    icon: "refresh-cw",
+    principle: "Critique is the greatest gift a mentor can bestow. Feedback is directed at your code and execution, never your personal worth.",
+    practice: "Receive mentor code reviews and pull-request revisions with gratitude, take rapid notes, and deploy remediation commits within 24 hours.",
+    zeroTolerance: "Defensive arguments, sulking, disregarding mentor reviews, or repeating the exact same reported antipatterns."
+  },
+  {
+    id: 10,
+    title: "Cohort Empathy & Collective Victory",
+    category: "Teamwork & Elevating Others",
+    icon: "users",
+    principle: "No SarlaYash intern is left behind. A true tech leader measures their stature by how many peers they elevate along the journey.",
+    practice: "Share insights on community channels, unblock peers during evening debugging lounges, and celebrate fellow cohort members' wins.",
+    zeroTolerance: "Gatekeeping knowledge, hoarding solutions, mocking someone's doubts, or fostering cutthroat toxic rivalry."
+  },
+  {
+    id: 11,
+    title: "Cybersecurity Hygiene & Secret Sanitation",
+    category: "Security Excellence",
+    icon: "key",
+    principle: "Production engineers treat environment secrets and credentials with sovereign defense.",
+    practice: "Use .env files, .gitignore, and secure credential managers. Sanitize all logs, client payloads, and production databases before commits.",
+    zeroTolerance: "Hardcoding AWS/GCP keys, Firebase tokens, or database passwords in client code or pushing secrets to public GitHub repositories."
+  },
+  {
+    id: 12,
+    title: "Focused Digital Demeanor & Active Engagement",
+    category: "Executive Demeanor",
+    icon: "video",
+    principle: "When you sit before mentors and peers, bring your complete undivided attention. Multi-tasking is the death of deep learning.",
+    practice: "Keep your video camera on during live mentorship syncs, maintain eye contact, mute background noise, and participate actively in discussions.",
+    zeroTolerance: "Attending calls while driving or multi-tasking on unrelated chores, passive background presence, or turning off video without prior notice."
+  },
+  {
+    id: 13,
+    title: "The 22-Day Completion Covenant",
+    category: "Perseverance & Grit",
+    icon: "flag",
+    principle: "Great software engineers aren't the ones who never encounter bugs; they are the ones who refuse to surrender until the build is green.",
+    practice: "Persevere through difficult debugging walls, utilize office hours, exhaust official docs, and see the full 22-day sprint to completion.",
+    zeroTolerance: "Quitting midway due to initial difficulty, abandoning your teammates on assigned integrations, or dropping out without formal closure."
+  },
+  {
+    id: 14,
+    title: "Customer-Centricity & Real-World Utility",
+    category: "User Value & Impact",
+    icon: "target",
+    principle: "Code has no intrinsic value until it serves a human being and solves a real-world friction point.",
+    practice: "Design intuitive user interfaces, write accessible semantic HTML, optimize performance budgets, and build with the end-user's needs at center.",
+    zeroTolerance: "Writing obtuse code that ignores real-world usability, ignoring performance bottlenecks, or disregarding user accessibility."
+  },
+  {
+    id: 15,
+    title: "The SarlaYash Ambassador & Gratitude Pledge",
+    category: "Legacy & Citizenship",
+    icon: "star",
+    principle: "You are an ambassador of the SarlaYash legacy. Wherever your career takes you, carry our values of integrity, craft, and gratitude.",
+    practice: "Represent SarlaYash Learning Solutions with pride on LinkedIn, GitHub, and industry forums. Pay your blessings forward by mentoring the next generation.",
+    zeroTolerance: "Using SarlaYash credentials or brand name to mislead recruiters, conduct unethical freelance activities, or tarnish the sacred ethos."
+  }
+];
+
+let currentCocCardIndex = 0;
+let currentCocViewMode = 'stepper';
+
+function getActiveJourneyId() {
+  if (window.currentUserApp) {
+    const id = getJourneyId(window.currentUserApp);
+    if (id) return id;
+  }
+  if (currentUser) {
+    try {
+      const stored = localStorage.getItem('sarlayash_app_' + currentUser.uid);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        const id = getJourneyId(parsed);
+        if (id) return id;
+      }
+    } catch (e) {}
+  }
+  return 'SYM-2026-7842';
+}
+
+function getCocAcknowledgedSet(journeyId) {
+  const jId = journeyId || getActiveJourneyId();
+  try {
+    const raw = localStorage.getItem('sarlayash_coc_' + jId);
+    if (raw) {
+      return new Set(JSON.parse(raw));
+    }
+  } catch (e) {}
+  return new Set();
+}
+
+function saveCocAcknowledgedSet(journeyId, setObj) {
+  const jId = journeyId || getActiveJourneyId();
+  try {
+    localStorage.setItem('sarlayash_coc_' + jId, JSON.stringify(Array.from(setObj)));
+  } catch (e) {}
+}
+
+function toggleCocView(mode) {
+  currentCocViewMode = mode;
+  const stepperView = document.getElementById('cocStepperView');
+  const gridView = document.getElementById('cocGridView');
+  const btnStepper = document.getElementById('cocBtnViewStepper');
+  const btnGrid = document.getElementById('cocBtnViewGrid');
+
+  if (mode === 'grid') {
+    if (stepperView) stepperView.classList.add('hidden');
+    if (gridView) gridView.classList.remove('hidden');
+    if (btnGrid) {
+      btnGrid.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-brand-gold text-brand-dark shadow-sm flex items-center gap-1.5';
+    }
+    if (btnStepper) {
+      btnStepper.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-white flex items-center gap-1.5';
+    }
+  } else {
+    if (stepperView) stepperView.classList.remove('hidden');
+    if (gridView) gridView.classList.add('hidden');
+    if (btnStepper) {
+      btnStepper.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-brand-gold text-brand-dark shadow-sm flex items-center gap-1.5';
+    }
+    if (btnGrid) {
+      btnGrid.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-white flex items-center gap-1.5';
+    }
+  }
+  renderCodeOfConductUI();
+}
+
+function prevCocCard() {
+  currentCocCardIndex = Math.max(0, currentCocCardIndex - 1);
+  renderCodeOfConductUI();
+}
+
+function nextCocCard() {
+  currentCocCardIndex = Math.min(SARLAYASH_CODE_OF_CONDUCT.length - 1, currentCocCardIndex + 1);
+  renderCodeOfConductUI();
+}
+
+function acknowledgeCurrentTenet() {
+  const jId = getActiveJourneyId();
+  const setObj = getCocAcknowledgedSet(jId);
+  const currentTenet = SARLAYASH_CODE_OF_CONDUCT[currentCocCardIndex];
+  if (currentTenet) {
+    setObj.add(currentTenet.id);
+    saveCocAcknowledgedSet(jId, setObj);
+    
+    // Check if newly completed all 15
+    if (setObj.size === 15) {
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 100,
+          spread: 80,
+          origin: { y: 0.6 },
+          colors: ['#E5A93C', '#34A853', '#4285F4', '#EA4335', '#F59E0B']
+        });
+      }
+    } else {
+      // Advance to next unacknowledged card if available
+      for (let i = 0; i < SARLAYASH_CODE_OF_CONDUCT.length; i++) {
+        const nextIdx = (currentCocCardIndex + 1 + i) % SARLAYASH_CODE_OF_CONDUCT.length;
+        if (!setObj.has(SARLAYASH_CODE_OF_CONDUCT[nextIdx].id)) {
+          currentCocCardIndex = nextIdx;
+          break;
+        }
+      }
+    }
+  }
+  renderCodeOfConductUI();
+}
+
+function acknowledgeTenet(id) {
+  const jId = getActiveJourneyId();
+  const setObj = getCocAcknowledgedSet(jId);
+  setObj.add(id);
+  saveCocAcknowledgedSet(jId, setObj);
+
+  if (setObj.size === 15 && typeof confetti === 'function') {
+    confetti({ particleCount: 90, spread: 80, origin: { y: 0.6 } });
+  }
+  renderCodeOfConductUI();
+}
+
+function acknowledgeAllTenets() {
+  const jId = getActiveJourneyId();
+  const setObj = new Set();
+  SARLAYASH_CODE_OF_CONDUCT.forEach(t => setObj.add(t.id));
+  saveCocAcknowledgedSet(jId, setObj);
+
+  if (typeof confetti === 'function') {
+    confetti({
+      particleCount: 120,
+      spread: 90,
+      origin: { y: 0.6 },
+      colors: ['#E5A93C', '#34A853', '#4285F4', '#EA4335', '#F59E0B']
+    });
+  }
+  renderCodeOfConductUI();
+}
+
+async function renderCodeOfConductUI() {
+  const jId = getActiveJourneyId();
+  const setObj = getCocAcknowledgedSet(jId);
+  const count = setObj.size;
+  const total = SARLAYASH_CODE_OF_CONDUCT.length;
+  const pct = Math.round((count / total) * 100);
+
+  // Update Counters & Progress Bar
+  const countElem = document.getElementById('cocProgressCount');
+  const pctElem = document.getElementById('cocProgressPercent');
+  const barElem = document.getElementById('cocProgressBar');
+  const badgeCount = document.getElementById('conductBadgeCount');
+  const bannerStatus = document.getElementById('bannerCocStatusText');
+  const bannerBtn = document.getElementById('bannerCocBtnText');
+
+  if (countElem) countElem.innerText = count;
+  if (pctElem) pctElem.innerText = pct + '%';
+  if (barElem) barElem.style.width = pct + '%';
+
+  if (badgeCount) {
+    badgeCount.innerText = count === total ? '15/15 ✓' : `${count}/15`;
+    badgeCount.className = count === total
+      ? 'px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+      : 'px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30';
+  }
+
+  if (bannerStatus) {
+    bannerStatus.innerHTML = count === total
+      ? '<span class="text-emerald-400 font-bold">✓ 15/15 Tenets Formally Signed</span>'
+      : `<span class="text-amber-300 font-medium">${count}/15 Acknowledged (Pending)</span>`;
+  }
+  if (bannerBtn) {
+    bannerBtn.innerText = count === total ? 'View Signed Agreement' : 'Read & Sign 15 Tenets';
+  }
+
+  // Render Stepper Active Card
+  const stepperContainer = document.getElementById('cocCardActiveContainer');
+  const stepIndicator = document.getElementById('cocCardStepIndicator');
+  const prevBtn = document.getElementById('cocPrevBtn');
+  const nextBtn = document.getElementById('cocNextBtn');
+
+  if (stepIndicator) stepIndicator.innerText = `Tenet ${currentCocCardIndex + 1} of ${total}`;
+  if (prevBtn) prevBtn.disabled = currentCocCardIndex === 0;
+  if (nextBtn) nextBtn.disabled = currentCocCardIndex === total - 1;
+
+  if (stepperContainer && SARLAYASH_CODE_OF_CONDUCT[currentCocCardIndex]) {
+    const card = SARLAYASH_CODE_OF_CONDUCT[currentCocCardIndex];
+    const isAck = setObj.has(card.id);
+
+    stepperContainer.innerHTML = `
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-crimson to-brand-ruby border border-brand-gold/60 text-brand-gold flex items-center justify-center shrink-0 shadow-gold-glow">
+            <i data-lucide="${card.icon}" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <div class="text-[10px] font-mono uppercase tracking-widest text-brand-gold font-bold">
+              Tenet ${String(card.id).padStart(2, '0')} of 15 • ${card.category}
+            </div>
+            <h4 class="font-heading font-extrabold text-xl sm:text-2xl text-white">
+              ${card.title}
+            </h4>
+          </div>
+        </div>
+
+        <div>
+          ${isAck ? `
+            <span class="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-mono font-bold flex items-center gap-1.5">
+              <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+              <span>Acknowledged</span>
+            </span>
+          ` : `
+            <span class="px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-mono font-medium flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+              <span>Pending Agreement</span>
+            </span>
+          `}
+        </div>
+      </div>
+
+      <div class="space-y-4 text-xs sm:text-sm text-slate-200">
+        <div class="p-4 rounded-2xl bg-black/50 border border-white/10 space-y-1">
+          <div class="text-[10px] font-mono uppercase tracking-wider text-amber-300 font-bold">Core Ethical Principle:</div>
+          <p class="leading-relaxed text-slate-100 font-serif italic text-sm">"${card.principle}"</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-4 rounded-2xl bg-emerald-950/30 border border-emerald-500/30 space-y-1.5">
+            <div class="text-[10px] font-mono uppercase tracking-wider text-emerald-400 font-bold flex items-center gap-1.5">
+              <i data-lucide="check" class="w-3.5 h-3.5"></i>
+              <span>Required Practice & Standard:</span>
+            </div>
+            <p class="text-xs text-slate-200 leading-relaxed">${card.practice}</p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-rose-950/30 border border-rose-500/30 space-y-1.5">
+            <div class="text-[10px] font-mono uppercase tracking-wider text-rose-400 font-bold flex items-center gap-1.5">
+              <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i>
+              <span>Zero-Tolerance Policy:</span>
+            </div>
+            <p class="text-xs text-slate-200 leading-relaxed">${card.zeroTolerance}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
+        <div class="text-xs text-slate-400">
+          ${isAck 
+            ? '<span class="text-emerald-400 font-semibold">✓ You have formally agreed to uphold this tenet.</span>' 
+            : 'Please review and confirm your adherence to this practice:'}
+        </div>
+
+        <button onclick="acknowledgeCurrentTenet()" id="cocAcknowledgeBtn" class="px-6 py-2.5 rounded-xl font-extrabold text-xs flex items-center gap-2 transition-all shadow-md ${
+          isAck 
+            ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30' 
+            : 'bg-gradient-to-r from-brand-gold via-amber-300 to-brand-gold text-brand-dark shadow-gold-glow hover:brightness-110 active:scale-95'
+        }">
+          <i data-lucide="${isAck ? 'check-check' : 'check'}" class="w-4 h-4"></i>
+          <span>${isAck ? 'Acknowledged (Click to Advance)' : `I Have Read & Agree to Uphold Tenet ${card.id}`}</span>
+        </button>
+      </div>
+    `;
+  }
+
+  // Render Grid Cards
+  const gridContainer = document.getElementById('cocGridCardsContainer');
+  if (gridContainer) {
+    gridContainer.innerHTML = SARLAYASH_CODE_OF_CONDUCT.map(card => {
+      const isAck = setObj.has(card.id);
+      return `
+        <div class="p-4 rounded-2xl border transition-all space-y-3 flex flex-col justify-between ${
+          isAck 
+            ? 'bg-emerald-950/20 border-emerald-500/40' 
+            : 'bg-brand-card border-white/10 hover:border-brand-gold/40'
+        }">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-[9.5px] font-mono uppercase tracking-wider ${isAck ? 'text-emerald-400' : 'text-brand-gold'} font-bold">
+                Tenet ${String(card.id).padStart(2, '0')} • ${card.category}
+              </span>
+              <div class="w-7 h-7 rounded-lg ${isAck ? 'bg-emerald-500/20 text-emerald-400' : 'bg-brand-gold/15 text-brand-gold'} flex items-center justify-center shrink-0">
+                <i data-lucide="${card.icon}" class="w-3.5 h-3.5"></i>
+              </div>
+            </div>
+
+            <h5 class="font-heading font-bold text-sm text-white">${card.title}</h5>
+            <p class="text-xs text-slate-300 leading-relaxed font-serif italic line-clamp-2">"${card.principle}"</p>
+          </div>
+
+          <div class="pt-2 border-t border-white/5 flex items-center justify-between gap-2">
+            <button onclick="acknowledgeTenet(${card.id})" class="w-full py-1.5 px-3 rounded-lg text-[11px] font-bold flex items-center justify-center gap-1.5 transition-all ${
+              isAck
+                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                : 'bg-white/10 hover:bg-brand-gold hover:text-brand-dark text-slate-300'
+            }">
+              <i data-lucide="${isAck ? 'check-check' : 'check'}" class="w-3.5 h-3.5"></i>
+              <span>${isAck ? 'Acknowledged' : 'Acknowledge'}</span>
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // Render Signed Agreement Section if 15/15
+  const agreementSection = document.getElementById('cocSignedAgreementSection');
+  if (agreementSection) {
+    if (count === total) {
+      agreementSection.classList.remove('hidden');
+
+      // Populate personalized details
+      const app = window.currentUserApp || {
+        name: currentUser ? currentUser.displayName : 'Candidate Name',
+        track: 'Full-Stack Development',
+        journeyId: jId
+      };
+
+      const cName = app.name || (currentUser ? currentUser.displayName : 'Candidate Name');
+      const cTrack = app.track || 'Full-Stack Development';
+      const cDate = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+      const nameEl = document.getElementById('signedCocCandidateName');
+      const jIdEl = document.getElementById('signedCocJourneyId');
+      const trackEl = document.getElementById('signedCocTrack');
+      const dateEl = document.getElementById('signedCocDate');
+      const salutationEl = document.getElementById('signedCocSalutationName');
+      const page2NameEl = document.getElementById('signedCocPage2Name');
+      const page2IdEl = document.getElementById('signedCocPage2Id');
+      const candSigEl = document.getElementById('signedCocCandidateSig');
+      const sigTokenEl = document.getElementById('signedCocSigToken');
+      const sigDateEl = document.getElementById('signedCocSigDate');
+
+      if (nameEl) nameEl.innerText = cName;
+      if (jIdEl) jIdEl.innerText = jId;
+      if (trackEl) trackEl.innerText = cTrack;
+      if (dateEl) dateEl.innerText = cDate;
+      if (salutationEl) salutationEl.innerText = cName.split(' ')[0] || cName;
+      if (page2NameEl) page2NameEl.innerText = cName;
+      if (page2IdEl) page2IdEl.innerText = jId;
+      if (candSigEl) candSigEl.innerText = cName;
+      if (sigTokenEl) sigTokenEl.innerText = `Token: SY-COC-${jId.replace(/[^0-9A-Z]/g, '')}-AUTH`;
+      if (sigDateEl) sigDateEl.innerText = `Date: ${cDate}`;
+
+      // Populate Part 1 (Tenets 1 - 7)
+      const part1El = document.getElementById('signedCocTenetsPart1');
+      if (part1El) {
+        part1El.innerHTML = SARLAYASH_CODE_OF_CONDUCT.slice(0, 7).map(t => `
+          <div class="border-b border-slate-100 pb-1">
+            <strong class="text-slate-900 font-sans">${t.id}. ${t.title}:</strong>
+            <span> ${t.practice}</span>
+          </div>
+        `).join('');
+      }
+
+      // Populate Part 2 (Tenets 8 - 15)
+      const part2El = document.getElementById('signedCocTenetsPart2');
+      if (part2El) {
+        part2El.innerHTML = SARLAYASH_CODE_OF_CONDUCT.slice(7).map(t => `
+          <div class="border-b border-slate-100 pb-1">
+            <strong class="text-slate-900 font-sans">${t.id}. ${t.title}:</strong>
+            <span> ${t.practice}</span>
+          </div>
+        `).join('');
+      }
+
+      // Render Verified QR Code in Signed Document
+      const signedQrImg = document.getElementById('signedCocQrImg');
+      if (signedQrImg && (!signedQrImg.src || !signedQrImg.src.startsWith('data:'))) {
+        const verifyUrl = getVerificationUrl(jId);
+        generateQrCodeDataUrl(verifyUrl, 120).then(qrData => {
+          if (qrData) signedQrImg.src = qrData;
+        });
+      }
+
+    } else {
+      agreementSection.classList.add('hidden');
+    }
+  }
+
+  if (window.lucide) window.lucide.createIcons();
+}
+
+async function downloadSignedCodeOfConductPdf() {
+  const jId = getActiveJourneyId();
+  const setObj = getCocAcknowledgedSet(jId);
+  if (setObj.size < 15) {
+    alert("Please review and acknowledge all 15 Tenets before downloading your signed Code of Conduct Agreement.");
+    return;
+  }
+
+  const element = document.getElementById('signedCocDoc');
+  if (!element) {
+    alert("Code of Conduct document not found.");
+    return;
+  }
+
+  const app = window.currentUserApp || {
+    journeyId: jId,
+    name: currentUser ? currentUser.displayName : 'Candidate Name'
+  };
+
+  const jIdClean = (jId || 'SYM-2026-7842').replace(/[^a-zA-Z0-9_-]/g, '');
+  const filename = `SarlaYash-Code-Of-Conduct-${jIdClean}.pdf`;
+
+  const btn = document.getElementById('downloadCocPdfBtn');
+  const statusContainer = document.getElementById('cocPdfStatusMsg');
+  const originalHtml = btn ? btn.innerHTML : '';
+
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = `<span class="inline-block animate-spin mr-1.5">⏳</span><span>Generating Signed Covenant PDF...</span>`;
+  }
+  if (statusContainer) {
+    statusContainer.classList.remove('hidden');
+    statusContainer.innerHTML = `<div class="p-2.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2"><span class="animate-pulse">📄</span><span>Rendering 2-page executive agreement document for download...</span></div>`;
+  }
+
+  // Ensure QR Code is ready
+  const signedQrImg = document.getElementById('signedCocQrImg');
+  if (signedQrImg && (!signedQrImg.src || !signedQrImg.src.startsWith('data:'))) {
+    const verifyUrl = getVerificationUrl(jIdClean);
+    const qrData = await generateQrCodeDataUrl(verifyUrl, 120);
+    if (qrData) signedQrImg.src = qrData;
+  }
+
+  // Create clean isolated render container at (0, 0)
+  const container = document.createElement('div');
+  container.style.position = 'fixed';
+  container.style.left = '0';
+  container.style.top = '0';
+  container.style.width = '794px';
+  container.style.margin = '0';
+  container.style.padding = '0';
+  container.style.zIndex = '999999';
+  container.style.backgroundColor = '#ffffff';
+  container.style.overflow = 'visible';
+
+  const clone = element.cloneNode(true);
+  clone.style.width = '794px';
+  clone.style.maxWidth = '794px';
+  clone.style.margin = '0';
+  clone.style.padding = '0';
+  clone.style.boxSizing = 'border-box';
+  clone.style.backgroundColor = '#ffffff';
+  clone.style.color = '#0f172a';
+
+  container.appendChild(clone);
+  document.body.appendChild(container);
+
+  const opt = {
+    margin: [0, 0, 0, 0],
+    filename: filename,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      logging: false
+    },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  };
+
+  try {
+    if (typeof html2pdf !== 'undefined') {
+      const worker = html2pdf().set(opt).from(clone);
+      const blob = await worker.outputPdf('blob');
+      const blobUrl = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        if (document.body.contains(a)) document.body.removeChild(a);
+      }, 1000);
+
+      if (statusContainer) {
+        statusContainer.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs">
+            <span>✅ <strong>Signed Code of Conduct PDF Downloaded!</strong> If download didn't start:</span>
+            <a href="${blobUrl}" download="${filename}" target="_blank" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-bold underline shadow">
+              Click Here to Open / Save PDF
+            </a>
+          </div>
+        `;
+      }
+    } else {
+      fallbackCleanPrint(element, filename);
+    }
+  } catch (err) {
+    console.error('Code of conduct PDF generation error:', err);
+    fallbackCleanPrint(element, filename);
+  } finally {
+    if (document.body.contains(container)) {
+      document.body.removeChild(container);
+    }
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = originalHtml;
+      if (window.lucide) window.lucide.createIcons();
+    }
+  }
 }
