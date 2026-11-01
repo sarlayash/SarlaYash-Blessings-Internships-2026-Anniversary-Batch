@@ -5360,11 +5360,26 @@ function showWelcomeEmailModal(customApp) {
 
   if (utrElem) utrElem.innerText = app.utr || 'Logged & Verified';
 
+  // Populate Welcome Letter Page 2 fields
+  const p2Name = document.getElementById('emailPage2Name');
+  const p2Id = document.getElementById('emailPage2Id');
+  const acceptName = document.getElementById('emailCandidateAcceptName');
+  const acceptReg = document.getElementById('emailCandidateAcceptReg');
+  const welcomeQrImg = document.getElementById('welcomeQrImg');
 
+  if (p2Name) p2Name.innerText = app.name;
+  if (p2Id) p2Id.innerText = app.regId || 'SY-2026-0842';
+  if (acceptName) acceptName.innerText = app.name;
+  if (acceptReg) acceptReg.innerText = `Reg: ${app.regId || 'SY-2026-0842'}`;
 
-
-
-
+  // Generate QR Code for Welcome Letter
+  if (welcomeQrImg && typeof generateQrCodeDataUrl === 'function') {
+    const regClean = (app.regId || 'SY-2026-0842').replace(/[^a-zA-Z0-9_-]/g, '');
+    const verifyUrl = typeof getVerificationUrl === 'function' ? getVerificationUrl(regClean) : `https://sarlayash.com/verify/?id=${regClean}`;
+    generateQrCodeDataUrl(verifyUrl, 120).then(qrData => {
+      if (qrData) welcomeQrImg.src = qrData;
+    }).catch(e => console.warn('Welcome QR error:', e));
+  }
 
   // Format mailto link
 
@@ -5619,58 +5634,39 @@ function copyWelcomeEmailText() {
 
 
 async function downloadOfferLetter() {
-
-
-
   const element = document.getElementById('offerLetterPdfDoc');
-
-
-
   if (!element) {
-
-
-
     alert("Offer letter document not found.");
-
-
-
     return;
-
-
-
   }
 
-
-
-
-
-
-
   const app = window.currentUserApp || {
-
-
-
     regId: 'SY-2026-0842',
-
-
-
-    name: currentUser?.displayName || 'Candidate Name'
-
-
-
+    name: currentUser?.displayName || 'Candidate Name',
+    email: currentUser?.email || 'candidate@gmail.com',
+    phone: '+91 9873152277',
+    track: 'Full-Stack Development',
+    slot: 'Evening Batch (6:00 PM – 7:00 PM IST)',
+    utr: 'Logged & Verified'
   };
 
+  // Ensure modal fields are populated
+  if (typeof showOfferLetterModal === 'function') {
+    showOfferLetterModal(app);
+  }
 
-
-
-
-
-
-  const regIdClean = (app.regId || '2026').replace(/[^a-zA-Z0-9_-]/g, '');
-
-
-
+  const regIdClean = (app.regId || 'SY-2026-0842').replace(/[^a-zA-Z0-9_-]/g, '');
   const filename = `SarlaYash-Internship-Offer-Letter-${regIdClean}.pdf`;
+
+  // Ensure Offer QR Code is generated
+  const offerQrImg = document.getElementById('offerQrImg');
+  if (offerQrImg && (!offerQrImg.src || !offerQrImg.src.startsWith('data:'))) {
+    if (typeof generateQrCodeDataUrl === 'function') {
+      const verifyUrl = typeof getVerificationUrl === 'function' ? getVerificationUrl(regIdClean) : `https://sarlayash.com/verify/?id=${regIdClean}`;
+      const qrData = await generateQrCodeDataUrl(verifyUrl, 120);
+      if (qrData) offerQrImg.src = qrData;
+    }
+  }
 
 
 
@@ -6059,257 +6055,88 @@ async function downloadOfferLetter() {
 
 
 async function downloadWelcomeEmail() {
-
-
-
   const element = document.getElementById('welcomeEmailPdfDoc');
-
-
-
   if (!element) {
-
-
-
     alert("Welcome email document not found.");
-
-
-
     return;
-
-
-
   }
-
-
-
-
-
-
 
   const app = window.currentUserApp || {
-
-
-
     regId: 'SY-2026-0842',
-
-
-
-    name: currentUser?.displayName || 'Candidate Name'
-
-
-
+    name: currentUser?.displayName || 'Candidate Name',
+    email: currentUser?.email || 'candidate@gmail.com',
+    track: 'Full-Stack Development',
+    slot: 'Evening Batch (6:00 PM – 7:00 PM IST)',
+    utr: 'Logged & Confirmed'
   };
 
+  // Ensure modal fields are populated
+  if (typeof showWelcomeEmailModal === 'function') {
+    showWelcomeEmailModal(app);
+  }
 
-
-
-
-
-
-  const regIdClean = (app.regId || '2026').replace(/[^a-zA-Z0-9_-]/g, '');
-
-
-
+  const regIdClean = (app.regId || 'SY-2026-0842').replace(/[^a-zA-Z0-9_-]/g, '');
   const filename = `SarlaYash-Welcome-Letter-${regIdClean}.pdf`;
 
-
-
-
-
-
-
   const btn = document.getElementById('downloadWelcomePdfBtn');
-
-
-
   const statusContainer = document.getElementById('welcomePdfStatusMsg');
-
-
-
   const originalHtml = btn ? btn.innerHTML : '';
 
-
-
-
-
-
-
   if (btn) {
-
-
-
     btn.disabled = true;
-
-
-
-    btn.innerHTML = `<span class="inline-block animate-spin mr-1.5">⏳</span><span>Generating PDF Document...</span>`;
-
-
-
+    btn.innerHTML = `<span class="inline-block animate-spin mr-1.5">⏳</span><span>Generating 2-Page Welcome PDF...</span>`;
   }
-
-
-
   if (statusContainer) {
-
-
-
     statusContainer.classList.remove('hidden');
-
-
-
-    statusContainer.innerHTML = `<div class="p-2.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2"><span class="animate-pulse">📜</span><span>Rendering welcome correspondence for download...</span></div>`;
-
-
-
+    statusContainer.innerHTML = `<div class="p-2.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2"><span class="animate-pulse">📜</span><span>Rendering 2-page welcome correspondence for download...</span></div>`;
   }
 
-
-
-
-
-
+  // Ensure Welcome QR Code is ready
+  const welcomeQrImg = document.getElementById('welcomeQrImg');
+  if (welcomeQrImg && (!welcomeQrImg.src || !welcomeQrImg.src.startsWith('data:'))) {
+    if (typeof generateQrCodeDataUrl === 'function') {
+      const verifyUrl = typeof getVerificationUrl === 'function' ? getVerificationUrl(regIdClean) : `https://sarlayash.com/verify/?id=${regIdClean}`;
+      const qrData = await generateQrCodeDataUrl(verifyUrl, 120);
+      if (qrData) welcomeQrImg.src = qrData;
+    }
+  }
 
   // Create clean isolated render container at (0, 0)
-
-
-
   const container = document.createElement('div');
-
-
-
   container.style.position = 'fixed';
-
-
-
   container.style.left = '0';
-
-
-
   container.style.top = '0';
-
-
-
   container.style.width = '794px';
-
-
-
   container.style.margin = '0';
-
-
-
   container.style.padding = '0';
-
-
-
   container.style.zIndex = '999999';
-
-
-
   container.style.backgroundColor = '#ffffff';
-
-
-
   container.style.overflow = 'visible';
 
-
-
-
-
-
-
   const clone = element.cloneNode(true);
-
-
-
   clone.style.width = '794px';
-
-
-
   clone.style.maxWidth = '794px';
-
-
-
   clone.style.margin = '0';
-
-
-
-  clone.style.padding = '18px 24px';
-
-
-
+  clone.style.padding = '0';
   clone.style.boxSizing = 'border-box';
-
-
-
   clone.style.backgroundColor = '#ffffff';
-
-
-
   clone.style.color = '#0f172a';
 
-
-
-
-
-
-
   container.appendChild(clone);
-
-
-
   document.body.appendChild(container);
 
-
-
-
-
-
-
   const opt = {
-
-
-
-    margin: [4, 4, 4, 4],
-
-
-
+    margin: [0, 0, 0, 0],
     filename: filename,
-
-
-
     image: { type: 'jpeg', quality: 0.98 },
-
-
-
     html2canvas: { 
-
-
-
       scale: 2, 
-
-
-
       useCORS: true, 
-
-
-
       backgroundColor: '#ffffff',
-
-
-
       logging: false
-
-
-
     },
-
-
-
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-
-
-
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak: { mode: ['css', 'legacy'] }
   };
 
 
@@ -6877,6 +6704,17 @@ function showOfferLetterModal(customApp) {
 
 
 
+
+
+
+    const offerQrImg = document.getElementById('offerQrImg');
+  if (offerQrImg && typeof generateQrCodeDataUrl === 'function') {
+    const regClean = (app.regId || 'SY-2026-0842').replace(/[^a-zA-Z0-9_-]/g, '');
+    const verifyUrl = typeof getVerificationUrl === 'function' ? getVerificationUrl(regClean) : `https://sarlayash.com/verify/?id=${regClean}`;
+    generateQrCodeDataUrl(verifyUrl, 120).then(qrData => {
+      if (qrData) offerQrImg.src = qrData;
+    }).catch(e => console.warn('Offer QR error:', e));
+  }
 
   const modal = document.getElementById('offerLetterModal');
 
@@ -7677,11 +7515,23 @@ async function downloadDay1Certificate() {
   const app = window.currentUserApp || {
     regId: 'SY-2026-7842',
     journeyId: 'SYM-2026-7842',
-    name: currentUser.displayName || 'Candidate Name'
+    name: currentUser.displayName || 'Candidate Name',
+    track: 'Full-Stack Development'
   };
 
   const jIdClean = (getJourneyId(app) || 'SYM-2026-7842').replace(/[^a-zA-Z0-9_-]/g, '');
   const filename = `SarlaYash-Day1-Certificate-${jIdClean}.pdf`;
+
+  // Ensure modal fields are populated
+  const certName = document.getElementById('certCandidateName');
+  const certTrack = document.getElementById('certTrack');
+  const certJourneyId = document.getElementById('certJourneyId');
+  const certDate = document.getElementById('certDate');
+
+  if (certName) certName.innerText = app.name || currentUser.displayName || 'Candidate Name';
+  if (certTrack) certTrack.innerText = app.track || 'Full-Stack Development';
+  if (certJourneyId) certJourneyId.innerText = jIdClean;
+  if (certDate) certDate.innerText = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 
   // Ensure QR code is rendered and ready
   const certQrImg = document.getElementById('certQrImg');
@@ -7691,204 +7541,55 @@ async function downloadDay1Certificate() {
     if (qrData) certQrImg.src = qrData;
   }
 
-
-
-
-
-
-
   const btn = document.getElementById('downloadCertPdfBtn');
-
-
-
   const statusContainer = document.getElementById('certPdfStatusMsg');
-
-
-
   const originalHtml = btn ? btn.innerHTML : '';
 
-
-
-
-
-
-
   if (btn) {
-
-
-
     btn.disabled = true;
-
-
-
     btn.innerHTML = `<span class="inline-block animate-spin mr-1.5">⏳</span><span>Generating Certificate PDF...</span>`;
-
-
-
   }
-
-
-
   if (statusContainer) {
-
-
-
     statusContainer.classList.remove('hidden');
-
-
-
     statusContainer.innerHTML = `<div class="p-2.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2"><span class="animate-pulse">📜</span><span>Rendering Day 1 Certificate of Appreciation...</span></div>`;
-
-
-
   }
-
-
-
-
-
-
 
   const container = document.createElement('div');
-
-
-
   container.style.position = 'fixed';
-
-
-
   container.style.left = '0';
-
-
-
   container.style.top = '0';
-
-
-
-  container.style.width = '850px';
-
-
-
+  container.style.width = '1020px';
   container.style.margin = '0';
-
-
-
   container.style.padding = '0';
-
-
-
   container.style.zIndex = '999999';
-
-
-
   container.style.backgroundColor = '#ffffff';
-
-
-
   container.style.overflow = 'visible';
 
-
-
-
-
-
-
   const clone = element.cloneNode(true);
-
-
-
-  clone.style.width = '850px';
-
-
-
-  clone.style.minWidth = '850px';
-
-
-
-  clone.style.maxWidth = '850px';
-
-
-
+  clone.style.width = '1020px';
+  clone.style.minWidth = '1020px';
+  clone.style.maxWidth = '1020px';
+  clone.style.height = '710px';
   clone.style.margin = '0';
-
-
-
-  clone.style.padding = '24px 30px';
-
-
-
+  clone.style.padding = '26px 36px';
   clone.style.boxSizing = 'border-box';
-
-
-
   clone.style.backgroundColor = '#ffffff';
-
-
-
   clone.style.color = '#0f172a';
 
-
-
-
-
-
-
   container.appendChild(clone);
-
-
-
   document.body.appendChild(container);
 
-
-
-
-
-
-
   const opt = {
-
-
-
-    margin: [0, 0, 0, 0],
-
-
-
+    margin: [4, 4, 4, 4],
     filename: filename,
-
-
-
     image: { type: 'jpeg', quality: 0.98 },
-
-
-
     html2canvas: { 
-
-
-
       scale: 2, 
-
-
-
       useCORS: true, 
-
-
-
       backgroundColor: '#ffffff',
-
-
-
       logging: false
-
-
-
     },
-
-
-
     jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
-
-
-
   };
 
 
@@ -9183,7 +8884,8 @@ async function downloadSignedCodeOfConductPdf() {
       backgroundColor: '#ffffff',
       logging: false
     },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak: { mode: ['css', 'legacy'] }
   };
 
   try {
