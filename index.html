@@ -145,6 +145,8 @@
   <!-- High-Precision Client-Side PDF Generation -->
 
   <script src="html2pdf.bundle.min.js"></script>
+  <!-- HTML2Canvas for High-Resolution Badge PNG Export -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 
 
@@ -1000,25 +1002,55 @@
           Welcome to a transformative journey of sacred values and futuristic execution. No fluff, no dry theory—from Day 1 you step into the world of live engineering, peer rigor, and daily compounding growth.
         </p>
 
-        <!-- Live Journey ID Pill Banner -->
-        <div class="pt-2 flex flex-wrap items-center justify-center gap-3">
-          <div class="px-5 py-2.5 rounded-2xl bg-brand-card/90 border border-brand-gold/60 shadow-gold-glow flex items-center gap-3">
-            <span class="text-xs text-slate-400 font-mono uppercase tracking-wider">Your Official Journey ID:</span>
-            <span id="dashboardJourneyIdPill" class="font-mono font-extrabold text-base sm:text-lg text-emerald-400 tracking-wider">SYM-2026-0842</span>
-            <button onclick="copyJourneyId()" title="Copy Journey ID" class="p-1 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-colors">
-              <i data-lucide="copy" class="w-4 h-4"></i>
-            </button>
+        <!-- Live Journey ID Pill Banner & Auth Gate Status -->
+        <div class="pt-2 space-y-4">
+          <div class="flex flex-wrap items-center justify-center gap-3">
+            <div class="px-5 py-2.5 rounded-2xl bg-brand-card/90 border border-brand-gold/60 shadow-gold-glow flex items-center gap-3">
+              <span class="text-xs text-slate-400 font-mono uppercase tracking-wider">Official Journey ID:</span>
+              <span id="dashboardJourneyIdPill" class="font-mono font-extrabold text-base sm:text-lg text-emerald-400 tracking-wider">🔒 Login Required</span>
+              <button onclick="copyJourneyId()" title="Copy Journey ID" class="p-1 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-colors">
+                <i data-lucide="copy" class="w-4 h-4"></i>
+              </button>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-2">
+              <button onclick="showDay1CertificateModal()" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-brand-gold to-amber-300 text-brand-dark font-extrabold text-xs flex items-center gap-2 shadow-gold-glow hover:brightness-110 active:scale-95 transition-all">
+                <i data-lucide="award" class="w-4 h-4"></i>
+                <span>Certificate of Appreciation</span>
+              </button>
+              <button onclick="showDay1BadgeModal()" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs flex items-center gap-2 border border-brand-gold/40 hover:border-brand-gold transition-all">
+                <i data-lucide="shield-check" class="w-4 h-4 text-brand-gold"></i>
+                <span>Digital Induction Badge</span>
+              </button>
+            </div>
           </div>
 
-          <div class="flex items-center gap-2">
-            <button onclick="showDay1CertificateModal()" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-brand-gold to-amber-300 text-brand-dark font-extrabold text-xs flex items-center gap-2 shadow-gold-glow hover:brightness-110 active:scale-95 transition-all">
-              <i data-lucide="award" class="w-4 h-4"></i>
-              <span>Certificate of Appreciation</span>
-            </button>
-            <button onclick="showDay1BadgeModal()" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs flex items-center gap-2 border border-brand-gold/40 hover:border-brand-gold transition-all">
-              <i data-lucide="shield-check" class="w-4 h-4 text-brand-gold"></i>
-              <span>Digital Induction Badge</span>
-            </button>
+          <!-- Unauthenticated Notice Alert Banner -->
+          <div id="day1AuthNoticeBanner" class="max-w-2xl mx-auto p-3 rounded-2xl bg-brand-crimson/25 border border-brand-gold/40 flex flex-wrap items-center justify-between gap-3 text-xs text-amber-200">
+            <div class="flex items-center gap-2.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse shrink-0"></span>
+              <span><strong>Official Authentication Gate:</strong> Sign in with Google to unlock verified Journey ID, Badges & Certificates.</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="loginWithGoogle()" class="px-3.5 py-1.5 bg-gradient-to-r from-brand-gold to-amber-300 text-brand-dark font-bold text-xs rounded-lg hover:brightness-110 shadow-sm flex items-center gap-1.5">
+                <i data-lucide="log-in" class="w-3.5 h-3.5"></i>
+                <span>Google Sign-In</span>
+              </button>
+              <button onclick="quickDemoLogin()" class="px-3 py-1.5 bg-white/10 hover:bg-white/20 text-amber-200 font-mono text-[11px] rounded-lg border border-amber-300/30">
+                ⚡ Demo User
+              </button>
+            </div>
+          </div>
+
+          <!-- Authenticated Learner Welcome Strip (Hidden by default) -->
+          <div id="day1AuthSuccessBanner" class="hidden max-w-2xl mx-auto p-3 rounded-2xl bg-emerald-950/40 border border-emerald-500/40 flex flex-wrap items-center justify-between gap-3 text-xs text-emerald-200">
+            <div class="flex items-center gap-2.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0"></span>
+              <span>Verified Learner: <strong class="text-white" id="day1LoggedUserName">Candidate</strong> (<span id="day1LoggedUserEmail" class="font-mono text-emerald-300">user@gmail.com</span>)</span>
+            </div>
+            <span class="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 font-mono font-bold text-[11px] border border-emerald-500/30 flex items-center gap-1">
+              <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Verified Credentials
+            </span>
           </div>
         </div>
       </div>
