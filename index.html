@@ -224,7 +224,16 @@
 
       
 
-      <!-- Nav Item 1: Leaders -->
+            <!-- Nav Item 0: Day 1 Welcome Aboard -->
+      <a href="#day1-welcome" onclick="handleNavClick()" title="Day 1 Welcome Aboard Dashboard" class="sidebar-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-brand-gold hover:text-white bg-brand-crimson/30 hover:bg-brand-crimson/50 border border-brand-gold/40 shadow-gold-glow transition-all group">
+        <i data-lucide="compass" class="w-5 h-5 text-amber-300 shrink-0 group-hover:scale-110 transition-transform"></i>
+        <div class="sidebar-text flex items-center justify-between w-full">
+          <span class="font-bold text-white whitespace-nowrap">Day 1 Dashboard</span>
+          <span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[9px] font-mono font-bold">START</span>
+        </div>
+      </a>
+
+<!-- Nav Item 1: Leaders -->
 
       <a href="#leaders" onclick="handleNavClick()" title="Maa Sarla & Paa Yash" class="sidebar-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-amber-200 hover:text-white hover:bg-brand-velvet/50 border border-transparent hover:border-brand-gold/30 transition-all group">
 
@@ -956,6 +965,330 @@
 
   </section>
 
+
+
+    <!-- ======================================================== -->
+  <!-- SECTION: DAY 1 - WELCOME ABOARD! ONBOARDING DASHBOARD     -->
+  <!-- ======================================================== -->
+  <section id="day1-welcome" class="py-20 relative overflow-hidden bg-gradient-to-b from-brand-dark via-brand-surface to-brand-dark border-t border-brand-gold/30">
+    <!-- Ambient Theatrical Glow -->
+    <div class="absolute top-1/4 left-1/3 -translate-y-1/2 w-[550px] h-[350px] bg-brand-gold/15 rounded-full blur-[140px] pointer-events-none"></div>
+    <div class="absolute bottom-10 right-1/4 w-[600px] h-[400px] bg-brand-crimson/25 rounded-full blur-[160px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+      <!-- Theatrical Section Badge & Header -->
+      <div class="text-center max-w-4xl mx-auto space-y-4 mb-12">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-crimson/40 border border-brand-gold/50 shadow-gold-glow backdrop-blur-sm">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span class="text-xs uppercase tracking-widest text-amber-200 font-mono font-bold">
+            Day 1 • Virtual Orientation & Induction
+          </span>
+          <span class="ml-1 px-2 py-0.5 rounded bg-brand-gold text-brand-dark text-[11px] font-extrabold uppercase">
+            Exclusive Batch 2026
+          </span>
+        </div>
+
+        <h2 class="font-heading text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
+          Day 1 — Welcome Aboard!<br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold via-amber-200 to-brand-gold">
+            Your Virtual Induction & Orientation Center
+          </span>
+        </h2>
+
+        <p class="text-base sm:text-lg text-slate-300 font-light max-w-3xl mx-auto leading-relaxed">
+          Welcome to a transformative journey of sacred values and futuristic execution. No fluff, no dry theory—from Day 1 you step into the world of live engineering, peer rigor, and daily compounding growth.
+        </p>
+
+        <!-- Live Journey ID Pill Banner -->
+        <div class="pt-2 flex flex-wrap items-center justify-center gap-3">
+          <div class="px-5 py-2.5 rounded-2xl bg-brand-card/90 border border-brand-gold/60 shadow-gold-glow flex items-center gap-3">
+            <span class="text-xs text-slate-400 font-mono uppercase tracking-wider">Your Official Journey ID:</span>
+            <span id="dashboardJourneyIdPill" class="font-mono font-extrabold text-base sm:text-lg text-emerald-400 tracking-wider">SYM-2026-0842</span>
+            <button onclick="copyJourneyId()" title="Copy Journey ID" class="p-1 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-colors">
+              <i data-lucide="copy" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button onclick="showDay1CertificateModal()" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-brand-gold to-amber-300 text-brand-dark font-extrabold text-xs flex items-center gap-2 shadow-gold-glow hover:brightness-110 active:scale-95 transition-all">
+              <i data-lucide="award" class="w-4 h-4"></i>
+              <span>Certificate of Appreciation</span>
+            </button>
+            <button onclick="showDay1BadgeModal()" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs flex items-center gap-2 border border-brand-gold/40 hover:border-brand-gold transition-all">
+              <i data-lucide="shield-check" class="w-4 h-4 text-brand-gold"></i>
+              <span>Digital Induction Badge</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ONBOARDING DASHBOARD TABS (Interactive 4-Pillar Console) -->
+      <div class="bg-brand-surface/90 border border-brand-gold/30 rounded-3xl p-4 sm:p-8 shadow-2xl backdrop-blur-md space-y-8">
+        
+        <!-- Tab Switcher Navigation -->
+        <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 border-b border-white/10 pb-4">
+          <button onclick="switchOnboardingTab('who-we-are')" id="tabBtn-who-we-are" class="onboard-tab-btn active px-4 py-2.5 rounded-xl font-heading font-bold text-xs sm:text-sm tracking-wide transition-all flex items-center gap-2">
+            <i data-lucide="landmark" class="w-4 h-4 text-brand-gold"></i>
+            <span>Who We Are & Ethos</span>
+          </button>
+
+          <button onclick="switchOnboardingTab('wiifm')" id="tabBtn-wiifm" class="onboard-tab-btn px-4 py-2.5 rounded-xl font-heading font-bold text-xs sm:text-sm tracking-wide transition-all flex items-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent">
+            <i data-lucide="gift" class="w-4 h-4 text-amber-400"></i>
+            <span>What's In It For You (WIIFM)</span>
+          </button>
+
+          <button onclick="switchOnboardingTab('roadmap')" id="tabBtn-roadmap" class="onboard-tab-btn px-4 py-2.5 rounded-xl font-heading font-bold text-xs sm:text-sm tracking-wide transition-all flex items-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent">
+            <i data-lucide="compass" class="w-4 h-4 text-emerald-400"></i>
+            <span>22-Day Milestones Roadmap</span>
+          </button>
+
+          <button onclick="switchOnboardingTab('toolkit')" id="tabBtn-toolkit" class="onboard-tab-btn px-4 py-2.5 rounded-xl font-heading font-bold text-xs sm:text-sm tracking-wide transition-all flex items-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 border border-transparent">
+            <i data-lucide="wrench" class="w-4 h-4 text-rose-400"></i>
+            <span>Day 1 Toolkit & Guidelines</span>
+          </button>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- TAB PANE 1: WHO WE ARE & SACRED FOUNDATION     -->
+        <!-- ============================================== -->
+        <div id="tabPane-who-we-are" class="onboard-tab-pane space-y-6">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+            <div class="lg:col-span-7 space-y-4">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-brand-crimson/30 border border-brand-gold/40 text-[11px] text-amber-300 font-mono">
+                <i data-lucide="heart" class="w-3.5 h-3.5 text-rose-400 fill-rose-400"></i>
+                Dedicated to Maa Sarla & Paa Yash
+              </div>
+              <h3 class="font-heading text-2xl sm:text-3xl font-bold text-white leading-tight">
+                Not a Corporation.<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-amber-200">
+                  A Living Temple of Values, Gratitude & Real Engineering.
+                </span>
+              </h3>
+              <p class="text-sm text-slate-300 leading-relaxed">
+                <strong>SarlaYash Learning Solutions LLP</strong> was founded with a singular sacred vow: to democratize high-conviction, human-led engineering mentorship without corporate commercialization. We operate with zero fluff, zero predatory promises, and 100% human dedication.
+              </p>
+              <p class="text-sm text-slate-300 leading-relaxed">
+                Under the direct stewardship of <strong>Kapil (The One Rupee Full-Stack CEO & Founder)</strong>, every single learner is welcomed as family. We believe that ethics, unyielding work ethic, and clean craftsmanship conquer any market recession or AI automation.
+              </p>
+            </div>
+
+            <div class="lg:col-span-5 bg-gradient-to-br from-brand-crimson/20 via-brand-card to-black p-5 rounded-2xl border border-brand-gold/40 shadow-xl space-y-4">
+              <h4 class="font-heading font-bold text-base text-amber-200 flex items-center gap-2">
+                <i data-lucide="shield-check" class="w-5 h-5 text-brand-gold"></i>
+                <span>Our 4 Non-Negotiable Pillars</span>
+              </h4>
+              <ul class="space-y-3 text-xs text-slate-300">
+                <li class="flex items-start gap-2.5">
+                  <span class="w-5 h-5 rounded-md bg-brand-gold/20 text-brand-gold font-bold flex items-center justify-center shrink-0 text-[11px]">1</span>
+                  <div><strong class="text-white">Strict 50-Seat Sanctity:</strong> We cap our cohort strictly to 50 interns so every single person receives dual-mentor reviews and daily live human feedback.</div>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="w-5 h-5 rounded-md bg-brand-gold/20 text-brand-gold font-bold flex items-center justify-center shrink-0 text-[11px]">2</span>
+                  <div><strong class="text-white">The ₹50/Day Anti-Ghosting Covenant:</strong> The ₹50 daily deposit exists purely to eliminate casual dropouts and is <strong>100% refunded</strong> with your performance stipend.</div>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="w-5 h-5 rounded-md bg-brand-gold/20 text-brand-gold font-bold flex items-center justify-center shrink-0 text-[11px]">3</span>
+                  <div><strong class="text-white">10% Theory + 90% Production Artifacts:</strong> No 3-hour monotonous lectures. 60 laser-focused minutes every day producing verifiable Git commits.</div>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="w-5 h-5 rounded-md bg-brand-gold/20 text-brand-gold font-bold flex items-center justify-center shrink-0 text-[11px]">4</span>
+                  <div><strong class="text-white">Radical Transparency:</strong> 100-point rubric, publicly audible scoreboards, and zero undisclosed fees.</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- TAB PANE 2: WIIFM (WHAT'S IN IT FOR YOU)       -->
+        <!-- ============================================== -->
+        <div id="tabPane-wiifm" class="onboard-tab-pane hidden space-y-6">
+          <div class="text-center max-w-3xl mx-auto space-y-2 mb-6">
+            <h3 class="font-heading text-2xl sm:text-3xl font-bold text-white">
+              What’s In It For You? (WIIFM)
+            </h3>
+            <p class="text-sm text-slate-300 font-light">
+              Here is exactly what you will own, master, and take into the industry upon graduating from SarlaYash Blessings 2026.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- WIIFM 1 -->
+            <div class="p-5 rounded-2xl bg-brand-card border border-white/10 hover:border-brand-gold/40 transition-all space-y-3 group">
+              <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center border border-amber-500/30 group-hover:scale-110 transition-transform">
+                <i data-lucide="git-pull-request" class="w-5 h-5"></i>
+              </div>
+              <h4 class="font-heading font-bold text-base text-white">Unshakeable Proof-of-Work</h4>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Say goodbye to generic certificates. You will build and deploy <strong>22 production-grade artifacts</strong> with clean Git histories, architecture docs, and live URLs that recruiters can actually test.
+              </p>
+            </div>
+
+            <!-- WIIFM 2 -->
+            <div class="p-5 rounded-2xl bg-brand-card border border-white/10 hover:border-emerald-500/40 transition-all space-y-3 group">
+              <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-500/30 group-hover:scale-110 transition-transform">
+                <i data-lucide="banknote" class="w-5 h-5"></i>
+              </div>
+              <h4 class="font-heading font-bold text-base text-white">₹5K to ₹15K Merit Stipend</h4>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Top benchmark qualifiers unlock direct performance stipends ranging from <strong>₹5,000 to ₹15,000 INR</strong>, plus <strong>100% full refund of your ₹1,000 commitment deposit</strong>.
+              </p>
+            </div>
+
+            <!-- WIIFM 3 -->
+            <div class="p-5 rounded-2xl bg-brand-card border border-white/10 hover:border-rose-500/40 transition-all space-y-3 group">
+              <div class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-300 flex items-center justify-center border border-rose-500/30 group-hover:scale-110 transition-transform">
+                <i data-lucide="user-check" class="w-5 h-5"></i>
+              </div>
+              <h4 class="font-heading font-bold text-base text-white">1-on-1 Founder Mentorship</h4>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Direct live interaction every single evening with Kapil. Real-time debugging sessions, code refactoring teardowns, and executive corporate communication training.
+              </p>
+            </div>
+
+            <!-- WIIFM 4 -->
+            <div class="p-5 rounded-2xl bg-brand-card border border-white/10 hover:border-brand-gold/40 transition-all space-y-3 group">
+              <div class="w-10 h-10 rounded-xl bg-brand-gold/20 text-brand-gold flex items-center justify-center border border-brand-gold/30 group-hover:scale-110 transition-transform">
+                <i data-lucide="file-check-2" class="w-5 h-5"></i>
+              </div>
+              <h4 class="font-heading font-bold text-base text-white">Permanent Credentials</h4>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Verified digital journey credentials with permanent cryptographic reference IDs (`SYM-2026-XXXX`), signed letters of recommendation (LOR) for top qualifiers, and alumni network access.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- TAB PANE 3: 22-DAY MILESTONES ROADMAP          -->
+        <!-- ============================================== -->
+        <div id="tabPane-roadmap" class="onboard-tab-pane hidden space-y-6">
+          <div class="text-center max-w-3xl mx-auto space-y-2 mb-6">
+            <h3 class="font-heading text-2xl sm:text-3xl font-bold text-white">
+              The 22-Day Sprint Roadmap
+            </h3>
+            <p class="text-sm text-slate-300 font-light">
+              One focused hour every weekday. Here is how your daily compounding journey unfolds across 4 comprehensive weeks.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Week 1 -->
+            <div class="p-5 rounded-2xl bg-brand-card border border-amber-500/30 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-mono text-amber-400 font-bold uppercase">Week 1 • Days 1 to 5</span>
+                <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px] font-bold">Foundation</span>
+              </div>
+              <h4 class="font-heading font-bold text-base text-white">Architecture & First Commits</h4>
+              <ul class="text-xs text-slate-300 space-y-1.5 list-disc list-inside">
+                <li>Day 1: Journey Onboarding & System Setup</li>
+                <li>Day 2: Domain Architecture & Skeleton</li>
+                <li>Day 3: Core Business Logic & Data Flow</li>
+                <li>Day 4: Unit Test Harness & Edge Cases</li>
+                <li>Day 5: Week 1 Artifact Review & Peer Feedback</li>
+              </ul>
+            </div>
+
+            <!-- Week 2 -->
+            <div class="p-5 rounded-2xl bg-brand-card border border-emerald-500/30 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-mono text-emerald-400 font-bold uppercase">Week 2 • Days 6 to 10</span>
+                <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">Deep Work</span>
+              </div>
+              <h4 class="font-heading font-bold text-base text-white">Production Engineering</h4>
+              <ul class="text-xs text-slate-300 space-y-1.5 list-disc list-inside">
+                <li>Day 6: Advanced Functional Pipelines</li>
+                <li>Day 7: State Management & Resilient UI</li>
+                <li>Day 8: Performance Profiling & Optimization</li>
+                <li>Day 9: Security Vulnerabilities & Sanitization</li>
+                <li>Day 10: Mid-Term Code Review & Viva</li>
+              </ul>
+            </div>
+
+            <!-- Week 3 -->
+            <div class="p-5 rounded-2xl bg-brand-card border border-rose-500/30 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-mono text-rose-400 font-bold uppercase">Week 3 • Days 11 to 15</span>
+                <span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 text-[10px] font-bold">Integration</span>
+              </div>
+              <h4 class="font-heading font-bold text-base text-white">Full-Stack Synthesis</h4>
+              <ul class="text-xs text-slate-300 space-y-1.5 list-disc list-inside">
+                <li>Day 11: Cloud Deployments & CI/CD Actions</li>
+                <li>Day 12: Real-World Latency & Edge Caching</li>
+                <li>Day 13: Observability, Logging & Sentry</li>
+                <li>Day 14: Documentation & Swagger Spec</li>
+                <li>Day 15: Capstone MVP Alpha Release</li>
+              </ul>
+            </div>
+
+            <!-- Week 4 -->
+            <div class="p-5 rounded-2xl bg-brand-card border border-brand-gold/40 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-mono text-brand-gold font-bold uppercase">Week 4 • Days 16 to 22</span>
+                <span class="px-2 py-0.5 rounded bg-brand-gold/20 text-brand-gold text-[10px] font-bold">Graduation</span>
+              </div>
+              <h4 class="font-heading font-bold text-base text-white">Release & Stipend Audit</h4>
+              <ul class="text-xs text-slate-300 space-y-1.5 list-disc list-inside">
+                <li>Day 16-18: Production Hardening</li>
+                <li>Day 19: Capstone Public Live Launch</li>
+                <li>Day 20: 100-Point Rubric Scoring Audit</li>
+                <li>Day 21: Dual-Mentor Assessment Review</li>
+                <li>Day 22: Convocation & Stipend Payout</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- TAB PANE 4: DAY 1 TOOLKIT & GUIDELINES         -->
+        <!-- ============================================== -->
+        <div id="tabPane-toolkit" class="onboard-tab-pane hidden space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 rounded-2xl bg-brand-card border border-white/10 space-y-3">
+              <h4 class="font-heading font-bold text-base text-amber-200 flex items-center gap-2">
+                <i data-lucide="check-square" class="w-5 h-5 text-emerald-400"></i>
+                <span>Your Day 1 Checklist (Complete Today)</span>
+              </h4>
+              <ul class="space-y-2.5 text-xs text-slate-300">
+                <li class="flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[10px]">✓</span>
+                  <span><strong>Confirm Your Journey ID:</strong> Copy & save your <code>SYM-2026-XXXX</code> ID.</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[10px]">✓</span>
+                  <span><strong>Download Day 1 Certificate:</strong> Download your Certificate of Appreciation.</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[10px]">✓</span>
+                  <span><strong>Save Digital Badge:</strong> Download and flaunt your Day 1 Digital Induction Badge.</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[10px]">✓</span>
+                  <span><strong>WhatsApp Connectivity:</strong> Confirm contact with Kapil (<a href="https://wa.me/919873152277" target="_blank" class="text-emerald-400 underline">9873152277</a>).</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-brand-card border border-white/10 space-y-3">
+              <h4 class="font-heading font-bold text-base text-amber-200 flex items-center gap-2">
+                <i data-lucide="alert-circle" class="w-5 h-5 text-amber-400"></i>
+                <span>Golden Rules of Engagement</span>
+              </h4>
+              <ul class="space-y-2 text-xs text-slate-300">
+                <li>• <strong>Be on time:</strong> Daily 60-minute window begins precisely on schedule.</li>
+                <li>• <strong>Original Code Only:</strong> Zero plagiarism tolerated; we build genuine competence.</li>
+                <li>• <strong>Respectful Camaraderie:</strong> All 50 learners are on a shared ascent. Support your peers.</li>
+                <li>• <strong>Ask Without Hesitation:</strong> No question is too basic. We are here to elevate you.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
 
 
   <!-- SECTION: MEET THE LEADERS — MAA SARLA AND PAA YASH -->
@@ -4645,6 +4978,10 @@
 
 
         <div class="flex flex-wrap items-center justify-center gap-3">
+          <a href="#day1-welcome" onclick="closeApplyModal()" class="w-full sm:w-auto px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-400 text-brand-dark rounded-xl text-xs font-extrabold hover:brightness-110 flex items-center justify-center gap-1.5 shadow-md">
+            <i data-lucide="compass" class="w-4 h-4"></i>
+            <span>Enter Day 1 Dashboard</span>
+          </a>
 
           <button onclick="showOfferLetterModal()" class="w-full sm:w-auto px-5 py-2.5 bg-gradient-to-r from-brand-gold via-amber-300 to-brand-gold text-brand-dark rounded-xl text-xs font-bold hover:brightness-110 flex items-center justify-center gap-1.5 shadow-gold-glow">
 
@@ -5657,6 +5994,200 @@
 
   </div>
 
+
+
+    <!-- ======================================================== -->
+  <!-- MODAL: DAY 1 CERTIFICATE OF APPRECIATION (DOWNLOAD)       -->
+  <!-- ======================================================== -->
+  <div id="day1CertificateModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
+    <div class="relative w-full max-w-4xl bg-brand-surface border border-brand-gold/40 rounded-2xl shadow-2xl p-4 sm:p-6 my-6 text-slate-200 max-h-[92vh] overflow-y-auto">
+      
+      <!-- Close Button -->
+      <button onclick="closeDay1CertificateModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors z-20">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Modal Title -->
+      <div class="flex items-center gap-3 mb-4 pb-3 border-b border-white/10">
+        <div class="w-10 h-10 rounded-xl bg-brand-crimson/30 border border-brand-gold/30 flex items-center justify-center text-brand-gold shrink-0">
+          <i data-lucide="award" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Day 1 Certificate of Appreciation</h3>
+          <p class="text-xs text-slate-400">Formal Recognition of Day 1 Virtual Onboarding & Induction</p>
+        </div>
+      </div>
+
+      <!-- Scrollable Preview Container -->
+      <div class="w-full overflow-x-auto pb-4">
+        <!-- CERTIFICATE OF APPRECIATION DOCUMENT (Pristine White Landscape Container) -->
+        <div id="day1CertPdfDoc" class="bg-white text-slate-900 shadow-2xl text-left font-sans mx-auto" style="background-color: #ffffff !important; color: #0f172a !important; width: 850px; min-width: 850px; height: 600px; max-height: 600px; box-sizing: border-box; padding: 24px 30px; display: flex; flex-direction: column; justify-content: space-between; border: 10px double #E5A93C; position: relative;">
+          
+          <!-- Inner Border Accent -->
+          <div style="position: absolute; inset: 4px; border: 1px solid #B87A1E; pointer-events-none;"></div>
+
+          <!-- Certificate Header -->
+          <div class="text-center space-y-1 relative z-10">
+            <!-- SarlaYash Theatrical Banner -->
+            <div class="w-full rounded overflow-hidden border border-amber-300 shadow-sm bg-black mb-2" style="max-height: 65px;">
+              <img src="assets/banner.png" alt="SarlaYash Learning Solutions LLP" class="w-full block object-cover" style="max-height: 65px; object-fit: cover;">
+            </div>
+
+            <p class="text-[10px] uppercase tracking-widest text-amber-900 font-mono font-bold">
+              With the Sacred Blessings of Maa Sarla & Paa Yash
+            </p>
+            <h2 class="font-heading font-extrabold text-2xl text-slate-900 tracking-wider">
+              CERTIFICATE OF APPRECIATION
+            </h2>
+            <p class="text-[11px] uppercase tracking-widest text-brand-ruby font-bold font-mono">
+              ★ DAY 1 VIRTUAL ONBOARDING & INDUCTION COMPLETED ★
+            </p>
+          </div>
+
+          <!-- Certificate Body -->
+          <div class="text-center space-y-3 px-8 my-auto relative z-10">
+            <p class="text-xs text-slate-600 font-serif italic">This Certificate of Honour is Proudly Presented To</p>
+            
+            <div class="font-heading font-extrabold text-2xl sm:text-3xl text-slate-900 border-b-2 border-brand-gold pb-1.5 inline-block px-8 tracking-wide" id="certCandidateName">
+              Candidate Name
+            </div>
+
+            <p class="text-xs text-slate-700 max-w-2xl mx-auto leading-relaxed">
+              in recognition of successfully completing <strong>Day 1 Virtual Onboarding & Induction</strong> in the prestigious <strong>SarlaYash Blessings Internships 2026 (Anniversary Batch)</strong>, demonstrating formal alignment with our foundational ethos of <em>"Legacy of Values, Future of Learning"</em> and commitment to 22 working days of live production engineering.
+            </p>
+
+            <div class="flex items-center justify-center gap-6 pt-1 text-xs font-mono text-slate-600">
+              <div>Assigned Track: <strong class="text-slate-900 font-sans font-bold" id="certTrack">Full-Stack Development</strong></div>
+              <div>•</div>
+              <div>Official Journey ID: <strong class="text-emerald-700 font-bold" id="certJourneyId">SYM-2026-0842</strong></div>
+              <div>•</div>
+              <div>Date: <strong class="text-slate-900" id="certDate">October 25, 2026</strong></div>
+            </div>
+          </div>
+
+          <!-- Signatures & Official Stamp Footer -->
+          <div class="pt-3 border-t-2 border-slate-200 flex items-center justify-between gap-4 relative z-10">
+            <div class="text-left space-y-0.5">
+              <div class="font-heading font-bold text-base text-slate-900">Kapil Narula</div>
+              <p class="text-xs text-amber-900 font-semibold">Founder & Lead Mentor | The One Rupee Full-Stack CEO</p>
+              <p class="text-[10px] text-slate-600 font-medium">SarlaYash Learning Solutions LLP</p>
+              <div class="text-[9px] text-slate-500 font-mono">
+                Corporate: https://sarlayash.com/ • Verification: namaste@sarlayash.com
+              </div>
+            </div>
+
+            <!-- Official Seal Stamp -->
+            <div class="w-18 h-18 rounded-full border-2 border-dashed border-amber-600 p-0.5 flex items-center justify-center text-center bg-amber-50 shadow-sm shrink-0">
+              <div class="w-16 h-16 rounded-full border border-amber-700 flex flex-col items-center justify-center p-0.5 text-amber-900 select-none">
+                <span class="text-[5px] font-bold uppercase tracking-tight leading-tight">SARLAYASH LEARNING</span>
+                <span class="text-[7.5px] font-extrabold text-brand-ruby my-0.5">★ DAY 1 VERIFIED ★</span>
+                <span class="text-[5.5px] font-mono font-bold">BATCH 2026</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div id="certPdfStatusMsg" class="w-full hidden mt-3"></div>
+
+      <div class="flex flex-wrap items-center justify-between gap-3 mt-4 pt-3 border-t border-white/10">
+        <button id="downloadCertPdfBtn" onclick="downloadDay1Certificate()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-gold via-amber-300 to-brand-gold text-brand-dark font-extrabold text-xs flex items-center gap-2 shadow-gold-glow hover:brightness-110 active:scale-95 transition-all">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>Download Certificate (PDF Format)</span>
+        </button>
+
+        <button onclick="closeDay1CertificateModal()" class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white font-bold text-xs ml-auto">
+          Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ======================================================== -->
+  <!-- MODAL: DAY 1 DIGITAL INDUCTION BADGE (DOWNLOAD)           -->
+  <!-- ======================================================== -->
+  <div id="day1BadgeModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
+    <div class="relative w-full max-w-lg bg-brand-surface border border-brand-gold/40 rounded-2xl shadow-2xl p-4 sm:p-6 my-6 text-slate-200">
+      
+      <!-- Close Button -->
+      <button onclick="closeDay1BadgeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors z-20">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Modal Title -->
+      <div class="flex items-center gap-3 mb-4 pb-3 border-b border-white/10">
+        <div class="w-10 h-10 rounded-xl bg-brand-crimson/30 border border-brand-gold/30 flex items-center justify-center text-brand-gold shrink-0">
+          <i data-lucide="shield-check" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Day 1 Induction Badge</h3>
+          <p class="text-xs text-slate-400">Shareable Digital Credential & Proof of Induction</p>
+        </div>
+      </div>
+
+      <!-- BADGE CARD CONTAINER (High-Resolution Graphic Badge) -->
+      <div class="flex justify-center py-2">
+        <div id="day1BadgeCard" class="w-[340px] rounded-3xl bg-gradient-to-br from-[#1b120c] via-brand-surface to-black border-2 border-brand-gold/60 p-6 text-center space-y-4 shadow-theatre relative overflow-hidden">
+          <!-- Background Glow -->
+          <div class="absolute -top-12 -right-12 w-36 h-36 bg-brand-gold/20 rounded-full blur-2xl pointer-events-none"></div>
+          <div class="absolute -bottom-12 -left-12 w-36 h-36 bg-brand-crimson/30 rounded-full blur-2xl pointer-events-none"></div>
+
+          <!-- Top Emblem -->
+          <div class="flex items-center justify-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span class="text-[9.5px] font-mono uppercase tracking-widest text-brand-gold font-bold">SarlaYash Blessings 2026</span>
+          </div>
+
+          <!-- Badge Shield Icon -->
+          <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-brand-crimson via-brand-ruby to-brand-velvet border-2 border-brand-gold/70 shadow-gold-glow flex items-center justify-center text-brand-gold">
+            <i data-lucide="shield-check" class="w-10 h-10"></i>
+          </div>
+
+          <!-- Badge Titles -->
+          <div class="space-y-1">
+            <h4 class="font-heading font-extrabold text-xl text-white tracking-wide">
+              DAY 1 INDUCTED
+            </h4>
+            <p class="text-[11px] text-amber-200/90 font-mono font-medium">Virtual Orientation & Induction</p>
+          </div>
+
+          <!-- Candidate Details Card -->
+          <div class="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1 text-xs">
+            <div class="text-white font-bold text-sm" id="badgeCandidateName">Candidate Name</div>
+            <div class="text-amber-300 text-[11px] font-medium" id="badgeTrack">Full-Stack Development</div>
+            <div class="text-emerald-400 font-mono font-bold text-xs pt-1 border-t border-white/10" id="badgeJourneyId">
+              SYM-2026-0842
+            </div>
+          </div>
+
+          <!-- Badge Footer -->
+          <div class="pt-2 border-t border-white/10 text-[9px] text-slate-400 font-mono space-y-0.5">
+            <div>SarlaYash Learning Solutions LLP</div>
+            <div class="text-amber-300/80">Legacy of Values • Future of Learning</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div id="badgeStatusMsg" class="w-full hidden mt-3"></div>
+
+      <div class="flex flex-wrap items-center justify-between gap-3 mt-4 pt-3 border-t border-white/10">
+        <button id="downloadBadgeBtn" onclick="downloadDay1Badge()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-gold to-amber-300 text-brand-dark font-extrabold text-xs flex items-center gap-2 shadow-gold-glow hover:brightness-110 active:scale-95 transition-all">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>Download Badge (PNG Image)</span>
+        </button>
+
+        <button onclick="closeDay1BadgeModal()" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white font-bold text-xs ml-auto">
+          Close
+        </button>
+      </div>
+
+    </div>
+  </div>
 
 
   <!-- Custom Scripts -->

@@ -894,7 +894,9 @@ function submitApplication() {
   const track = document.getElementById('app_track').value;
   const background = document.getElementById('app_background').value;
   const slot = document.getElementById('app_slot').value;
-  const regId = 'SY-2026-' + Math.floor(1000 + Math.random() * 9000);
+  const rand4 = Math.floor(1000 + Math.random() * 9000);
+  const regId = 'SY-2026-' + rand4;
+  const journeyId = 'SYM-2026-' + rand4;
 
   const appData = {
     uid: currentUser.uid,
@@ -907,6 +909,7 @@ function submitApplication() {
     slot: slot,
     utr: utr,
     regId: regId,
+    journeyId: journeyId,
     submittedAt: new Date().toISOString(),
     feeInstallment: 250,
     feeTotal: 1000,
@@ -931,6 +934,9 @@ function submitApplication() {
   document.getElementById('pass_track').innerText = track;
   document.getElementById('pass_slot').innerText = slot;
   document.getElementById('pass_regId').innerText = regId;
+  if (typeof populateDay1DashboardDetails === 'function') {
+    populateDay1DashboardDetails();
+  }
 
   // Trigger celebration confetti
   if (typeof confetti === 'function') {
@@ -1096,6 +1102,9 @@ async function fetchUserApplication(user) {
         window.currentUserApp = doc.data();
         localStorage.setItem('sarlayash_app_' + user.uid, JSON.stringify(doc.data()));
       }
+    }
+    if (typeof populateDay1DashboardDetails === 'function') {
+      populateDay1DashboardDetails();
     }
   } catch (err) {
     console.warn("Error fetching candidate app:", err);
@@ -1736,3 +1745,337 @@ function copyOfferLetterText() {
   });
 }
 
+
+
+// ----------------------------------------------------
+// 13. DAY 1 ONBOARDING, JOURNEY ID, CERTIFICATE & BADGE
+// ----------------------------------------------------
+
+function getJourneyId(app) {
+  if (app && app.journeyId) return app.journeyId;
+  if (app && app.regId) {
+    // If regId is SY-2026-XXXX, convert to SYM-2026-XXXX
+    return app.regId.replace(/^SY-/, 'SYM-');
+  }
+  return 'SYM-2026-0842';
+}
+
+function copyJourneyId() {
+  const pill = document.getElementById('dashboardJourneyIdPill');
+  const idText = pill ? pill.innerText.trim() : 'SYM-2026-0842';
+  navigator.clipboard.writeText(idText).then(() => {
+    alert(`Copied Journey ID: ${idText}\nKeep this safe for your Day 1 to Day 22 attendance and Capstone evaluation!`);
+  }).catch(() => {
+    prompt("Copy your Journey ID:", idText);
+  });
+}
+
+function switchOnboardingTab(tabName) {
+  // Update buttons
+  const buttons = document.querySelectorAll('.onboard-tab-btn');
+  buttons.forEach(btn => {
+    btn.classList.remove('active', 'bg-brand-velvet/60', 'text-amber-200', 'border-brand-gold/40');
+    btn.classList.add('text-slate-400', 'border-transparent');
+  });
+
+  const activeBtn = document.getElementById('tabBtn-' + tabName);
+  if (activeBtn) {
+    activeBtn.classList.add('active');
+    activeBtn.classList.remove('text-slate-400', 'border-transparent');
+  }
+
+  // Update panes
+  const panes = document.querySelectorAll('.onboard-tab-pane');
+  panes.forEach(pane => pane.classList.add('hidden'));
+
+  const activePane = document.getElementById('tabPane-' + tabName);
+  if (activePane) {
+    activePane.classList.remove('hidden');
+  }
+
+  if (window.lucide) window.lucide.createIcons();
+}
+
+function populateDay1DashboardDetails() {
+  const app = window.currentUserApp || {
+    name: currentUser?.displayName || 'Candidate Name',
+    track: 'Full-Stack Development',
+    regId: 'SY-2026-0842'
+  };
+
+  const journeyId = getJourneyId(app);
+
+  const pill = document.getElementById('dashboardJourneyIdPill');
+  if (pill) pill.innerText = journeyId;
+
+  const sidebarJourneyPill = document.getElementById('sidebarJourneyId');
+  if (sidebarJourneyPill) sidebarJourneyPill.innerText = journeyId;
+}
+
+function showDay1CertificateModal() {
+  const app = window.currentUserApp || {
+    name: currentUser?.displayName || 'Candidate Name',
+    track: 'Full-Stack Development',
+    regId: 'SY-2026-0842'
+  };
+
+  const journeyId = getJourneyId(app);
+  const today = new Date().toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
+
+  const nameElem = document.getElementById('certCandidateName');
+  const trackElem = document.getElementById('certTrack');
+  const journeyElem = document.getElementById('certJourneyId');
+  const dateElem = document.getElementById('certDate');
+  const statusContainer = document.getElementById('certPdfStatusMsg');
+
+  if (nameElem) nameElem.innerText = app.name;
+  if (trackElem) trackElem.innerText = app.track || 'Full-Stack Development';
+  if (journeyElem) journeyElem.innerText = journeyId;
+  if (dateElem) dateElem.innerText = today;
+
+  if (statusContainer) {
+    statusContainer.classList.add('hidden');
+    statusContainer.innerHTML = '';
+  }
+
+  const modal = document.getElementById('day1CertificateModal');
+  if (modal) modal.classList.remove('hidden');
+  if (window.lucide) window.lucide.createIcons();
+}
+
+function closeDay1CertificateModal() {
+  const modal = document.getElementById('day1CertificateModal');
+  if (modal) modal.classList.add('hidden');
+}
+
+async function downloadDay1Certificate() {
+  const element = document.getElementById('day1CertPdfDoc');
+  if (!element) {
+    alert("Certificate document not found.");
+    return;
+  }
+
+  const app = window.currentUserApp || {
+    regId: 'SY-2026-0842',
+    name: currentUser?.displayName || 'Candidate Name'
+  };
+
+  const jIdClean = getJourneyId(app).replace(/[^a-zA-Z0-9_-]/g, '');
+  const filename = `SarlaYash-Day1-Certificate-${jIdClean}.pdf`;
+
+  const btn = document.getElementById('downloadCertPdfBtn');
+  const statusContainer = document.getElementById('certPdfStatusMsg');
+  const originalHtml = btn ? btn.innerHTML : '';
+
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = `<span class="inline-block animate-spin mr-1.5">⏳</span><span>Generating Certificate PDF...</span>`;
+  }
+  if (statusContainer) {
+    statusContainer.classList.remove('hidden');
+    statusContainer.innerHTML = `<div class="p-2.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2"><span class="animate-pulse">📜</span><span>Rendering Day 1 Certificate of Appreciation...</span></div>`;
+  }
+
+  // Create isolated container at (0, 0)
+  const container = document.createElement('div');
+  container.style.position = 'fixed';
+  container.style.left = '0';
+  container.style.top = '0';
+  container.style.width = '850px';
+  container.style.margin = '0';
+  container.style.padding = '0';
+  container.style.zIndex = '999999';
+  container.style.backgroundColor = '#ffffff';
+  container.style.overflow = 'visible';
+
+  const clone = element.cloneNode(true);
+  clone.style.width = '850px';
+  clone.style.minWidth = '850px';
+  clone.style.maxWidth = '850px';
+  clone.style.margin = '0';
+  clone.style.padding = '24px 30px';
+  clone.style.boxSizing = 'border-box';
+  clone.style.backgroundColor = '#ffffff';
+  clone.style.color = '#0f172a';
+
+  container.appendChild(clone);
+  document.body.appendChild(container);
+
+  const opt = {
+    margin: [0, 0, 0, 0],
+    filename: filename,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { 
+      scale: 2, 
+      useCORS: true, 
+      backgroundColor: '#ffffff',
+      logging: false
+    },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
+  };
+
+  try {
+    if (typeof html2pdf !== 'undefined') {
+      const worker = html2pdf().set(opt).from(clone);
+      const blob = await worker.outputPdf('blob');
+      const blobUrl = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => { 
+        if (document.body.contains(a)) document.body.removeChild(a); 
+      }, 1000);
+
+      if (statusContainer) {
+        statusContainer.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs">
+            <span>✅ <strong>Day 1 Certificate PDF Generated!</strong> If download didn't start:</span>
+            <a href="${blobUrl}" download="${filename}" target="_blank" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-bold underline shadow">
+              Click Here to Open / Save PDF
+            </a>
+          </div>
+        `;
+      }
+    } else {
+      fallbackCleanPrint(element, filename);
+    }
+  } catch (err) {
+    console.error('Certificate generation error:', err);
+    fallbackCleanPrint(element, filename);
+  } finally {
+    if (document.body.contains(container)) {
+      document.body.removeChild(container);
+    }
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = originalHtml;
+      if (window.lucide) window.lucide.createIcons();
+    }
+  }
+}
+
+function showDay1BadgeModal() {
+  const app = window.currentUserApp || {
+    name: currentUser?.displayName || 'Candidate Name',
+    track: 'Full-Stack Development',
+    regId: 'SY-2026-0842'
+  };
+
+  const journeyId = getJourneyId(app);
+
+  const nameElem = document.getElementById('badgeCandidateName');
+  const trackElem = document.getElementById('badgeTrack');
+  const journeyElem = document.getElementById('badgeJourneyId');
+  const statusContainer = document.getElementById('badgeStatusMsg');
+
+  if (nameElem) nameElem.innerText = app.name;
+  if (trackElem) trackElem.innerText = app.track || 'Full-Stack Development';
+  if (journeyElem) journeyElem.innerText = journeyId;
+
+  if (statusContainer) {
+    statusContainer.classList.add('hidden');
+    statusContainer.innerHTML = '';
+  }
+
+  const modal = document.getElementById('day1BadgeModal');
+  if (modal) modal.classList.remove('hidden');
+  if (window.lucide) window.lucide.createIcons();
+}
+
+function closeDay1BadgeModal() {
+  const modal = document.getElementById('day1BadgeModal');
+  if (modal) modal.classList.add('hidden');
+}
+
+async function downloadDay1Badge() {
+  const element = document.getElementById('day1BadgeCard');
+  if (!element) {
+    alert("Badge card not found.");
+    return;
+  }
+
+  const app = window.currentUserApp || {
+    regId: 'SY-2026-0842',
+    name: currentUser?.displayName || 'Candidate Name'
+  };
+
+  const jIdClean = getJourneyId(app).replace(/[^a-zA-Z0-9_-]/g, '');
+  const filename = `SarlaYash-Day1-Badge-${jIdClean}.png`;
+
+  const btn = document.getElementById('downloadBadgeBtn');
+  const statusContainer = document.getElementById('badgeStatusMsg');
+  const originalHtml = btn ? btn.innerHTML : '';
+
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = `<span class="inline-block animate-spin mr-1.5">⏳</span><span>Rendering PNG Badge...</span>`;
+  }
+  if (statusContainer) {
+    statusContainer.classList.remove('hidden');
+    statusContainer.innerHTML = `<div class="p-2.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2"><span class="animate-pulse">🛡️</span><span>Generating high-resolution PNG badge...</span></div>`;
+  }
+
+  try {
+    if (typeof html2canvas !== 'undefined') {
+      const canvas = await html2canvas(element, {
+        scale: 3,
+        useCORS: true,
+        backgroundColor: '#0A0A0C',
+        logging: false
+      });
+
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          alert("Could not generate badge image.");
+          return;
+        }
+        const blobUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          if (document.body.contains(a)) document.body.removeChild(a);
+        }, 1000);
+
+        if (statusContainer) {
+          statusContainer.innerHTML = `
+            <div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs">
+              <span>✅ <strong>Digital Badge Downloaded!</strong></span>
+              <a href="${blobUrl}" download="${filename}" target="_blank" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-bold underline shadow">
+                Save Image
+              </a>
+            </div>
+          `;
+        }
+      }, 'image/png');
+    } else {
+      alert("Canvas renderer is not available.");
+    }
+  } catch (err) {
+    console.error("Badge download error:", err);
+    alert("Error downloading badge: " + err.message);
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = originalHtml;
+      if (window.lucide) window.lucide.createIcons();
+    }
+  }
+}
+
+
+// Initialize Day 1 Dashboard Details on Startup
+document.addEventListener('DOMContentLoaded', () => {
+  if (typeof populateDay1DashboardDetails === 'function') {
+    populateDay1DashboardDetails();
+  }
+});
