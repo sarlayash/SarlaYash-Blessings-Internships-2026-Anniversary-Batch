@@ -8930,3 +8930,214 @@ async function downloadSignedCodeOfConductPdf() {
     }
   }
 }
+
+
+/* ========================================================================= */
+/* POWER BI DASHBOARD ARCHITECTURE & CONTROLLER                             */
+/* ========================================================================= */
+
+const PBI_PAGES = {
+  'overview': { num: 1, name: '1. Executive Overview & KPIs', title: 'Executive Overview' },
+  'induction': { num: 2, name: '2. Day 1 Induction & Learner Deck', title: 'Day 1 Induction' },
+  'coc': { num: 3, name: '3. Code of Conduct (15 Tenets)', title: 'Code of Conduct' },
+  'curriculum': { num: 4, name: '4. Curriculum, Daily Formula & Tracks', title: 'Curriculum & Tracks' },
+  'finance': { num: 5, name: '5. Stipend Simulator & 50-Seat Ledger', title: 'Stipend & Ledger' },
+  'leadership': { num: 6, name: '6. Mentorship & Leadership Homage', title: 'Leadership Homage' },
+  'verification': { num: 7, name: '7. Verification Hub & FAQ', title: 'Verification & FAQ' }
+};
+
+let currentPbiPage = 'overview';
+
+function switchPbiPage(pageId, scrollToTop = true) {
+  if (!PBI_PAGES[pageId]) pageId = 'overview';
+  currentPbiPage = pageId;
+
+  // 1. Toggle page containers
+  document.querySelectorAll('.pbi-page-container').forEach(el => {
+    el.classList.add('hidden');
+  });
+  const target = document.getElementById(`pbi-page-${pageId}`);
+  if (target) {
+    target.classList.remove('hidden');
+  }
+
+  // 2. Update Left Navigation Rail items
+  document.querySelectorAll('.pbi-nav-item').forEach(btn => {
+    const p = btn.getAttribute('data-pbi-page');
+    if (p === pageId) {
+      btn.classList.add('active', 'bg-brand-crimson/50', 'border-brand-gold/50', 'text-white');
+      btn.classList.remove('border-transparent');
+    } else {
+      btn.classList.remove('active', 'bg-brand-crimson/50', 'border-brand-gold/50', 'text-white');
+      btn.classList.add('border-transparent');
+    }
+  });
+
+  // 3. Update Bottom Sheet Tab items
+  document.querySelectorAll('.pbi-sheet-tab').forEach(tab => {
+    const p = tab.getAttribute('data-pbi-page');
+    if (p === pageId) {
+      tab.classList.add('active');
+      tab.classList.remove('text-slate-400');
+    } else {
+      tab.classList.remove('active');
+      tab.classList.add('text-slate-400');
+    }
+  });
+
+  // 4. Update Header Breadcrumb and Page indicator
+  const info = PBI_PAGES[pageId];
+  const breadcrumb = document.getElementById('pbiBreadcrumbPage');
+  if (breadcrumb) breadcrumb.innerText = info.name;
+
+  const pageNum = document.getElementById('pbiCurrentPageNum');
+  if (pageNum) pageNum.innerText = `Page ${info.num} of 7`;
+
+  // 5. Update URL hash cleanly
+  try {
+    history.replaceState(null, null, `#${pageId}`);
+  } catch (e) {}
+
+  // 6. Refresh icons
+  if (window.lucide) window.lucide.createIcons();
+
+  // 7. Scroll to top if requested
+  if (scrollToTop) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+// Toggle individual collapsible card
+function togglePbiCard(cardId) {
+  const body = document.getElementById(`body-${cardId}`);
+  const chevron = document.getElementById(`chevron-${cardId}`);
+  const status = document.getElementById(`status-${cardId}`);
+  const card = document.querySelector(`[data-pbi-card="${cardId}"]`);
+
+  if (!body) return;
+
+  const isHidden = body.classList.contains('hidden');
+  if (isHidden) {
+    body.classList.remove('hidden');
+    if (chevron) chevron.classList.remove('rotate-180');
+    if (status) status.innerText = 'Expanded';
+    if (card) card.classList.remove('collapsed');
+  } else {
+    body.classList.add('hidden');
+    if (chevron) chevron.classList.add('rotate-180');
+    if (status) status.innerText = 'Collapsed';
+    if (card) card.classList.add('collapsed');
+  }
+}
+
+// Global Collapse All / Expand All toggle
+let pbiGlobalCollapsed = false;
+function toggleAllPbiCards() {
+  pbiGlobalCollapsed = !pbiGlobalCollapsed;
+  const cards = document.querySelectorAll('.pbi-visual-card');
+  const toggleText = document.getElementById('globalCollapseToggleText');
+
+  cards.forEach(card => {
+    const cardId = card.getAttribute('data-pbi-card');
+    const body = document.getElementById(`body-${cardId}`);
+    const chevron = document.getElementById(`chevron-${cardId}`);
+    const status = document.getElementById(`status-${cardId}`);
+
+    if (pbiGlobalCollapsed) {
+      card.classList.add('collapsed');
+      if (body) body.classList.add('hidden');
+      if (chevron) chevron.classList.add('rotate-180');
+      if (status) status.innerText = 'Collapsed';
+    } else {
+      card.classList.remove('collapsed');
+      if (body) body.classList.remove('hidden');
+      if (chevron) chevron.classList.remove('rotate-180');
+      if (status) status.innerText = 'Expanded';
+    }
+  });
+
+  if (toggleText) {
+    toggleText.innerText = pbiGlobalCollapsed ? 'Expand All' : 'Collapse All';
+  }
+}
+
+// Toggle Header Ribbon
+function togglePbiHeader() {
+  const ribbon = document.getElementById('pbiHeaderRibbon');
+  const icon = document.getElementById('pbiHeaderToggleIcon');
+  if (!ribbon) return;
+  ribbon.classList.toggle('hidden');
+  if (icon) icon.classList.toggle('rotate-180');
+}
+
+// Toggle Footer Status Bar
+function togglePbiFooter() {
+  const footerBar = document.getElementById('pbiFooterBar');
+  const icon = document.getElementById('pbiFooterToggleIcon');
+  if (!footerBar) return;
+  footerBar.classList.toggle('hidden');
+  if (icon) icon.classList.toggle('rotate-180');
+}
+
+// Refresh Data Animation
+function refreshPbiData() {
+  const icon = document.getElementById('pbiRefreshIcon');
+  if (icon) {
+    icon.classList.add('animate-spin');
+    setTimeout(() => {
+      icon.classList.remove('animate-spin');
+    }, 800);
+  }
+  if (window.lucide) window.lucide.createIcons();
+}
+
+// Fullscreen toggle
+function togglePbiFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(err => {
+      console.warn("Fullscreen request error:", err);
+    });
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
+  }
+}
+
+// Map hash to page on initial load
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash.replace('#', '').toLowerCase();
+  const hashMapping = {
+    'day1-welcome': 'induction',
+    'induction': 'induction',
+    'coc': 'coc',
+    'code-of-conduct': 'coc',
+    'curriculum': 'curriculum',
+    'blueprint': 'curriculum',
+    'daily-formula': 'curriculum',
+    'tracks': 'curriculum',
+    'roadmap': 'curriculum',
+    'finance': 'finance',
+    'rubric-calculator': 'finance',
+    'refund-policy': 'finance',
+    'leadership': 'leadership',
+    'leaders': 'leadership',
+    'mentor-note': 'leadership',
+    'verification': 'verification',
+    'faq': 'verification',
+    'ecosystem': 'verification',
+    'overview': 'overview'
+  };
+
+  if (hash && hashMapping[hash]) {
+    switchPbiPage(hashMapping[hash], false);
+    const targetEl = document.getElementById(hash);
+    if (targetEl) {
+      setTimeout(() => {
+        targetEl.scrollIntoView({ behavior: 'smooth' });
+      }, 200);
+    }
+  } else {
+    switchPbiPage('overview', false);
+  }
+});

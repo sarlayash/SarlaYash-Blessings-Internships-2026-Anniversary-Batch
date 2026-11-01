@@ -225,155 +225,74 @@
 
     <!-- Navigation Links List (Scrollable) -->
 
-    <div class="flex-1 overflow-y-auto py-4 px-3 space-y-1.5 text-xs font-medium">
+    <div class="flex-1 overflow-y-auto py-3 px-2 space-y-1 text-xs font-medium">
+      <div class="px-2 py-1 text-[9.5px] font-mono uppercase text-slate-400 tracking-wider font-bold">Report Pages (Views)</div>
 
-      
-
-            <!-- Nav Item 0: Day 1 Welcome Aboard -->
-      <a href="#day1-welcome" onclick="handleNavClick()" title="Day 1 Welcome Aboard Dashboard" class="sidebar-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-brand-gold hover:text-white bg-brand-crimson/30 hover:bg-brand-crimson/50 border border-brand-gold/40 shadow-gold-glow transition-all group">
-        <i data-lucide="compass" class="w-5 h-5 text-amber-300 shrink-0 group-hover:scale-110 transition-transform"></i>
+      <!-- Page 1: Executive Overview -->
+      <button onclick="switchPbiPage('overview')" data-pbi-page="overview" title="1. Executive Overview & KPIs" class="pbi-nav-item active w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-200 hover:text-white hover:bg-white/5 border border-transparent transition-all group text-left">
+        <i data-lucide="activity" class="w-4 h-4 text-brand-gold shrink-0 group-hover:scale-110 transition-transform"></i>
         <div class="sidebar-text flex items-center justify-between w-full">
-          <span class="font-bold text-white whitespace-nowrap">Day 1 Dashboard</span>
-          <span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[9px] font-mono font-bold">START</span>
+          <span class="font-semibold whitespace-nowrap">1. Executive Overview</span>
+          <span class="px-1.5 py-0.2 rounded bg-brand-gold/20 text-brand-gold text-[8.5px] font-mono font-bold">LIVE</span>
         </div>
-      </a>
+      </button>
 
-<!-- Nav Item 1: Leaders -->
-
-      <a href="#leaders" onclick="handleNavClick()" title="Maa Sarla & Paa Yash" class="sidebar-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-amber-200 hover:text-white hover:bg-brand-velvet/50 border border-transparent hover:border-brand-gold/30 transition-all group">
-
-        <i data-lucide="heart" class="w-5 h-5 text-rose-400 fill-rose-400/40 shrink-0 group-hover:scale-110 transition-transform"></i>
-
-        <span class="sidebar-text whitespace-nowrap font-semibold">Maa & Paa</span>
-
-      </a>
-
-
-
-      <!-- Nav Item 2: Mentor Note -->
-
-      <a href="#mentor-note" onclick="handleNavClick()" title="Mentor Note (The One Rupee Full-Stack CEO)" class="sidebar-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-brand-gold hover:text-amber-200 hover:bg-brand-velvet/50 border border-transparent hover:border-brand-gold/30 transition-all group">
-
-        <i data-lucide="sparkles" class="w-5 h-5 text-brand-gold shrink-0 group-hover:scale-110 transition-transform"></i>
-
-        <span class="sidebar-text whitespace-nowrap font-semibold">Mentor Note (Kapil)</span>
-
-      </a>
-
-
-
-      <!-- Nav Item 3: Blueprint -->
-
-      <a href="#blueprint" onclick="handleNavClick()" title="The Program Blueprint" class="sidebar-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 transition-all group">
-
-        <i data-lucide="book-open" class="w-5 h-5 text-slate-400 group-hover:text-brand-gold shrink-0 transition-colors"></i>
-
-        <span class="sidebar-text whitespace-nowrap">Program Blueprint</span>
-
-      </a>
-
-
-
-      <!-- Nav Item 4: 1-Hr Formula -->
-
-      <a href="#daily-formula" onclick="handleNavClick()" title="Daily 1-Hour Formula (60 Mins)" class="sidebar-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 transition-all group">
-
-        <i data-lucide="clock" class="w-5 h-5 text-slate-400 group-hover:text-amber-300 shrink-0 transition-colors"></i>
-
-        <span class="sidebar-text whitespace-nowrap">1-Hour Formula</span>
-
-      </a>
-
-
-
-      <!-- Nav Item 5: Tracks -->
-
-      <a href="#tracks" onclick="handleNavClick()" title="12 Domain Tracks (SFE)" class="sidebar-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 transition-all group">
-
-        <i data-lucide="layers" class="w-5 h-5 text-slate-400 group-hover:text-rose-400 shrink-0 transition-colors"></i>
-
-        <div class="sidebar-text flex items-center justify-between w-full whitespace-nowrap">
-
-          <span>12 Domain Tracks</span>
-
-          <span class="text-[9px] px-1.5 py-0.5 rounded bg-brand-gold/20 text-brand-gold border border-brand-gold/30">SFE</span>
-
+      <!-- Page 2: Day 1 Induction -->
+      <button onclick="switchPbiPage('induction')" data-pbi-page="induction" title="2. Day 1 Induction & Learner Deck" class="pbi-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-200 hover:text-white hover:bg-white/5 border border-transparent transition-all group text-left">
+        <i data-lucide="compass" class="w-4 h-4 text-amber-300 shrink-0 group-hover:scale-110 transition-transform"></i>
+        <div class="sidebar-text flex items-center justify-between w-full">
+          <span class="font-semibold whitespace-nowrap">2. Day 1 Induction</span>
+          <span class="px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 text-[8.5px] font-mono font-bold">START</span>
         </div>
+      </button>
 
-      </a>
+      <!-- Page 3: Code of Conduct -->
+      <button onclick="switchPbiPage('coc')" data-pbi-page="coc" title="3. Code of Conduct (15 Tenets)" class="pbi-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-200 hover:text-white hover:bg-white/5 border border-transparent transition-all group text-left">
+        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400 shrink-0 group-hover:scale-110 transition-transform"></i>
+        <div class="sidebar-text flex items-center justify-between w-full">
+          <span class="font-semibold whitespace-nowrap">3. Code of Conduct</span>
+          <span class="px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 text-[8.5px] font-mono font-bold">15 TENETS</span>
+        </div>
+      </button>
 
+      <!-- Page 4: Curriculum & Tracks -->
+      <button onclick="switchPbiPage('curriculum')" data-pbi-page="curriculum" title="4. Curriculum, Daily Formula & Tracks" class="pbi-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-200 hover:text-white hover:bg-white/5 border border-transparent transition-all group text-left">
+        <i data-lucide="book-open" class="w-4 h-4 text-sky-400 shrink-0 group-hover:scale-110 transition-transform"></i>
+        <div class="sidebar-text flex items-center justify-between w-full">
+          <span class="font-semibold whitespace-nowrap">4. Curriculum & Tracks</span>
+          <span class="px-1.5 py-0.2 rounded bg-sky-500/20 text-sky-300 text-[8.5px] font-mono font-bold">22 DAYS</span>
+        </div>
+      </button>
 
+      <!-- Page 5: Stipend & Ledger -->
+      <button onclick="switchPbiPage('finance')" data-pbi-page="finance" title="5. Stipend Simulator & 50-Seat Ledger" class="pbi-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-200 hover:text-white hover:bg-white/5 border border-transparent transition-all group text-left">
+        <i data-lucide="calculator" class="w-4 h-4 text-amber-400 shrink-0 group-hover:scale-110 transition-transform"></i>
+        <div class="sidebar-text flex items-center justify-between w-full">
+          <span class="font-semibold whitespace-nowrap">5. Stipend & Ledger</span>
+          <span class="px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 text-[8.5px] font-mono font-bold">₹15,000</span>
+        </div>
+      </button>
 
-      <!-- Nav Item 6: Roadmap -->
+      <!-- Page 6: Mentorship & Leadership -->
+      <button onclick="switchPbiPage('leadership')" data-pbi-page="leadership" title="6. Mentorship & Leadership Homage" class="pbi-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-200 hover:text-white hover:bg-white/5 border border-transparent transition-all group text-left">
+        <i data-lucide="heart" class="w-4 h-4 text-rose-400 shrink-0 group-hover:scale-110 transition-transform"></i>
+        <div class="sidebar-text flex items-center justify-between w-full">
+          <span class="font-semibold whitespace-nowrap">6. Leadership Homage</span>
+          <span class="px-1.5 py-0.2 rounded bg-rose-500/20 text-rose-300 text-[8.5px] font-mono font-bold">MAA & PAA</span>
+        </div>
+      </button>
 
-      <a href="#roadmap" onclick="handleNavClick()" title="22-Working-Day Roadmap" class="sidebar-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 transition-all group">
-
-        <i data-lucide="calendar" class="w-5 h-5 text-slate-400 group-hover:text-blue-400 shrink-0 transition-colors"></i>
-
-        <span class="sidebar-text whitespace-nowrap">22-Day Roadmap</span>
-
-      </a>
-
-
-
-      <!-- Nav Item 7: Rubric & Stipend -->
-
-      <a href="#rubric-calculator" onclick="handleNavClick()" title="100-Point Rubric & Simulator" class="sidebar-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 transition-all group">
-
-        <i data-lucide="sliders" class="w-5 h-5 text-slate-400 group-hover:text-purple-400 shrink-0 transition-colors"></i>
-
-        <span class="sidebar-text whitespace-nowrap">Rubric & Simulator</span>
-
-      </a>
-
-
-
-      <!-- Nav Item 8: Fee Justification & Deposit Refund -->
-
-      <a href="#refund-policy" onclick="handleNavClick()" title="₹50 Daily Commitment & Stipend Refund Policy" class="sidebar-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 transition-all group">
-
-        <i data-lucide="shield-alert" class="w-5 h-5 text-slate-400 group-hover:text-amber-400 shrink-0 transition-colors"></i>
-
-        <span class="sidebar-text whitespace-nowrap">₹50/Day Deposit & Why Fee</span>
-
-      </a>
-
-
-
-      <!-- Nav Item 9: Ecosystem -->
-
-      <a href="#ecosystem" onclick="handleNavClick()" title="SarlaYash Official Ecosystem & Portals" class="sidebar-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 transition-all group">
-
-        <i data-lucide="globe" class="w-5 h-5 text-slate-400 group-hover:text-brand-gold shrink-0 transition-colors"></i>
-
-        <span class="sidebar-text whitespace-nowrap">Official Ecosystem</span>
-
-      </a>
-
-
-
-      <!-- Nav Item 10: FAQ -->
-
-      <a href="#faq" onclick="handleNavClick()" title="Frequently Asked Questions & Handbook" class="sidebar-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 transition-all group">
-
-        <i data-lucide="help-circle" class="w-5 h-5 text-slate-400 group-hover:text-amber-300 shrink-0 transition-colors"></i>
-
-        <span class="sidebar-text whitespace-nowrap">FAQ & Rules</span>
-
-      </a>
-
-
-
+      <!-- Page 7: Verification & FAQ -->
+      <button onclick="switchPbiPage('verification')" data-pbi-page="verification" title="7. Verification Hub & FAQ" class="pbi-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-200 hover:text-white hover:bg-white/5 border border-transparent transition-all group text-left">
+        <i data-lucide="check-circle" class="w-4 h-4 text-emerald-300 shrink-0 group-hover:scale-110 transition-transform"></i>
+        <div class="sidebar-text flex items-center justify-between w-full">
+          <span class="font-semibold whitespace-nowrap">7. Verification & FAQ</span>
+          <span class="px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 text-[8.5px] font-mono font-bold">QR AUTH</span>
+        </div>
+      </button>
     </div>
 
-
-
-    <!-- Sidebar Bottom: Apply CTA & Google Auth Status -->
-
-    <div class="p-3 border-t border-white/10 space-y-2 bg-black/50">
-
-      
-
+    <div class="p-3 border-t border-white/10 space-y-2">
       <!-- Apply Button -->
 
       <button onclick="openApplyModal()" title="Apply for 2026 Batch" class="w-full py-2.5 px-3 bg-gradient-to-r from-brand-gold to-amber-300 text-brand-dark font-bold text-xs rounded-xl shadow-gold-glow hover:brightness-110 transition-all flex items-center justify-center gap-2 group">
@@ -540,213 +459,221 @@
 
   <!-- Main Navigation Top Bar -->
 
-  <header class="sticky top-0 z-30 bg-brand-dark/90 backdrop-blur-md border-b border-white/10 transition-all duration-300" id="mainHeader">
-
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-
-      
-
-      <!-- Left Controls: Toggle Sidebar & Brand -->
-
-      <div class="flex items-center gap-3">
-
-        <!-- Mobile Open Drawer Button -->
-
-        <button onclick="toggleMobileSidebar(true)" class="lg:hidden p-2 text-slate-300 hover:text-white rounded-lg focus:outline-none bg-white/5 border border-white/10">
-
-          <i data-lucide="menu" class="w-5 h-5 text-brand-gold"></i>
-
+  <!-- POWER BI ENTERPRISE REPORT HEADER & SLICER RIBBON -->
+  <header class="sticky top-0 z-40 bg-[#0B0E14] border-b border-white/10 shadow-2xl transition-all duration-300" id="mainHeader">
+    <!-- Top Row: Power BI App Bar -->
+    <div class="px-3 sm:px-6 h-14 flex items-center justify-between gap-3 border-b border-white/5">
+      <!-- Left: Workspace Switcher & Branding -->
+      <div class="flex items-center gap-2.5 shrink-0">
+        <!-- Mobile Sidebar Button -->
+        <button onclick="toggleMobileSidebar(true)" class="lg:hidden p-1.5 text-slate-300 hover:text-white rounded-lg bg-white/5 border border-white/10">
+          <i data-lucide="menu" class="w-4 h-4 text-brand-gold"></i>
         </button>
 
-
-
-        <!-- Desktop Toggle Sidebar Pill -->
-
-        <button onclick="toggleSidebarCollapse()" class="hidden lg:inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/10 hover:border-brand-gold/40 text-xs font-semibold text-slate-300 hover:text-white transition-all bg-white/5">
-
-          <i data-lucide="columns-2" class="w-4 h-4 text-brand-gold"></i>
-
-          <span id="headerToggleLabel">Collapse Sidebar</span>
-
+        <!-- Desktop Sidebar Toggle -->
+        <button onclick="toggleSidebarCollapse()" class="hidden lg:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-white/10 hover:border-brand-gold/40 text-[11px] font-semibold text-slate-300 hover:text-white transition-all bg-white/5">
+          <i data-lucide="columns-2" class="w-3.5 h-3.5 text-brand-gold"></i>
+          <span id="headerToggleLabel">Pages Pane</span>
         </button>
 
-
-
-        <a href="#" class="flex items-center gap-2.5 group">
-
-          <div class="relative w-9 h-9 rounded-lg bg-gradient-to-br from-brand-crimson to-black p-0.5 border border-brand-gold/40 shadow-gold-glow flex items-center justify-center overflow-hidden">
-
-            <img src="assets/banner.png" alt="SarlaYash Emblem" class="w-full h-full object-cover rounded-md scale-125 transform group-hover:scale-135 transition-transform duration-500">
-
+        <!-- Brand Emblem & Workspace -->
+        <a href="#overview" onclick="switchPbiPage('overview')" class="flex items-center gap-2 group">
+          <div class="w-7 h-7 rounded-md bg-gradient-to-br from-brand-crimson to-black p-0.5 border border-brand-gold/40 shadow-gold-glow flex items-center justify-center overflow-hidden">
+            <img src="assets/banner.png" alt="SarlaYash Emblem" class="w-full h-full object-cover rounded scale-125">
           </div>
-
-          <div>
-
-            <div class="font-heading font-bold text-base sm:text-lg tracking-wider text-white flex items-center gap-1">
-
-              SARLAYASH <span class="text-brand-gold font-normal text-[10px] tracking-widest px-1.5 py-0.2 rounded bg-brand-gold/10 border border-brand-gold/20">BLESSINGS</span>
-
+          <div class="leading-tight">
+            <div class="font-heading font-extrabold text-xs sm:text-sm tracking-wider text-white flex items-center gap-1.5">
+              SARLAYASH <span class="text-brand-gold font-mono text-[9px] px-1.5 py-0.2 rounded bg-brand-gold/15 border border-brand-gold/25 font-bold">POWER BI</span>
             </div>
-
-            <p class="text-[9px] tracking-widest uppercase text-slate-400 font-medium">Legacy of Values • Future of Learning</p>
-
+            <div class="text-[8.5px] font-mono text-slate-400 hidden sm:block">Anniversary Batch 2026 • Live Dashboard Hub</div>
           </div>
-
         </a>
 
+        <!-- Live Status Indicator -->
+        <span class="hidden xl:inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono font-bold">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          LIVE PRODUCTION
+        </span>
       </div>
 
+      <!-- Center: KPI Slicer Chips (Desktop) -->
+      <div class="hidden md:flex items-center gap-2 overflow-x-auto py-1 text-[10.5px] font-mono">
+        <div class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-slate-300 flex items-center gap-1.5 shrink-0">
+          <span class="text-slate-500">Cohort:</span>
+          <strong class="text-white font-sans">50 / 50 Enrolled</strong>
+        </div>
+        <div class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-slate-300 flex items-center gap-1.5 shrink-0">
+          <span class="text-slate-500">Stipend:</span>
+          <strong class="text-emerald-400 font-sans">₹5,000 – ₹15,000</strong>
+        </div>
+        <div class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-slate-300 flex items-center gap-1.5 shrink-0">
+          <span class="text-slate-500">Model:</span>
+          <strong class="text-amber-300 font-sans">10% Theory / 90% Prod</strong>
+        </div>
+      </div>
 
+      <!-- Right: Action Bar, Demo Login & User Auth -->
+      <div class="flex items-center gap-2 shrink-0">
+        <!-- Global Collapse All / Expand All Button -->
+        <button onclick="toggleAllPbiCards()" class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/10 border border-white/10 hover:border-brand-gold/30 text-[11px] font-mono text-slate-300 hover:text-white transition-all" title="Collapse / Expand All Visual Cards">
+          <i data-lucide="chevrons-up-down" class="w-3.5 h-3.5 text-brand-gold"></i>
+          <span id="globalCollapseToggleText">Collapse All</span>
+        </button>
 
-      <!-- Action & Auth Area -->
+        <!-- Refresh Data Button -->
+        <button onclick="refreshPbiData()" class="p-1.5 rounded-md bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-all" title="Refresh Live Data Visuals">
+          <i data-lucide="refresh-cw" id="pbiRefreshIcon" class="w-3.5 h-3.5 text-amber-300"></i>
+        </button>
 
-      <div class="flex items-center gap-2 sm:gap-3">
-
-        
-
-        <!-- Google User Profile / Login Button -->
-
-        <div id="googleAuthNavContainer" class="flex items-center">
-
-          <button onclick="loginWithGoogle()" id="googleLoginBtn" class="inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold text-white bg-white/5 hover:bg-white/10 border border-white/20 hover:border-brand-gold rounded-lg transition-all shadow-sm">
-
-            <svg class="w-4 h-4" viewBox="0 0 24 24">
-
-              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-
-              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-
-              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-
-              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-
-            </svg>
-
-            <span class="hidden sm:inline">Google Login</span>
-
-            <span class="sm:hidden">Login</span>
-
+        <!-- Quick Demo Account Dropdown Switcher -->
+        <div class="relative group hidden sm:block">
+          <button class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-brand-crimson/30 hover:bg-brand-crimson/50 border border-brand-gold/30 text-[10.5px] font-mono text-amber-200">
+            <i data-lucide="user-check" class="w-3.5 h-3.5 text-brand-gold"></i>
+            <span>Demo Users</span>
+            <i data-lucide="chevron-down" class="w-3 h-3 text-slate-400"></i>
           </button>
-
-
-
-          <!-- Logged-in state (hidden by default) -->
-
-          <div id="googleUserBadge" class="hidden items-center gap-2 bg-brand-surface border border-brand-gold/40 rounded-lg p-1 pr-2.5">
-
-            <img id="googleUserPhoto" src="" alt="Google Profile" class="w-7 h-7 rounded-full border border-brand-gold object-cover">
-
-            <div class="text-left hidden sm:block">
-
-              <div id="googleUserName" class="text-xs font-bold text-white leading-tight truncate max-w-[110px]">User</div>
-
-              <span class="text-[9px] text-emerald-400 font-mono flex items-center gap-0.5">
-
-                <i data-lucide="check-circle" class="w-2.5 h-2.5"></i> Verified
-
-              </span>
-
-            </div>
-
-            <button onclick="logoutGoogle()" title="Sign Out" class="text-slate-400 hover:text-rose-400 p-1">
-
-              <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
-
+          <div class="absolute right-0 top-full mt-1 w-52 bg-[#121622] border border-brand-gold/30 rounded-xl shadow-2xl p-1.5 hidden group-hover:block z-50 text-xs">
+            <div class="px-2 py-1 text-[9px] font-mono uppercase text-slate-400 border-b border-white/10">Quick Demo Accounts</div>
+            <button onclick="quickDemoLogin(0)" class="w-full text-left px-2.5 py-1.5 rounded-lg hover:bg-white/10 text-slate-200 hover:text-white flex items-center justify-between">
+              <span>Aarav Sharma</span>
+              <span class="text-[9px] font-mono text-emerald-400">SYM-7842</span>
             </button>
-
+            <button onclick="quickDemoLogin(1)" class="w-full text-left px-2.5 py-1.5 rounded-lg hover:bg-white/10 text-slate-200 hover:text-white flex items-center justify-between">
+              <span>Priya Patel</span>
+              <span class="text-[9px] font-mono text-emerald-400">SYM-7843</span>
+            </button>
+            <button onclick="quickDemoLogin(2)" class="w-full text-left px-2.5 py-1.5 rounded-lg hover:bg-white/10 text-slate-200 hover:text-white flex items-center justify-between">
+              <span>Rohan Mehta</span>
+              <span class="text-[9px] font-mono text-emerald-400">SYM-7844</span>
+            </button>
           </div>
-
-
-
-          <!-- Manage / Update UTR Button (Shown when logged in) -->
-
-          <button id="navManageAppBtn" onclick="openManageApplicationModal()" class="hidden items-center gap-1.5 ml-2 px-3 py-2 text-xs font-semibold text-amber-300 bg-brand-gold/15 hover:bg-brand-gold/25 border border-brand-gold/40 rounded-lg transition-all shadow-sm">
-
-            <i data-lucide="receipt" class="w-4 h-4 text-brand-gold"></i>
-
-            <span class="hidden sm:inline">My Application & UTR</span>
-
-            <span class="sm:hidden">My UTR</span>
-
-          </button>
-
         </div>
 
+        <!-- Google User Profile / Login Button Container -->
+        <div id="googleAuthNavContainer" class="flex items-center">
+          <button onclick="loginWithGoogle()" id="googleLoginBtn" class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold text-white bg-white/5 hover:bg-white/10 border border-white/20 hover:border-brand-gold rounded-md transition-all shadow-sm">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            <span class="hidden sm:inline">Sign In</span>
+          </button>
 
+          <!-- Logged-in state (hidden by default) -->
+          <div id="googleUserBadge" class="hidden items-center gap-1.5 bg-[#121622] border border-brand-gold/40 rounded-lg p-0.5 pr-2">
+            <img id="googleUserPhoto" src="" alt="Google Profile" class="w-6 h-6 rounded-full border border-brand-gold object-cover">
+            <div class="text-left hidden sm:block leading-tight">
+              <div id="googleUserName" class="text-[11px] font-bold text-white truncate max-w-[90px]">User</div>
+              <span class="text-[8px] text-emerald-400 font-mono">Verified</span>
+            </div>
+            <button onclick="logoutGoogle()" title="Sign Out" class="text-slate-400 hover:text-rose-400 p-0.5">
+              <i data-lucide="log-out" class="w-3 h-3"></i>
+            </button>
+          </div>
 
-        <button onclick="openApplyModal()" class="relative inline-flex items-center justify-center px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold tracking-wide text-brand-dark transition-all duration-300 bg-gradient-to-r from-brand-gold via-amber-300 to-brand-gold rounded-lg shadow-gold-glow hover:shadow-lg hover:brightness-110 active:scale-95 group overflow-hidden">
+          <!-- Manage Application / UTR Button -->
+          <button id="navManageAppBtn" onclick="openManageApplicationModal()" class="hidden items-center gap-1 ml-1.5 px-2.5 py-1 text-xs font-semibold text-amber-300 bg-brand-gold/15 hover:bg-brand-gold/25 border border-brand-gold/40 rounded-md transition-all shadow-sm">
+            <i data-lucide="receipt" class="w-3.5 h-3.5 text-brand-gold"></i>
+            <span class="hidden sm:inline">My Application</span>
+            <span class="sm:hidden">App</span>
+          </button>
+        </div>
 
-          <span class="relative z-10 flex items-center gap-1.5 sm:gap-2">
-
-            <span>Apply Now</span>
-
-            <i data-lucide="arrow-up-right" class="w-3.5 sm:w-4 h-3.5 sm:h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
-
-          </span>
-
-          <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full duration-1000 bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform"></div>
-
+        <!-- Apply CTA -->
+        <button onclick="openApplyModal()" class="px-3 py-1.5 rounded-md bg-gradient-to-r from-brand-gold via-amber-300 to-brand-gold text-brand-dark font-extrabold text-xs shadow-gold-glow hover:brightness-110 active:scale-95 transition-all">
+          <span>Apply Now</span>
         </button>
 
-
-
-        <!-- Mobile Menu Toggle -->
-
-        <button id="mobileMenuBtn" class="lg:hidden p-2 text-slate-300 hover:text-white rounded-lg focus:outline-none">
-
-          <i data-lucide="menu" class="w-6 h-6"></i>
-
+        <!-- Toggle Ribbon Button -->
+        <button onclick="togglePbiHeader()" class="p-1 rounded text-slate-400 hover:text-white" title="Toggle Ribbon Bar">
+          <i data-lucide="chevron-up" id="pbiHeaderToggleIcon" class="w-4 h-4 transition-transform duration-300"></i>
         </button>
-
       </div>
-
     </div>
 
-
-
-    <!-- Mobile Nav Menu -->
-
-    <div id="mobileMenu" class="hidden lg:hidden bg-brand-surface/95 border-b border-brand-gold/20 px-6 py-5 space-y-4 text-base backdrop-blur-xl">
-
-      <a href="#leaders" class="block text-amber-300 font-semibold hover:text-brand-gold py-1">Meet the Leaders (Maa Sarla & Paa Yash)</a>
-
-      <a href="#mentor-note" class="block text-brand-gold font-semibold hover:text-amber-300 py-1">Mentor Note (The One Rupee Full-Stack CEO)</a>
-
-      <a href="#blueprint" class="block text-slate-200 hover:text-brand-gold py-1">The Blueprint</a>
-
-      <a href="#daily-formula" class="block text-slate-200 hover:text-brand-gold py-1">Daily 1-Hour Formula</a>
-
-      <a href="#tracks" class="block text-slate-200 hover:text-brand-gold py-1">12 Domain Tracks</a>
-
-      <a href="#roadmap" class="block text-slate-200 hover:text-brand-gold py-1">22-Day Roadmap</a>
-
-      <a href="#rubric-calculator" class="block text-slate-200 hover:text-brand-gold py-1">Rubric & Stipend Simulator</a>
-
-      <a href="#refund-policy" class="block text-slate-200 hover:text-brand-gold py-1">Why Fee? ₹50/Day Deposit & Stipend Refund</a>
-
-      <a href="#faq" class="block text-slate-200 hover:text-brand-gold py-1">Frequently Asked Questions</a>
-
-      <div class="pt-3 border-t border-white/10">
-
-        <button onclick="openApplyModal()" class="w-full py-3 bg-gradient-to-r from-brand-gold to-amber-400 text-brand-dark font-bold rounded-lg text-center flex items-center justify-center gap-2 shadow-gold-glow">
-
-          <span>Apply for Anniversary Batch</span>
-
-          <i data-lucide="arrow-right" class="w-4 h-4"></i>
-
-        </button>
-
+    <!-- Bottom Row: Slicer Ribbon & Breadcrumb Bar -->
+    <div id="pbiHeaderRibbon" class="px-3 sm:px-6 py-1.5 bg-[#121620] flex flex-wrap items-center justify-between gap-2 text-xs transition-all duration-300">
+      <!-- Breadcrumb -->
+      <div class="flex items-center gap-1.5 text-slate-400 font-mono text-[11px]">
+        <span>Reports</span>
+        <span>›</span>
+        <span>SarlaYash 2026</span>
+        <span>›</span>
+        <strong id="pbiBreadcrumbPage" class="text-brand-gold font-sans font-bold">1. Executive Overview & KPIs</strong>
       </div>
 
+      <!-- Quick Page Links in Ribbon -->
+      <div class="flex items-center gap-1 overflow-x-auto py-0.5 text-[11px] font-medium">
+        <button onclick="switchPbiPage('overview')" class="px-2.5 py-1 rounded-md text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center gap-1">
+          <i data-lucide="activity" class="w-3 h-3 text-brand-gold"></i>
+          <span>Overview</span>
+        </button>
+        <button onclick="switchPbiPage('induction')" class="px-2.5 py-1 rounded-md text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center gap-1">
+          <i data-lucide="compass" class="w-3 h-3 text-amber-300"></i>
+          <span>Day 1 Induction</span>
+        </button>
+        <button onclick="switchPbiPage('coc')" class="px-2.5 py-1 rounded-md text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center gap-1">
+          <i data-lucide="shield-check" class="w-3 h-3 text-emerald-400"></i>
+          <span>Code of Conduct</span>
+        </button>
+        <button onclick="switchPbiPage('curriculum')" class="px-2.5 py-1 rounded-md text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center gap-1">
+          <i data-lucide="book-open" class="w-3 h-3 text-sky-400"></i>
+          <span>Curriculum</span>
+        </button>
+        <button onclick="switchPbiPage('finance')" class="px-2.5 py-1 rounded-md text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center gap-1">
+          <i data-lucide="calculator" class="w-3 h-3 text-amber-400"></i>
+          <span>Stipend & Ledger</span>
+        </button>
+        <button onclick="switchPbiPage('leadership')" class="px-2.5 py-1 rounded-md text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center gap-1">
+          <i data-lucide="heart" class="w-3 h-3 text-rose-400"></i>
+          <span>Leadership</span>
+        </button>
+        <button onclick="switchPbiPage('verification')" class="px-2.5 py-1 rounded-md text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center gap-1">
+          <i data-lucide="check-circle" class="w-3 h-3 text-emerald-300"></i>
+          <span>Verify & FAQ</span>
+        </button>
+      </div>
     </div>
-
   </header>
 
 
 
   <!-- HERO SECTION WITH SHARED THEATRE BANNER -->
 
-  <section class="relative pt-6 pb-20 overflow-hidden">
+  <!-- ======================================================== -->
+<!-- POWER BI ENTERPRISE DASHBOARD CANVAS (7 REPORT PAGES)     -->
+<!-- ======================================================== -->
+<div id="pbiDashboardCanvas" class="w-full">
+  <!-- ========================================== -->
+<!-- POWER BI PAGE 1: EXECUTIVE OVERVIEW        -->
+<!-- ========================================== -->
+<div id="pbi-page-overview" class="pbi-page-container space-y-6">
+  <!-- Power BI Visual Card: overview-hero -->
+<div class="pbi-visual-card bg-[#0D111A] border border-white/10 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 mb-8" data-pbi-card="overview-hero">
+  <!-- Card Header -->
+  <div class="pbi-card-header bg-gradient-to-r from-[#141A26] via-[#1A2234] to-[#141A26] px-5 py-3.5 border-b border-white/10 flex items-center justify-between cursor-pointer select-none group" onclick="togglePbiCard('overview-hero')">
+    <div class="flex items-center gap-3">
+      <div class="w-2.5 h-2.5 rounded-full bg-brand-gold animate-pulse"></div>
+      <i data-lucide="activity" class="w-5 h-5 text-amber-300 shrink-0"></i>
+      <h3 class="font-heading font-bold text-sm sm:text-base text-white tracking-wide group-hover:text-amber-200 transition-colors">
+        Executive Overview, Sacred Dedication & Live KPI Deck
+      </h3>
+      <span class="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-brand-gold/15 border border-brand-gold/30 text-[10px] font-mono font-bold text-brand-gold">
+        Live Analytics Visual
+      </span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="text-[11px] text-slate-400 font-mono hidden sm:inline" id="status-overview-hero">Expanded</span>
+      <button type="button" class="p-1 rounded-lg hover:bg-white/10 text-slate-400 group-hover:text-white transition-all" title="Toggle Section">
+        <i data-lucide="chevron-down" class="pbi-chevron w-4 h-4 transition-transform duration-300" id="chevron-overview-hero"></i>
+      </button>
+    </div>
+  </div>
+  <!-- Card Body -->
+  <div class="pbi-card-body transition-all duration-300" id="body-overview-hero">
+<section class="relative pt-6 pb-20 overflow-hidden">
 
     <!-- Ambient Background Lighting -->
 
@@ -969,13 +896,37 @@
     </div>
 
   </section>
-
-
-
-    <!-- ======================================================== -->
-  <!-- SECTION: DAY 1 - WELCOME ABOARD! ONBOARDING DASHBOARD     -->
-  <!-- ======================================================== -->
-  <section id="day1-welcome" class="py-20 relative overflow-hidden bg-gradient-to-b from-brand-dark via-brand-surface to-brand-dark border-t border-brand-gold/30">
+  </div>
+</div>
+</div>
+  <!-- ========================================== -->
+<!-- POWER BI PAGE 2: DAY 1 INDUCTION          -->
+<!-- ========================================== -->
+<div id="pbi-page-induction" class="pbi-page-container space-y-6 hidden">
+  <!-- Power BI Visual Card: day1-induction -->
+<div class="pbi-visual-card bg-[#0D111A] border border-white/10 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 mb-8" data-pbi-card="day1-induction">
+  <!-- Card Header -->
+  <div class="pbi-card-header bg-gradient-to-r from-[#141A26] via-[#1A2234] to-[#141A26] px-5 py-3.5 border-b border-white/10 flex items-center justify-between cursor-pointer select-none group" onclick="togglePbiCard('day1-induction')">
+    <div class="flex items-center gap-3">
+      <div class="w-2.5 h-2.5 rounded-full bg-brand-gold animate-pulse"></div>
+      <i data-lucide="compass" class="w-5 h-5 text-amber-300 shrink-0"></i>
+      <h3 class="font-heading font-bold text-sm sm:text-base text-white tracking-wide group-hover:text-amber-200 transition-colors">
+        Day 1 Virtual Onboarding & Induction Dashboard
+      </h3>
+      <span class="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-brand-gold/15 border border-brand-gold/30 text-[10px] font-mono font-bold text-brand-gold">
+        Learner Experience Hub
+      </span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="text-[11px] text-slate-400 font-mono hidden sm:inline" id="status-day1-induction">Expanded</span>
+      <button type="button" class="p-1 rounded-lg hover:bg-white/10 text-slate-400 group-hover:text-white transition-all" title="Toggle Section">
+        <i data-lucide="chevron-down" class="pbi-chevron w-4 h-4 transition-transform duration-300" id="chevron-day1-induction"></i>
+      </button>
+    </div>
+  </div>
+  <!-- Card Body -->
+  <div class="pbi-card-body transition-all duration-300" id="body-day1-induction">
+<section id="day1-welcome" class="py-20 relative overflow-hidden bg-gradient-to-b from-brand-dark via-brand-surface to-brand-dark border-t border-brand-gold/30">
     <!-- Ambient Theatrical Glow -->
     <div class="absolute top-1/4 left-1/3 -translate-y-1/2 w-[550px] h-[350px] bg-brand-gold/15 rounded-full blur-[140px] pointer-events-none"></div>
     <div class="absolute bottom-10 right-1/4 w-[600px] h-[400px] bg-brand-crimson/25 rounded-full blur-[160px] pointer-events-none"></div>
@@ -1597,599 +1548,98 @@
 
     </div>
   </section>
-
-
-  <!-- SECTION: MEET THE LEADERS — MAA SARLA AND PAA YASH -->
-
-  <section id="leaders" class="py-24 relative overflow-hidden bg-gradient-to-b from-brand-dark via-brand-surface to-brand-dark border-t border-brand-gold/30">
-
-    <!-- Ambient Golden & Ruby Glow -->
-
-    <div class="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-brand-gold/15 rounded-full blur-[140px] pointer-events-none"></div>
-
-    <div class="absolute bottom-10 right-1/4 w-[500px] h-[400px] bg-brand-crimson/20 rounded-full blur-[150px] pointer-events-none"></div>
-
-
-
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-
-      
-
-      <!-- Section Header -->
-
-      <div class="text-center max-w-3xl mx-auto mb-16">
-
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-xs font-mono text-brand-gold tracking-widest uppercase mb-3">
-
-          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-brand-gold"></i>
-
-          <span>The Living Inspiration & Soul</span>
-
-        </div>
-
-        <h2 class="font-heading text-3xl sm:text-5xl font-bold text-white tracking-tight">
-
-          Meet the Leaders
-
-        </h2>
-
-        <div class="text-xl sm:text-2xl font-serif text-brand-gold mt-2 font-medium tracking-wide">
-
-          Maa Sarla and Paa Yash
-
-        </div>
-
-        <p class="text-slate-400 mt-3 text-sm sm:text-base leading-relaxed">
-
-          "Legacy of Values, Future of Learning" — SarlaYash is not just an organization; it is a sacred tribute to the boundless love, integrity, and lifelong blessings of our eternal guides.
-
-        </p>
-
-      </div>
-
-
-
-      <!-- Leaders Showcase Grid -->
-
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-
-        
-
-        <!-- Left Column: The Portrait Card -->
-
-        <div class="lg:col-span-5 flex justify-center">
-
-          <div class="relative w-full max-w-md group">
-
-            <!-- Glowing Bezel / Aura -->
-
-            <div class="absolute -inset-1.5 bg-gradient-to-tr from-brand-gold via-amber-300 to-brand-crimson rounded-3xl blur-md opacity-60 group-hover:opacity-100 transition duration-700"></div>
-
-
-
-            <div class="relative rounded-2xl bg-brand-dark border-2 border-brand-gold/50 overflow-hidden shadow-2xl">
-
-              <!-- Portrait Image -->
-
-              <div class="relative aspect-[2/3] overflow-hidden bg-black flex items-center justify-center">
-
-                <img src="assets/leaders.jpg" alt="Meet the Leaders - Maa Sarla and Paa Yash" class="w-full h-full object-cover object-top transform group-hover:scale-[1.03] transition-transform duration-700 ease-out">
-
-                
-
-                <!-- Bottom Soft Gradient Overlay -->
-
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
-
-
-
-                <!-- Floating Bottom Badge -->
-
-                <div class="absolute bottom-4 inset-x-4 p-4 rounded-xl bg-brand-dark/90 backdrop-blur-md border border-brand-gold/40 text-center">
-
-                  <div class="font-heading font-bold text-white text-base sm:text-lg tracking-wider text-glow">
-
-                    Maa Sarla & Paa Yash
-
-                  </div>
-
-                  <div class="text-[11px] font-mono text-brand-gold uppercase tracking-widest mt-0.5">
-
-                    SarlaYash Universe • Powered by Kapil
-
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-
-        <!-- Right Column: Heartfelt Philosophy & Legacy of Gratitude -->
-
-        <div class="lg:col-span-7 space-y-6">
-
-          <div class="space-y-4 text-slate-300 text-sm sm:text-base leading-relaxed">
-
-            <div class="p-4 rounded-2xl bg-brand-velvet/30 border border-brand-gold/30">
-
-              <span class="text-xs font-mono font-bold uppercase tracking-wider text-brand-gold flex items-center gap-1.5 mb-1.5">
-
-                <i data-lucide="quote" class="w-4 h-4 text-brand-gold"></i>
-
-                The Sacred Foundation
-
-              </span>
-
-              <p class="text-white text-base sm:text-lg font-serif italic leading-snug">
-
-                "Real work. Measurable growth. A legacy of gratitude."
-
-              </p>
-
-            </div>
-
-
-
-            <p>
-
-              The name <strong class="text-white">SarlaYash</strong> is the eternal combination of <strong class="text-brand-gold">Maa Sarla</strong> and <strong class="text-brand-gold">Paa Yash</strong>. Every initiative undertaken—from empowering first-semester students and dropouts to rewarding excellence through merit stipends—stems from their unwavering conviction that true learning must be anchored in values, empathy, and absolute honesty.
-
-            </p>
-
-
-
-            <p>
-
-              Unlike mass commercial institutes that treat learners as transactional numbers, this internship model is crafted with the same protective care, discipline, and earnest commitment that parents bestow upon their children.
-
-            </p>
-
-          </div>
-
-
-
-          <!-- The Three Guiding Pillars -->
-
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-
-            <div class="p-4 rounded-xl bg-brand-card border border-white/10 hover:border-brand-gold/40 transition-colors">
-
-              <div class="w-8 h-8 rounded-lg bg-brand-gold/20 flex items-center justify-center text-brand-gold mb-2">
-
-                <i data-lucide="shield-check" class="w-4 h-4"></i>
-
-              </div>
-
-              <h4 class="font-bold text-white text-sm">Truth & Integrity</h4>
-
-              <p class="text-xs text-slate-400 mt-1">₹50/day commitment deposit, 100% deposit refund for stipend earners, zero false promises.</p>
-
-            </div>
-
-
-
-            <div class="p-4 rounded-xl bg-brand-card border border-white/10 hover:border-brand-gold/40 transition-colors">
-
-              <div class="w-8 h-8 rounded-lg bg-rose-500/20 flex items-center justify-center text-rose-300 mb-2">
-
-                <i data-lucide="heart-handshake" class="w-4 h-4"></i>
-
-              </div>
-
-              <h4 class="font-bold text-white text-sm">Blessings for All</h4>
-
-              <p class="text-xs text-slate-400 mt-1">SFE philosophy: accessible to dropouts, freshers, switchers, and learners alike.</p>
-
-            </div>
-
-
-
-            <div class="p-4 rounded-xl bg-brand-card border border-white/10 hover:border-brand-gold/40 transition-colors">
-
-              <div class="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 mb-2">
-
-                <i data-lucide="target" class="w-4 h-4"></i>
-
-              </div>
-
-              <h4 class="font-bold text-white text-sm">Purposeful Growth</h4>
-
-              <p class="text-xs text-slate-400 mt-1">22 days, 1 hour daily, tangible capstone deliverables and lifelong dignity.</p>
-
-            </div>
-
-          </div>
-
-
-
-          <!-- Kapil's Personal Dedication -->
-
-          <div class="p-5 rounded-2xl bg-black/50 border border-brand-gold/20 flex items-start gap-4">
-
-            <div class="w-10 h-10 rounded-full bg-brand-crimson/40 border border-brand-gold/30 flex items-center justify-center text-brand-gold shrink-0">
-
-              <i data-lucide="feather" class="w-5 h-5"></i>
-
-            </div>
-
-            <div class="text-xs sm:text-sm text-slate-300">
-
-              <strong class="text-white block font-medium">A Word from Kapil (Founder & Mentor):</strong>
-
-              <p class="mt-1 leading-relaxed text-slate-400">
-
-                "This internship is my humble dedication to Maa Sarla and Paa Yash. When you step into this cohort, you are not just a participant; you become part of the SarlaYash family. We hold your hand, respect your time, and ensure your 22 hours transform into real ability."
-
-              </p>
-
-            </div>
-
-          </div>
-
-
-
-        </div>
-
-
-
-      </div>
-
-
-
+  </div>
+</div>
+</div>
+  <!-- ========================================== -->
+<!-- POWER BI PAGE 3: CODE OF CONDUCT (15 TENETS) -->
+<!-- ========================================== -->
+<div id="pbi-page-coc" class="pbi-page-container space-y-6 hidden">
+  <!-- Power BI Visual Card: coc-overview -->
+<div class="pbi-visual-card bg-[#0D111A] border border-white/10 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 mb-8" data-pbi-card="coc-overview">
+  <!-- Card Header -->
+  <div class="pbi-card-header bg-gradient-to-r from-[#141A26] via-[#1A2234] to-[#141A26] px-5 py-3.5 border-b border-white/10 flex items-center justify-between cursor-pointer select-none group" onclick="togglePbiCard('coc-overview')">
+    <div class="flex items-center gap-3">
+      <div class="w-2.5 h-2.5 rounded-full bg-brand-gold animate-pulse"></div>
+      <i data-lucide="shield-check" class="w-5 h-5 text-amber-300 shrink-0"></i>
+      <h3 class="font-heading font-bold text-sm sm:text-base text-white tracking-wide group-hover:text-amber-200 transition-colors">
+        SarlaYash Code of Conduct & Ethics Covenant
+      </h3>
+      <span class="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-brand-gold/15 border border-brand-gold/30 text-[10px] font-mono font-bold text-brand-gold">
+        Ethics & Professionalism
+      </span>
     </div>
-
-  </section>
-
-
-
-  <!-- SECTION: MENTOR NOTE — THE ONE RUPEE FULL-STACK CEO -->
-
-  <section id="mentor-note" class="py-24 relative overflow-hidden bg-brand-surface/80 border-t border-brand-gold/25">
-
-    <!-- Ambient Lighting -->
-
-    <div class="absolute -top-24 right-10 w-96 h-96 bg-brand-crimson/25 rounded-full blur-[140px] pointer-events-none"></div>
-
-    <div class="absolute -bottom-24 left-10 w-96 h-96 bg-brand-gold/15 rounded-full blur-[140px] pointer-events-none"></div>
-
-
-
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-
-      
-
-      <!-- Section Tag & Title -->
-
-      <div class="text-center max-w-3xl mx-auto mb-16">
-
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-xs font-mono text-brand-gold tracking-widest uppercase mb-3">
-
-          <i data-lucide="compass" class="w-3.5 h-3.5 text-brand-gold"></i>
-
-          <span>Direct Message From the Lead Mentor</span>
-
-        </div>
-
-        <h2 class="font-heading text-3xl sm:text-5xl font-bold text-white tracking-tight">
-
-          Mentor Note
-
-        </h2>
-
-        <div class="text-xl sm:text-2xl font-serif text-brand-gold mt-2 font-medium tracking-wide">
-
-          The One Rupee Full-Stack CEO — Powered By SarlaYash Mission
-
-        </div>
-
-        <p class="text-slate-400 mt-3 text-sm sm:text-base leading-relaxed">
-
-          "Bro, this is where your internship model can stand out. Don't make everyone learn coding just because it is an internship. Build it around three commitments: LEARN. BUILD. GROW."
-
-        </p>
-
-      </div>
-
-
-
-      <!-- Main Showcase: 2-Column Grid -->
-
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-
-        
-
-        <!-- Left: Mentor Image Showcase with Golden Border & Signature -->
-
-        <div class="lg:col-span-5 flex justify-center order-2 lg:order-1">
-
-          <div class="relative w-full max-w-md group">
-
-            <div class="absolute -inset-1.5 bg-gradient-to-tr from-brand-crimson via-brand-gold to-amber-300 rounded-3xl blur-md opacity-60 group-hover:opacity-100 transition duration-700"></div>
-
-
-
-            <div class="relative rounded-2xl bg-brand-dark border-2 border-brand-gold/50 overflow-hidden shadow-2xl">
-
-              <div class="relative aspect-[2/3] overflow-hidden bg-black flex items-center justify-center">
-
-                <img src="assets/mentor_kapil.jpg" alt="The One Rupee Full-Stack CEO - Powered by SarlaYash Mission - Kapil" class="w-full h-full object-cover object-top transform group-hover:scale-[1.03] transition-transform duration-700 ease-out">
-
-                
-
-                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent pointer-events-none"></div>
-
-
-
-                <!-- Floating Caption Overlay -->
-
-                <div class="absolute bottom-4 inset-x-4 p-4 rounded-xl bg-brand-dark/95 backdrop-blur-md border border-brand-gold/40 text-center">
-
-                  <div class="font-heading font-bold text-white text-base sm:text-lg tracking-wider text-glow">
-
-                    Kapil
-
-                  </div>
-
-                  <div class="text-[11px] font-mono text-brand-gold uppercase tracking-widest mt-0.5">
-
-                    The One Rupee Full-Stack CEO
-
-                  </div>
-
-                  <div class="text-[10px] text-slate-400 mt-1">
-
-                    Powered by SarlaYash Mission
-
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-
-        <!-- Right: The Personal Mentor Manifesto -->
-
-        <div class="lg:col-span-7 space-y-6 order-1 lg:order-2">
-
-          
-
-          <div class="p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-brand-card to-brand-surface border border-brand-gold/30 shadow-xl space-y-4">
-
-            <div class="flex items-center gap-3 border-b border-white/10 pb-4">
-
-              <div class="w-10 h-10 rounded-xl bg-brand-gold/20 border border-brand-gold/40 flex items-center justify-center text-brand-gold shrink-0">
-
-                <i data-lucide="feather" class="w-5 h-5"></i>
-
-              </div>
-
-              <div>
-
-                <h3 class="font-bold text-white text-lg">"Why I Built This 22-Day Program"</h3>
-
-                <span class="text-xs font-mono text-brand-gold">Kapil • Founder & Lead Mentor</span>
-
-              </div>
-
-            </div>
-
-
-
-            <p class="text-slate-300 text-sm leading-relaxed">
-
-              When I set out to create the <strong class="text-white">Anniversary Batch of SarlaYash Blessings Internships</strong>, I had one burning rule in mind: <em>This will not be another hollow certificate-distribution exercise.</em>
-
-            </p>
-
-
-
-            <p class="text-slate-300 text-sm leading-relaxed">
-
-              In India today, millions of college students, dropouts, and upskillers are trapped paying thousands of rupees for generic recorded courses and bogus certificates that teach nothing and get zero interview callbacks.
-
-            </p>
-
-
-
-            <p class="text-slate-300 text-sm leading-relaxed">
-
-              Under the blessings of <strong class="text-brand-gold">Maa Sarla and Paa Yash</strong>, we do things with uncompromised integrity:
-
-            </p>
-
-
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-
-              <div class="p-3.5 rounded-xl bg-black/40 border border-white/5 text-xs space-y-1">
-
-                <div class="text-amber-300 font-bold flex items-center gap-1.5">
-
-                  <i data-lucide="shield-check" class="w-4 h-4"></i>
-
-                  <span>₹50/Day Deposit • 100% Refund to Stipend Achievers</span>
-
-                </div>
-
-                <p class="text-slate-400">₹50 daily commitment deposit filters casual ghosters. Earn a merit stipend, and your ₹1,000 deposit is 100% refunded back with your stipend.</p>
-
-              </div>
-
-
-
-              <div class="p-3.5 rounded-xl bg-black/40 border border-white/5 text-xs space-y-1">
-
-                <div class="text-brand-gold font-bold flex items-center gap-1.5">
-
-                  <i data-lucide="flame" class="w-4 h-4"></i>
-
-                  <span>1 Hour of Pure Focus</span>
-
-                </div>
-
-                <p class="text-slate-400">Strictly 60 minutes daily. 10% theory, 90% hands-on artifact creation. No hidden overtime.</p>
-
-              </div>
-
-
-
-              <div class="p-3.5 rounded-xl bg-black/40 border border-white/5 text-xs space-y-1">
-
-                <div class="text-purple-400 font-bold flex items-center gap-1.5">
-
-                  <i data-lucide="trophy" class="w-4 h-4"></i>
-
-                  <span>Merit Stipend Pool</span>
-
-                </div>
-
-                <p class="text-slate-400">₹0 to ₹15,000 awarded purely on our objective 100-point rubric with dual-mentor reviews.</p>
-
-              </div>
-
-
-
-              <div class="p-3.5 rounded-xl bg-black/40 border border-white/5 text-xs space-y-1">
-
-                <div class="text-rose-400 font-bold flex items-center gap-1.5">
-
-                  <i data-lucide="users" class="w-4 h-4"></i>
-
-                  <span>Strictly 50 Interns</span>
-
-                </div>
-
-                <p class="text-slate-400">We refuse to enroll thousands. 50 dedicated learners receive genuine personal guidance.</p>
-
-              </div>
-
-            </div>
-
-
-
-            <!-- Signature Callout -->
-
-            <div class="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-
-              <div>
-
-                <div class="font-serif italic text-white text-base">"Learn with heart, build with pride, and grow with dignity."</div>
-
-                <div class="text-xs text-brand-gold font-mono mt-0.5">— Kapil (The One Rupee Full-Stack CEO)</div>
-
-              </div>
-
-              <button onclick="openApplyModal()" class="px-5 py-2.5 bg-brand-gold text-brand-dark font-bold text-xs rounded-xl shadow-gold-glow hover:brightness-110 flex items-center gap-1.5 shrink-0">
-
-                <span>Join Kapil's Cohort</span>
-
-                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-
-              </button>
-
-            </div>
-
-
-
-            <!-- Kapil's Verified Ecosystem & Direct Contact Links -->
-
-            <div class="pt-4 border-t border-white/5 space-y-2.5">
-
-              <div class="flex flex-wrap items-center gap-2 text-xs">
-
-                <a href="https://wa.me/919873152277" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/35 text-emerald-300 border border-emerald-500/30 flex items-center gap-1.5 transition-colors font-medium">
-
-                  <i data-lucide="message-circle" class="w-3.5 h-3.5 text-emerald-400"></i>
-
-                  <span>WhatsApp: 9873152277</span>
-
-                  <i data-lucide="external-link" class="w-3 h-3 text-emerald-400"></i>
-
-                </a>
-
-                <a href="mailto:namaste@sarlayash.com" class="px-3.5 py-1.5 rounded-lg bg-rose-600/20 hover:bg-rose-600/35 text-rose-300 border border-rose-500/30 flex items-center gap-1.5 transition-colors font-medium">
-
-                  <i data-lucide="mail" class="w-3.5 h-3.5 text-rose-400"></i>
-
-                  <span>Email: namaste@sarlayash.com</span>
-
-                </a>
-
-                <a href="https://www.linkedin.com/in/kapil-narula-63447026/" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg bg-blue-600/20 hover:bg-blue-600/35 text-blue-300 border border-blue-500/30 flex items-center gap-1.5 transition-colors font-medium">
-
-                  <span class="text-blue-400"><svg class="w-3.5 h-3.5 fill-current inline-block" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></span>
-
-                  <span>LinkedIn</span>
-
-                  <i data-lucide="external-link" class="w-3 h-3 text-blue-400"></i>
-
-                </a>
-
-              </div>
-
-              <div class="flex flex-wrap items-center gap-2 text-xs">
-
-                <a href="https://sarlayash.github.io/sarlayash-mission-day-2/index.html" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg bg-brand-gold/15 hover:bg-brand-gold/30 text-amber-200 border border-brand-gold/30 flex items-center gap-1.5 transition-colors font-medium">
-
-                  <i data-lucide="rocket" class="w-3.5 h-3.5 text-brand-gold"></i>
-
-                  <span>SarlaYash Mission Day 2</span>
-
-                  <i data-lucide="external-link" class="w-3 h-3 text-brand-gold"></i>
-
-                </a>
-
-                <a href="https://sarlayash.com/" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 flex items-center gap-1.5 transition-colors font-medium">
-
-                  <i data-lucide="globe" class="w-3.5 h-3.5 text-brand-gold"></i>
-
-                  <span>sarlayash.com</span>
-
-                  <i data-lucide="external-link" class="w-3 h-3 text-slate-400"></i>
-
-                </a>
-
-              </div>
-
-            </div>
-
-
-
-          </div>
-
-
-
-        </div>
-
-
-
-      </div>
-
-
-
+    <div class="flex items-center gap-2">
+      <span class="text-[11px] text-slate-400 font-mono hidden sm:inline" id="status-coc-overview">Expanded</span>
+      <button type="button" class="p-1 rounded-lg hover:bg-white/10 text-slate-400 group-hover:text-white transition-all" title="Toggle Section">
+        <i data-lucide="chevron-down" class="pbi-chevron w-4 h-4 transition-transform duration-300" id="chevron-coc-overview"></i>
+      </button>
     </div>
-
-  </section>
-
-
-
-  <!-- SECTION: CORE PROMISE & BLUEPRINT -->
-
-  <section id="blueprint" class="py-20 bg-brand-surface/60 border-y border-white/5 relative">
+  </div>
+  <!-- Card Body -->
+  <div class="pbi-card-body transition-all duration-300" id="body-coc-overview">
+<div class="p-6 space-y-4 text-slate-300">
+      <div class="flex flex-wrap items-center justify-between gap-4 p-5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-brand-surface to-brand-dark border border-amber-500/30">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-brand-gold animate-ping"></span>
+            <h4 class="font-heading font-extrabold text-lg text-white">15 Foundational Tenets of Engineering Craftsmanship</h4>
+          </div>
+          <p class="text-xs text-slate-300 max-w-xl">
+            Read, comprehend, and acknowledge each of our 15 Tenets in the Day 1 Induction Hub to unlock your official verified certificate and dual-signed agreement.
+          </p>
+        </div>
+        <button onclick="switchPbiPage('induction'); switchOnboardingTab('code-of-conduct');" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-gold via-amber-300 to-brand-gold text-brand-dark font-extrabold text-xs flex items-center gap-2 shadow-gold-glow hover:brightness-110 active:scale-95 transition-all">
+          <i data-lucide="layers" class="w-4 h-4"></i>
+          <span>Open Interactive 15-Card Stepper</span>
+        </button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 text-xs">
+        <div class="p-3.5 rounded-xl bg-white/5 border border-white/10">
+          <div class="text-brand-gold font-bold mb-1">Part I: Ethos & Integrity</div>
+          <p class="text-slate-400">Tenets 1 to 7 cover Reverence, 100% Punctuality, Radical Ownership, Zero Mediocrity, and Responsible AI usage.</p>
+        </div>
+        <div class="p-3.5 rounded-xl bg-white/5 border border-white/10">
+          <div class="text-brand-gold font-bold mb-1">Part II: Operational Discipline</div>
+          <p class="text-slate-400">Tenets 8 to 15 cover Strict Confidentiality, Rapid Growth Agility, Cybersecurity Hygiene, and the 22-Day Completion Covenant.</p>
+        </div>
+        <div class="p-3.5 rounded-xl bg-white/5 border border-white/10">
+          <div class="text-brand-gold font-bold mb-1">Verified Digital Attestation</div>
+          <p class="text-slate-400">Acknowledge all 15 tenets to generate your 100% authentic dual-signed 2-page PDF agreement with verified QR code.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+  <!-- ========================================== -->
+<!-- POWER BI PAGE 4: CURRICULUM & TRACKS       -->
+<!-- ========================================== -->
+<div id="pbi-page-curriculum" class="pbi-page-container space-y-6 hidden">
+  <!-- Power BI Visual Card: curriculum-blueprint -->
+<div class="pbi-visual-card bg-[#0D111A] border border-white/10 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 mb-8" data-pbi-card="curriculum-blueprint">
+  <!-- Card Header -->
+  <div class="pbi-card-header bg-gradient-to-r from-[#141A26] via-[#1A2234] to-[#141A26] px-5 py-3.5 border-b border-white/10 flex items-center justify-between cursor-pointer select-none group" onclick="togglePbiCard('curriculum-blueprint')">
+    <div class="flex items-center gap-3">
+      <div class="w-2.5 h-2.5 rounded-full bg-brand-gold animate-pulse"></div>
+      <i data-lucide="book-open" class="w-5 h-5 text-amber-300 shrink-0"></i>
+      <h3 class="font-heading font-bold text-sm sm:text-base text-white tracking-wide group-hover:text-amber-200 transition-colors">
+        Program Blueprint & 4-Week Progression
+      </h3>
+      <span class="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-brand-gold/15 border border-brand-gold/30 text-[10px] font-mono font-bold text-brand-gold">
+        Curriculum Matrix
+      </span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="text-[11px] text-slate-400 font-mono hidden sm:inline" id="status-curriculum-blueprint">Expanded</span>
+      <button type="button" class="p-1 rounded-lg hover:bg-white/10 text-slate-400 group-hover:text-white transition-all" title="Toggle Section">
+        <i data-lucide="chevron-down" class="pbi-chevron w-4 h-4 transition-transform duration-300" id="chevron-curriculum-blueprint"></i>
+      </button>
+    </div>
+  </div>
+  <!-- Card Body -->
+  <div class="pbi-card-body transition-all duration-300" id="body-curriculum-blueprint">
+<section id="blueprint" class="py-20 bg-brand-surface/60 border-y border-white/5 relative">
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -2548,12 +1998,32 @@
     </div>
 
   </section>
-
-
-
-  <!-- SECTION: THE DAILY 1-HOUR FORMULA (INTERACTIVE SCRUBBER) -->
-
-  <section id="daily-formula" class="py-20 relative">
+  </div>
+</div>
+  <!-- Power BI Visual Card: curriculum-formula -->
+<div class="pbi-visual-card bg-[#0D111A] border border-white/10 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 mb-8" data-pbi-card="curriculum-formula">
+  <!-- Card Header -->
+  <div class="pbi-card-header bg-gradient-to-r from-[#141A26] via-[#1A2234] to-[#141A26] px-5 py-3.5 border-b border-white/10 flex items-center justify-between cursor-pointer select-none group" onclick="togglePbiCard('curriculum-formula')">
+    <div class="flex items-center gap-3">
+      <div class="w-2.5 h-2.5 rounded-full bg-brand-gold animate-pulse"></div>
+      <i data-lucide="clock" class="w-5 h-5 text-amber-300 shrink-0"></i>
+      <h3 class="font-heading font-bold text-sm sm:text-base text-white tracking-wide group-hover:text-amber-200 transition-colors">
+        The Daily 1-Hour Apprenticeship Formula (60 Mins)
+      </h3>
+      <span class="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-brand-gold/15 border border-brand-gold/30 text-[10px] font-mono font-bold text-brand-gold">
+        Operating Model
+      </span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="text-[11px] text-slate-400 font-mono hidden sm:inline" id="status-curriculum-formula">Expanded</span>
+      <button type="button" class="p-1 rounded-lg hover:bg-white/10 text-slate-400 group-hover:text-white transition-all" title="Toggle Section">
+        <i data-lucide="chevron-down" class="pbi-chevron w-4 h-4 transition-transform duration-300" id="chevron-curriculum-formula"></i>
+      </button>
+    </div>
+  </div>
+  <!-- Card Body -->
+  <div class="pbi-card-body transition-all duration-300" id="body-curriculum-formula">
+<section id="daily-formula" class="py-20 relative">
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -2792,12 +2262,32 @@
     </div>
 
   </section>
-
-
-
-  <!-- SECTION: SFE — SOMETHING FOR EVERYONE (12 DOMAIN TRACKS) -->
-
-  <section id="tracks" class="py-20 bg-brand-surface/70 border-t border-white/5 relative">
+  </div>
+</div>
+  <!-- Power BI Visual Card: curriculum-tracks -->
+<div class="pbi-visual-card bg-[#0D111A] border border-white/10 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 mb-8" data-pbi-card="curriculum-tracks">
+  <!-- Card Header -->
+  <div class="pbi-card-header bg-gradient-to-r from-[#141A26] via-[#1A2234] to-[#141A26] px-5 py-3.5 border-b border-white/10 flex items-center justify-between cursor-pointer select-none group" onclick="togglePbiCard('curriculum-tracks')">
+    <div class="flex items-center gap-3">
+      <div class="w-2.5 h-2.5 rounded-full bg-brand-gold animate-pulse"></div>
+      <i data-lucide="layers" class="w-5 h-5 text-amber-300 shrink-0"></i>
+      <h3 class="font-heading font-bold text-sm sm:text-base text-white tracking-wide group-hover:text-amber-200 transition-colors">
+        12 Domain Specialization Tracks (SFE)
+      </h3>
+      <span class="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-brand-gold/15 border border-brand-gold/30 text-[10px] font-mono font-bold text-brand-gold">
+        Domain Tracks
+      </span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="text-[11px] text-slate-400 font-mono hidden sm:inline" id="status-curriculum-tracks">Expanded</span>
+      <button type="button" class="p-1 rounded-lg hover:bg-white/10 text-slate-400 group-hover:text-white transition-all" title="Toggle Section">
+        <i data-lucide="chevron-down" class="pbi-chevron w-4 h-4 transition-transform duration-300" id="chevron-curriculum-tracks"></i>
+      </button>
+    </div>
+  </div>
+  <!-- Card Body -->
+  <div class="pbi-card-body transition-all duration-300" id="body-curriculum-tracks">
+<section id="tracks" class="py-20 bg-brand-surface/70 border-t border-white/5 relative">
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -2904,12 +2394,32 @@
     </div>
 
   </section>
-
-
-
-  <!-- SECTION: THE 22-DAY ROADMAP -->
-
-  <section id="roadmap" class="py-20 relative">
+  </div>
+</div>
+  <!-- Power BI Visual Card: curriculum-roadmap -->
+<div class="pbi-visual-card bg-[#0D111A] border border-white/10 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 mb-8" data-pbi-card="curriculum-roadmap">
+  <!-- Card Header -->
+  <div class="pbi-card-header bg-gradient-to-r from-[#141A26] via-[#1A2234] to-[#141A26] px-5 py-3.5 border-b border-white/10 flex items-center justify-between cursor-pointer select-none group" onclick="togglePbiCard('curriculum-roadmap')">
+    <div class="flex items-center gap-3">
+      <div class="w-2.5 h-2.5 rounded-full bg-brand-gold animate-pulse"></div>
+      <i data-lucide="calendar" class="w-5 h-5 text-amber-300 shrink-0"></i>
+      <h3 class="font-heading font-bold text-sm sm:text-base text-white tracking-wide group-hover:text-amber-200 transition-colors">
+        The 22-Day Production Engineering Roadmap
+      </h3>
+      <span class="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-brand-gold/15 border border-brand-gold/30 text-[10px] font-mono font-bold text-brand-gold">
+        Sprint Schedule
+      </span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="text-[11px] text-slate-400 font-mono hidden sm:inline" id="status-curriculum-roadmap">Expanded</span>
+      <button type="button" class="p-1 rounded-lg hover:bg-white/10 text-slate-400 group-hover:text-white transition-all" title="Toggle Section">
+        <i data-lucide="chevron-down" class="pbi-chevron w-4 h-4 transition-transform duration-300" id="chevron-curriculum-roadmap"></i>
+      </button>
+    </div>
+  </div>
+  <!-- Card Body -->
+  <div class="pbi-card-body transition-all duration-300" id="body-curriculum-roadmap">
+<section id="roadmap" class="py-20 relative">
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -3052,12 +2562,37 @@
     </div>
 
   </section>
-
-
-
-  <!-- SECTION: 100-POINT RUBRIC & INTERACTIVE STIPEND SIMULATOR -->
-
-  <section id="rubric-calculator" class="py-20 bg-brand-surface/70 border-y border-white/5 relative">
+  </div>
+</div>
+</div>
+  <!-- ========================================== -->
+<!-- POWER BI PAGE 5: STIPEND & LEDGER          -->
+<!-- ========================================== -->
+<div id="pbi-page-finance" class="pbi-page-container space-y-6 hidden">
+  <!-- Power BI Visual Card: finance-rubric -->
+<div class="pbi-visual-card bg-[#0D111A] border border-white/10 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 mb-8" data-pbi-card="finance-rubric">
+  <!-- Card Header -->
+  <div class="pbi-card-header bg-gradient-to-r from-[#141A26] via-[#1A2234] to-[#141A26] px-5 py-3.5 border-b border-white/10 flex items-center justify-between cursor-pointer select-none group" onclick="togglePbiCard('finance-rubric')">
+    <div class="flex items-center gap-3">
+      <div class="w-2.5 h-2.5 rounded-full bg-brand-gold animate-pulse"></div>
+      <i data-lucide="calculator" class="w-5 h-5 text-amber-300 shrink-0"></i>
+      <h3 class="font-heading font-bold text-sm sm:text-base text-white tracking-wide group-hover:text-amber-200 transition-colors">
+        100-Point Evaluation Rubric & Stipend Simulator
+      </h3>
+      <span class="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-brand-gold/15 border border-brand-gold/30 text-[10px] font-mono font-bold text-brand-gold">
+        Interactive Calculator
+      </span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="text-[11px] text-slate-400 font-mono hidden sm:inline" id="status-finance-rubric">Expanded</span>
+      <button type="button" class="p-1 rounded-lg hover:bg-white/10 text-slate-400 group-hover:text-white transition-all" title="Toggle Section">
+        <i data-lucide="chevron-down" class="pbi-chevron w-4 h-4 transition-transform duration-300" id="chevron-finance-rubric"></i>
+      </button>
+    </div>
+  </div>
+  <!-- Card Body -->
+  <div class="pbi-card-body transition-all duration-300" id="body-finance-rubric">
+<section id="rubric-calculator" class="py-20 bg-brand-surface/70 border-y border-white/5 relative">
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -3434,12 +2969,32 @@
     </div>
 
   </section>
-
-
-
-  <!-- SECTION: FEE TRANSPARENCY & 100% REFUND FRAMEWORK -->
-
-  <section id="refund-policy" class="py-20 relative">
+  </div>
+</div>
+  <!-- Power BI Visual Card: finance-refund -->
+<div class="pbi-visual-card bg-[#0D111A] border border-white/10 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 mb-8" data-pbi-card="finance-refund">
+  <!-- Card Header -->
+  <div class="pbi-card-header bg-gradient-to-r from-[#141A26] via-[#1A2234] to-[#141A26] px-5 py-3.5 border-b border-white/10 flex items-center justify-between cursor-pointer select-none group" onclick="togglePbiCard('finance-refund')">
+    <div class="flex items-center gap-3">
+      <div class="w-2.5 h-2.5 rounded-full bg-brand-gold animate-pulse"></div>
+      <i data-lucide="receipt" class="w-5 h-5 text-amber-300 shrink-0"></i>
+      <h3 class="font-heading font-bold text-sm sm:text-base text-white tracking-wide group-hover:text-amber-200 transition-colors">
+        Financial Covenants, 100% Deposit Refund & Live 50-Seat Ledger
+      </h3>
+      <span class="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-brand-gold/15 border border-brand-gold/30 text-[10px] font-mono font-bold text-brand-gold">
+        Ledger & Financials
+      </span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="text-[11px] text-slate-400 font-mono hidden sm:inline" id="status-finance-refund">Expanded</span>
+      <button type="button" class="p-1 rounded-lg hover:bg-white/10 text-slate-400 group-hover:text-white transition-all" title="Toggle Section">
+        <i data-lucide="chevron-down" class="pbi-chevron w-4 h-4 transition-transform duration-300" id="chevron-finance-refund"></i>
+      </button>
+    </div>
+  </div>
+  <!-- Card Body -->
+  <div class="pbi-card-body transition-all duration-300" id="body-finance-refund">
+<section id="refund-policy" class="py-20 relative">
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -3896,12 +3451,665 @@
   </section>
 
   </section>
+  </div>
+</div>
+</div>
+  <!-- ========================================== -->
+<!-- POWER BI PAGE 6: LEADERSHIP & MENTORSHIP   -->
+<!-- ========================================== -->
+<div id="pbi-page-leadership" class="pbi-page-container space-y-6 hidden">
+  <!-- Power BI Visual Card: leadership-leaders -->
+<div class="pbi-visual-card bg-[#0D111A] border border-white/10 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 mb-8" data-pbi-card="leadership-leaders">
+  <!-- Card Header -->
+  <div class="pbi-card-header bg-gradient-to-r from-[#141A26] via-[#1A2234] to-[#141A26] px-5 py-3.5 border-b border-white/10 flex items-center justify-between cursor-pointer select-none group" onclick="togglePbiCard('leadership-leaders')">
+    <div class="flex items-center gap-3">
+      <div class="w-2.5 h-2.5 rounded-full bg-brand-gold animate-pulse"></div>
+      <i data-lucide="heart" class="w-5 h-5 text-amber-300 shrink-0"></i>
+      <h3 class="font-heading font-bold text-sm sm:text-base text-white tracking-wide group-hover:text-amber-200 transition-colors">
+        Sacred Foundations: Homage to Maa Sarla & Paa Yash
+      </h3>
+      <span class="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-brand-gold/15 border border-brand-gold/30 text-[10px] font-mono font-bold text-brand-gold">
+        Soul & Ethics
+      </span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="text-[11px] text-slate-400 font-mono hidden sm:inline" id="status-leadership-leaders">Expanded</span>
+      <button type="button" class="p-1 rounded-lg hover:bg-white/10 text-slate-400 group-hover:text-white transition-all" title="Toggle Section">
+        <i data-lucide="chevron-down" class="pbi-chevron w-4 h-4 transition-transform duration-300" id="chevron-leadership-leaders"></i>
+      </button>
+    </div>
+  </div>
+  <!-- Card Body -->
+  <div class="pbi-card-body transition-all duration-300" id="body-leadership-leaders">
+<section id="leaders" class="py-24 relative overflow-hidden bg-gradient-to-b from-brand-dark via-brand-surface to-brand-dark border-t border-brand-gold/30">
+
+    <!-- Ambient Golden & Ruby Glow -->
+
+    <div class="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-brand-gold/15 rounded-full blur-[140px] pointer-events-none"></div>
+
+    <div class="absolute bottom-10 right-1/4 w-[500px] h-[400px] bg-brand-crimson/20 rounded-full blur-[150px] pointer-events-none"></div>
 
 
 
-  <!-- SECTION: RECOMMENDED ACCESSIBLE TOOL STACK & ONBOARDING -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
-  <section class="py-20 bg-brand-surface/60 border-t border-white/5">
+      
+
+      <!-- Section Header -->
+
+      <div class="text-center max-w-3xl mx-auto mb-16">
+
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-xs font-mono text-brand-gold tracking-widest uppercase mb-3">
+
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-brand-gold"></i>
+
+          <span>The Living Inspiration & Soul</span>
+
+        </div>
+
+        <h2 class="font-heading text-3xl sm:text-5xl font-bold text-white tracking-tight">
+
+          Meet the Leaders
+
+        </h2>
+
+        <div class="text-xl sm:text-2xl font-serif text-brand-gold mt-2 font-medium tracking-wide">
+
+          Maa Sarla and Paa Yash
+
+        </div>
+
+        <p class="text-slate-400 mt-3 text-sm sm:text-base leading-relaxed">
+
+          "Legacy of Values, Future of Learning" — SarlaYash is not just an organization; it is a sacred tribute to the boundless love, integrity, and lifelong blessings of our eternal guides.
+
+        </p>
+
+      </div>
+
+
+
+      <!-- Leaders Showcase Grid -->
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+        
+
+        <!-- Left Column: The Portrait Card -->
+
+        <div class="lg:col-span-5 flex justify-center">
+
+          <div class="relative w-full max-w-md group">
+
+            <!-- Glowing Bezel / Aura -->
+
+            <div class="absolute -inset-1.5 bg-gradient-to-tr from-brand-gold via-amber-300 to-brand-crimson rounded-3xl blur-md opacity-60 group-hover:opacity-100 transition duration-700"></div>
+
+
+
+            <div class="relative rounded-2xl bg-brand-dark border-2 border-brand-gold/50 overflow-hidden shadow-2xl">
+
+              <!-- Portrait Image -->
+
+              <div class="relative aspect-[2/3] overflow-hidden bg-black flex items-center justify-center">
+
+                <img src="assets/leaders.jpg" alt="Meet the Leaders - Maa Sarla and Paa Yash" class="w-full h-full object-cover object-top transform group-hover:scale-[1.03] transition-transform duration-700 ease-out">
+
+                
+
+                <!-- Bottom Soft Gradient Overlay -->
+
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
+
+
+
+                <!-- Floating Bottom Badge -->
+
+                <div class="absolute bottom-4 inset-x-4 p-4 rounded-xl bg-brand-dark/90 backdrop-blur-md border border-brand-gold/40 text-center">
+
+                  <div class="font-heading font-bold text-white text-base sm:text-lg tracking-wider text-glow">
+
+                    Maa Sarla & Paa Yash
+
+                  </div>
+
+                  <div class="text-[11px] font-mono text-brand-gold uppercase tracking-widest mt-0.5">
+
+                    SarlaYash Universe • Powered by Kapil
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Right Column: Heartfelt Philosophy & Legacy of Gratitude -->
+
+        <div class="lg:col-span-7 space-y-6">
+
+          <div class="space-y-4 text-slate-300 text-sm sm:text-base leading-relaxed">
+
+            <div class="p-4 rounded-2xl bg-brand-velvet/30 border border-brand-gold/30">
+
+              <span class="text-xs font-mono font-bold uppercase tracking-wider text-brand-gold flex items-center gap-1.5 mb-1.5">
+
+                <i data-lucide="quote" class="w-4 h-4 text-brand-gold"></i>
+
+                The Sacred Foundation
+
+              </span>
+
+              <p class="text-white text-base sm:text-lg font-serif italic leading-snug">
+
+                "Real work. Measurable growth. A legacy of gratitude."
+
+              </p>
+
+            </div>
+
+
+
+            <p>
+
+              The name <strong class="text-white">SarlaYash</strong> is the eternal combination of <strong class="text-brand-gold">Maa Sarla</strong> and <strong class="text-brand-gold">Paa Yash</strong>. Every initiative undertaken—from empowering first-semester students and dropouts to rewarding excellence through merit stipends—stems from their unwavering conviction that true learning must be anchored in values, empathy, and absolute honesty.
+
+            </p>
+
+
+
+            <p>
+
+              Unlike mass commercial institutes that treat learners as transactional numbers, this internship model is crafted with the same protective care, discipline, and earnest commitment that parents bestow upon their children.
+
+            </p>
+
+          </div>
+
+
+
+          <!-- The Three Guiding Pillars -->
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+
+            <div class="p-4 rounded-xl bg-brand-card border border-white/10 hover:border-brand-gold/40 transition-colors">
+
+              <div class="w-8 h-8 rounded-lg bg-brand-gold/20 flex items-center justify-center text-brand-gold mb-2">
+
+                <i data-lucide="shield-check" class="w-4 h-4"></i>
+
+              </div>
+
+              <h4 class="font-bold text-white text-sm">Truth & Integrity</h4>
+
+              <p class="text-xs text-slate-400 mt-1">₹50/day commitment deposit, 100% deposit refund for stipend earners, zero false promises.</p>
+
+            </div>
+
+
+
+            <div class="p-4 rounded-xl bg-brand-card border border-white/10 hover:border-brand-gold/40 transition-colors">
+
+              <div class="w-8 h-8 rounded-lg bg-rose-500/20 flex items-center justify-center text-rose-300 mb-2">
+
+                <i data-lucide="heart-handshake" class="w-4 h-4"></i>
+
+              </div>
+
+              <h4 class="font-bold text-white text-sm">Blessings for All</h4>
+
+              <p class="text-xs text-slate-400 mt-1">SFE philosophy: accessible to dropouts, freshers, switchers, and learners alike.</p>
+
+            </div>
+
+
+
+            <div class="p-4 rounded-xl bg-brand-card border border-white/10 hover:border-brand-gold/40 transition-colors">
+
+              <div class="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 mb-2">
+
+                <i data-lucide="target" class="w-4 h-4"></i>
+
+              </div>
+
+              <h4 class="font-bold text-white text-sm">Purposeful Growth</h4>
+
+              <p class="text-xs text-slate-400 mt-1">22 days, 1 hour daily, tangible capstone deliverables and lifelong dignity.</p>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- Kapil's Personal Dedication -->
+
+          <div class="p-5 rounded-2xl bg-black/50 border border-brand-gold/20 flex items-start gap-4">
+
+            <div class="w-10 h-10 rounded-full bg-brand-crimson/40 border border-brand-gold/30 flex items-center justify-center text-brand-gold shrink-0">
+
+              <i data-lucide="feather" class="w-5 h-5"></i>
+
+            </div>
+
+            <div class="text-xs sm:text-sm text-slate-300">
+
+              <strong class="text-white block font-medium">A Word from Kapil (Founder & Mentor):</strong>
+
+              <p class="mt-1 leading-relaxed text-slate-400">
+
+                "This internship is my humble dedication to Maa Sarla and Paa Yash. When you step into this cohort, you are not just a participant; you become part of the SarlaYash family. We hold your hand, respect your time, and ensure your 22 hours transform into real ability."
+
+              </p>
+
+            </div>
+
+          </div>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+    </div>
+
+  </section>
+  </div>
+</div>
+  <!-- Power BI Visual Card: leadership-mentor -->
+<div class="pbi-visual-card bg-[#0D111A] border border-white/10 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 mb-8" data-pbi-card="leadership-mentor">
+  <!-- Card Header -->
+  <div class="pbi-card-header bg-gradient-to-r from-[#141A26] via-[#1A2234] to-[#141A26] px-5 py-3.5 border-b border-white/10 flex items-center justify-between cursor-pointer select-none group" onclick="togglePbiCard('leadership-mentor')">
+    <div class="flex items-center gap-3">
+      <div class="w-2.5 h-2.5 rounded-full bg-brand-gold animate-pulse"></div>
+      <i data-lucide="sparkles" class="w-5 h-5 text-amber-300 shrink-0"></i>
+      <h3 class="font-heading font-bold text-sm sm:text-base text-white tracking-wide group-hover:text-amber-200 transition-colors">
+        Personal Directive from Kapil Narula (The One Rupee Full-Stack CEO)
+      </h3>
+      <span class="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-brand-gold/15 border border-brand-gold/30 text-[10px] font-mono font-bold text-brand-gold">
+        Lead Mentor Desk
+      </span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="text-[11px] text-slate-400 font-mono hidden sm:inline" id="status-leadership-mentor">Expanded</span>
+      <button type="button" class="p-1 rounded-lg hover:bg-white/10 text-slate-400 group-hover:text-white transition-all" title="Toggle Section">
+        <i data-lucide="chevron-down" class="pbi-chevron w-4 h-4 transition-transform duration-300" id="chevron-leadership-mentor"></i>
+      </button>
+    </div>
+  </div>
+  <!-- Card Body -->
+  <div class="pbi-card-body transition-all duration-300" id="body-leadership-mentor">
+<section id="mentor-note" class="py-24 relative overflow-hidden bg-brand-surface/80 border-t border-brand-gold/25">
+
+    <!-- Ambient Lighting -->
+
+    <div class="absolute -top-24 right-10 w-96 h-96 bg-brand-crimson/25 rounded-full blur-[140px] pointer-events-none"></div>
+
+    <div class="absolute -bottom-24 left-10 w-96 h-96 bg-brand-gold/15 rounded-full blur-[140px] pointer-events-none"></div>
+
+
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+      
+
+      <!-- Section Tag & Title -->
+
+      <div class="text-center max-w-3xl mx-auto mb-16">
+
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-xs font-mono text-brand-gold tracking-widest uppercase mb-3">
+
+          <i data-lucide="compass" class="w-3.5 h-3.5 text-brand-gold"></i>
+
+          <span>Direct Message From the Lead Mentor</span>
+
+        </div>
+
+        <h2 class="font-heading text-3xl sm:text-5xl font-bold text-white tracking-tight">
+
+          Mentor Note
+
+        </h2>
+
+        <div class="text-xl sm:text-2xl font-serif text-brand-gold mt-2 font-medium tracking-wide">
+
+          The One Rupee Full-Stack CEO — Powered By SarlaYash Mission
+
+        </div>
+
+        <p class="text-slate-400 mt-3 text-sm sm:text-base leading-relaxed">
+
+          "Bro, this is where your internship model can stand out. Don't make everyone learn coding just because it is an internship. Build it around three commitments: LEARN. BUILD. GROW."
+
+        </p>
+
+      </div>
+
+
+
+      <!-- Main Showcase: 2-Column Grid -->
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+        
+
+        <!-- Left: Mentor Image Showcase with Golden Border & Signature -->
+
+        <div class="lg:col-span-5 flex justify-center order-2 lg:order-1">
+
+          <div class="relative w-full max-w-md group">
+
+            <div class="absolute -inset-1.5 bg-gradient-to-tr from-brand-crimson via-brand-gold to-amber-300 rounded-3xl blur-md opacity-60 group-hover:opacity-100 transition duration-700"></div>
+
+
+
+            <div class="relative rounded-2xl bg-brand-dark border-2 border-brand-gold/50 overflow-hidden shadow-2xl">
+
+              <div class="relative aspect-[2/3] overflow-hidden bg-black flex items-center justify-center">
+
+                <img src="assets/mentor_kapil.jpg" alt="The One Rupee Full-Stack CEO - Powered by SarlaYash Mission - Kapil" class="w-full h-full object-cover object-top transform group-hover:scale-[1.03] transition-transform duration-700 ease-out">
+
+                
+
+                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent pointer-events-none"></div>
+
+
+
+                <!-- Floating Caption Overlay -->
+
+                <div class="absolute bottom-4 inset-x-4 p-4 rounded-xl bg-brand-dark/95 backdrop-blur-md border border-brand-gold/40 text-center">
+
+                  <div class="font-heading font-bold text-white text-base sm:text-lg tracking-wider text-glow">
+
+                    Kapil
+
+                  </div>
+
+                  <div class="text-[11px] font-mono text-brand-gold uppercase tracking-widest mt-0.5">
+
+                    The One Rupee Full-Stack CEO
+
+                  </div>
+
+                  <div class="text-[10px] text-slate-400 mt-1">
+
+                    Powered by SarlaYash Mission
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Right: The Personal Mentor Manifesto -->
+
+        <div class="lg:col-span-7 space-y-6 order-1 lg:order-2">
+
+          
+
+          <div class="p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-brand-card to-brand-surface border border-brand-gold/30 shadow-xl space-y-4">
+
+            <div class="flex items-center gap-3 border-b border-white/10 pb-4">
+
+              <div class="w-10 h-10 rounded-xl bg-brand-gold/20 border border-brand-gold/40 flex items-center justify-center text-brand-gold shrink-0">
+
+                <i data-lucide="feather" class="w-5 h-5"></i>
+
+              </div>
+
+              <div>
+
+                <h3 class="font-bold text-white text-lg">"Why I Built This 22-Day Program"</h3>
+
+                <span class="text-xs font-mono text-brand-gold">Kapil • Founder & Lead Mentor</span>
+
+              </div>
+
+            </div>
+
+
+
+            <p class="text-slate-300 text-sm leading-relaxed">
+
+              When I set out to create the <strong class="text-white">Anniversary Batch of SarlaYash Blessings Internships</strong>, I had one burning rule in mind: <em>This will not be another hollow certificate-distribution exercise.</em>
+
+            </p>
+
+
+
+            <p class="text-slate-300 text-sm leading-relaxed">
+
+              In India today, millions of college students, dropouts, and upskillers are trapped paying thousands of rupees for generic recorded courses and bogus certificates that teach nothing and get zero interview callbacks.
+
+            </p>
+
+
+
+            <p class="text-slate-300 text-sm leading-relaxed">
+
+              Under the blessings of <strong class="text-brand-gold">Maa Sarla and Paa Yash</strong>, we do things with uncompromised integrity:
+
+            </p>
+
+
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+
+              <div class="p-3.5 rounded-xl bg-black/40 border border-white/5 text-xs space-y-1">
+
+                <div class="text-amber-300 font-bold flex items-center gap-1.5">
+
+                  <i data-lucide="shield-check" class="w-4 h-4"></i>
+
+                  <span>₹50/Day Deposit • 100% Refund to Stipend Achievers</span>
+
+                </div>
+
+                <p class="text-slate-400">₹50 daily commitment deposit filters casual ghosters. Earn a merit stipend, and your ₹1,000 deposit is 100% refunded back with your stipend.</p>
+
+              </div>
+
+
+
+              <div class="p-3.5 rounded-xl bg-black/40 border border-white/5 text-xs space-y-1">
+
+                <div class="text-brand-gold font-bold flex items-center gap-1.5">
+
+                  <i data-lucide="flame" class="w-4 h-4"></i>
+
+                  <span>1 Hour of Pure Focus</span>
+
+                </div>
+
+                <p class="text-slate-400">Strictly 60 minutes daily. 10% theory, 90% hands-on artifact creation. No hidden overtime.</p>
+
+              </div>
+
+
+
+              <div class="p-3.5 rounded-xl bg-black/40 border border-white/5 text-xs space-y-1">
+
+                <div class="text-purple-400 font-bold flex items-center gap-1.5">
+
+                  <i data-lucide="trophy" class="w-4 h-4"></i>
+
+                  <span>Merit Stipend Pool</span>
+
+                </div>
+
+                <p class="text-slate-400">₹0 to ₹15,000 awarded purely on our objective 100-point rubric with dual-mentor reviews.</p>
+
+              </div>
+
+
+
+              <div class="p-3.5 rounded-xl bg-black/40 border border-white/5 text-xs space-y-1">
+
+                <div class="text-rose-400 font-bold flex items-center gap-1.5">
+
+                  <i data-lucide="users" class="w-4 h-4"></i>
+
+                  <span>Strictly 50 Interns</span>
+
+                </div>
+
+                <p class="text-slate-400">We refuse to enroll thousands. 50 dedicated learners receive genuine personal guidance.</p>
+
+              </div>
+
+            </div>
+
+
+
+            <!-- Signature Callout -->
+
+            <div class="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+
+              <div>
+
+                <div class="font-serif italic text-white text-base">"Learn with heart, build with pride, and grow with dignity."</div>
+
+                <div class="text-xs text-brand-gold font-mono mt-0.5">— Kapil (The One Rupee Full-Stack CEO)</div>
+
+              </div>
+
+              <button onclick="openApplyModal()" class="px-5 py-2.5 bg-brand-gold text-brand-dark font-bold text-xs rounded-xl shadow-gold-glow hover:brightness-110 flex items-center gap-1.5 shrink-0">
+
+                <span>Join Kapil's Cohort</span>
+
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+
+              </button>
+
+            </div>
+
+
+
+            <!-- Kapil's Verified Ecosystem & Direct Contact Links -->
+
+            <div class="pt-4 border-t border-white/5 space-y-2.5">
+
+              <div class="flex flex-wrap items-center gap-2 text-xs">
+
+                <a href="https://wa.me/919873152277" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/35 text-emerald-300 border border-emerald-500/30 flex items-center gap-1.5 transition-colors font-medium">
+
+                  <i data-lucide="message-circle" class="w-3.5 h-3.5 text-emerald-400"></i>
+
+                  <span>WhatsApp: 9873152277</span>
+
+                  <i data-lucide="external-link" class="w-3 h-3 text-emerald-400"></i>
+
+                </a>
+
+                <a href="mailto:namaste@sarlayash.com" class="px-3.5 py-1.5 rounded-lg bg-rose-600/20 hover:bg-rose-600/35 text-rose-300 border border-rose-500/30 flex items-center gap-1.5 transition-colors font-medium">
+
+                  <i data-lucide="mail" class="w-3.5 h-3.5 text-rose-400"></i>
+
+                  <span>Email: namaste@sarlayash.com</span>
+
+                </a>
+
+                <a href="https://www.linkedin.com/in/kapil-narula-63447026/" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg bg-blue-600/20 hover:bg-blue-600/35 text-blue-300 border border-blue-500/30 flex items-center gap-1.5 transition-colors font-medium">
+
+                  <span class="text-blue-400"><svg class="w-3.5 h-3.5 fill-current inline-block" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></span>
+
+                  <span>LinkedIn</span>
+
+                  <i data-lucide="external-link" class="w-3 h-3 text-blue-400"></i>
+
+                </a>
+
+              </div>
+
+              <div class="flex flex-wrap items-center gap-2 text-xs">
+
+                <a href="https://sarlayash.github.io/sarlayash-mission-day-2/index.html" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg bg-brand-gold/15 hover:bg-brand-gold/30 text-amber-200 border border-brand-gold/30 flex items-center gap-1.5 transition-colors font-medium">
+
+                  <i data-lucide="rocket" class="w-3.5 h-3.5 text-brand-gold"></i>
+
+                  <span>SarlaYash Mission Day 2</span>
+
+                  <i data-lucide="external-link" class="w-3 h-3 text-brand-gold"></i>
+
+                </a>
+
+                <a href="https://sarlayash.com/" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 flex items-center gap-1.5 transition-colors font-medium">
+
+                  <i data-lucide="globe" class="w-3.5 h-3.5 text-brand-gold"></i>
+
+                  <span>sarlayash.com</span>
+
+                  <i data-lucide="external-link" class="w-3 h-3 text-slate-400"></i>
+
+                </a>
+
+              </div>
+
+            </div>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+    </div>
+
+  </section>
+  </div>
+</div>
+  <!-- Power BI Visual Card: leadership-proof -->
+<div class="pbi-visual-card bg-[#0D111A] border border-white/10 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 mb-8" data-pbi-card="leadership-proof">
+  <!-- Card Header -->
+  <div class="pbi-card-header bg-gradient-to-r from-[#141A26] via-[#1A2234] to-[#141A26] px-5 py-3.5 border-b border-white/10 flex items-center justify-between cursor-pointer select-none group" onclick="togglePbiCard('leadership-proof')">
+    <div class="flex items-center gap-3">
+      <div class="w-2.5 h-2.5 rounded-full bg-brand-gold animate-pulse"></div>
+      <i data-lucide="award" class="w-5 h-5 text-amber-300 shrink-0"></i>
+      <h3 class="font-heading font-bold text-sm sm:text-base text-white tracking-wide group-hover:text-amber-200 transition-colors">
+        Wall of Proof, Verified Deliverables & Alumni Artifacts
+      </h3>
+      <span class="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-brand-gold/15 border border-brand-gold/30 text-[10px] font-mono font-bold text-brand-gold">
+        Proof of Work
+      </span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="text-[11px] text-slate-400 font-mono hidden sm:inline" id="status-leadership-proof">Expanded</span>
+      <button type="button" class="p-1 rounded-lg hover:bg-white/10 text-slate-400 group-hover:text-white transition-all" title="Toggle Section">
+        <i data-lucide="chevron-down" class="pbi-chevron w-4 h-4 transition-transform duration-300" id="chevron-leadership-proof"></i>
+      </button>
+    </div>
+  </div>
+  <!-- Card Body -->
+  <div class="pbi-card-body transition-all duration-300" id="body-leadership-proof">
+<section class="py-20 bg-brand-surface/60 border-t border-white/5">
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -4054,12 +4262,79 @@
     </div>
 
   </section>
-
-
-
-  <!-- SECTION: FREQUENTLY ASKED QUESTIONS -->
-
-  <section id="faq" class="py-20 relative">
+  </div>
+</div>
+</div>
+  <!-- ========================================== -->
+<!-- POWER BI PAGE 7: VERIFICATION & FAQ        -->
+<!-- ========================================== -->
+<div id="pbi-page-verification" class="pbi-page-container space-y-6 hidden">
+  <!-- Power BI Visual Card: verification-hub -->
+<div class="pbi-visual-card bg-[#0D111A] border border-white/10 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 mb-8" data-pbi-card="verification-hub">
+  <!-- Card Header -->
+  <div class="pbi-card-header bg-gradient-to-r from-[#141A26] via-[#1A2234] to-[#141A26] px-5 py-3.5 border-b border-white/10 flex items-center justify-between cursor-pointer select-none group" onclick="togglePbiCard('verification-hub')">
+    <div class="flex items-center gap-3">
+      <div class="w-2.5 h-2.5 rounded-full bg-brand-gold animate-pulse"></div>
+      <i data-lucide="shield-check" class="w-5 h-5 text-amber-300 shrink-0"></i>
+      <h3 class="font-heading font-bold text-sm sm:text-base text-white tracking-wide group-hover:text-amber-200 transition-colors">
+        Public Credential Authenticity Scanner & Instant QR Verification
+      </h3>
+      <span class="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-brand-gold/15 border border-brand-gold/30 text-[10px] font-mono font-bold text-brand-gold">
+        Authenticity Hub
+      </span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="text-[11px] text-slate-400 font-mono hidden sm:inline" id="status-verification-hub">Expanded</span>
+      <button type="button" class="p-1 rounded-lg hover:bg-white/10 text-slate-400 group-hover:text-white transition-all" title="Toggle Section">
+        <i data-lucide="chevron-down" class="pbi-chevron w-4 h-4 transition-transform duration-300" id="chevron-verification-hub"></i>
+      </button>
+    </div>
+  </div>
+  <!-- Card Body -->
+  <div class="pbi-card-body transition-all duration-300" id="body-verification-hub">
+<div class="p-6 space-y-4 text-slate-300">
+      <div class="flex flex-wrap items-center justify-between gap-4 p-5 rounded-2xl bg-gradient-to-r from-emerald-500/10 via-brand-surface to-brand-dark border border-emerald-500/30">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-emerald-400 animate-ping"></span>
+            <h4 class="font-heading font-extrabold text-lg text-white">100% Verifiable & Tamper-Proof Credentials</h4>
+          </div>
+          <p class="text-xs text-slate-300 max-w-xl">
+            Every SarlaYash Day 1 Certificate, Induction Badge, Offer Letter, and Signed Code of Conduct features a cryptographic QR code linked to our cloud registry.
+          </p>
+        </div>
+        <button onclick="openPublicVerifyModal()" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-2 shadow-lg transition-all active:scale-95">
+          <i data-lucide="qr-code" class="w-4 h-4"></i>
+          <span>Open Public Credential Verifier</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Power BI Visual Card: verification-faq -->
+<div class="pbi-visual-card bg-[#0D111A] border border-white/10 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 mb-8" data-pbi-card="verification-faq">
+  <!-- Card Header -->
+  <div class="pbi-card-header bg-gradient-to-r from-[#141A26] via-[#1A2234] to-[#141A26] px-5 py-3.5 border-b border-white/10 flex items-center justify-between cursor-pointer select-none group" onclick="togglePbiCard('verification-faq')">
+    <div class="flex items-center gap-3">
+      <div class="w-2.5 h-2.5 rounded-full bg-brand-gold animate-pulse"></div>
+      <i data-lucide="help-circle" class="w-5 h-5 text-amber-300 shrink-0"></i>
+      <h3 class="font-heading font-bold text-sm sm:text-base text-white tracking-wide group-hover:text-amber-200 transition-colors">
+        Frequently Asked Questions (FAQ Accordion)
+      </h3>
+      <span class="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-brand-gold/15 border border-brand-gold/30 text-[10px] font-mono font-bold text-brand-gold">
+        Support & Clarity
+      </span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="text-[11px] text-slate-400 font-mono hidden sm:inline" id="status-verification-faq">Expanded</span>
+      <button type="button" class="p-1 rounded-lg hover:bg-white/10 text-slate-400 group-hover:text-white transition-all" title="Toggle Section">
+        <i data-lucide="chevron-down" class="pbi-chevron w-4 h-4 transition-transform duration-300" id="chevron-verification-faq"></i>
+      </button>
+    </div>
+  </div>
+  <!-- Card Body -->
+  <div class="pbi-card-body transition-all duration-300" id="body-verification-faq">
+<section id="faq" class="py-20 relative">
 
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -4228,100 +4503,32 @@
     </div>
 
   </section>
-
-
-
-  <!-- CTA FOOTER HERO BANNER -->
-
-  <section class="py-20 bg-gradient-to-t from-black via-brand-surface to-brand-velvet/40 border-t border-brand-gold/30 relative">
-
-    <div class="max-w-5xl mx-auto px-4 text-center space-y-6">
-
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-gold/15 border border-brand-gold/40 text-brand-gold font-mono text-xs">
-
-        <i data-lucide="flame" class="w-4 h-4"></i>
-
-        <span>Anniversary Batch 2026 • 50 Interns Only</span>
-
-      </div>
-
-
-
-      <h2 class="font-heading text-3xl sm:text-5xl font-bold text-white leading-tight">
-
-        Ready for 22 Working Days of<br>
-
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold via-amber-200 to-brand-gold">
-
-          Genuine, Measurable Transformation?
-
-        </span>
-
-      </h2>
-
-
-
-      <p class="text-slate-300 text-base max-w-2xl mx-auto">
-
-        Join SarlaYash Learning Solutions LLP. One hour daily. Real work. ₹50/day commitment deposit. 100% deposit refunded to stipend earners. Zero excuses.
-
-      </p>
-
-
-
-      <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
-
-        <button onclick="openApplyModal()" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-brand-gold via-amber-300 to-brand-gold text-brand-dark font-bold text-base rounded-xl shadow-gold-glow hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2">
-
-          <i data-lucide="sparkles" class="w-5 h-5 text-brand-dark"></i>
-
-          <span>Apply Now for Anniversary Batch</span>
-
-          <i data-lucide="arrow-right" class="w-5 h-5"></i>
-
-        </button>
-
-
-
-        <button onclick="showHandbookModal()" class="w-full sm:w-auto px-7 py-4 bg-white/5 hover:bg-white/10 text-white font-semibold text-base rounded-xl border border-white/10 transition-all flex items-center justify-center gap-2">
-
-          <i data-lucide="file-text" class="w-5 h-5 text-brand-gold"></i>
-
-          <span>Read Program Handbook</span>
-
-        </button>
-
-      </div>
-
-
-
-      <div class="pt-8 text-xs text-slate-400 flex flex-wrap items-center justify-center gap-6">
-
-        <span>Official UPI: <strong class="text-white font-mono">9873152277@kotakbank</strong></span>
-
-        <span>•</span>
-
-        <span>Total Deposit: <strong class="text-brand-gold">₹1,000 (₹50/day • 100% Back with Stipend)</strong></span>
-
-        <span>•</span>
-
-        <span>Weekly: <strong class="text-slate-300">₹250 / week</strong></span>
-
-        <span>•</span>
-
-        <span>Stipend Pool: <strong class="text-purple-300">₹0–₹15,000</strong></span>
-
-      </div>
-
+  </div>
+</div>
+  <!-- Power BI Visual Card: verification-ecosystem -->
+<div class="pbi-visual-card bg-[#0D111A] border border-white/10 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 mb-8" data-pbi-card="verification-ecosystem">
+  <!-- Card Header -->
+  <div class="pbi-card-header bg-gradient-to-r from-[#141A26] via-[#1A2234] to-[#141A26] px-5 py-3.5 border-b border-white/10 flex items-center justify-between cursor-pointer select-none group" onclick="togglePbiCard('verification-ecosystem')">
+    <div class="flex items-center gap-3">
+      <div class="w-2.5 h-2.5 rounded-full bg-brand-gold animate-pulse"></div>
+      <i data-lucide="globe" class="w-5 h-5 text-amber-300 shrink-0"></i>
+      <h3 class="font-heading font-bold text-sm sm:text-base text-white tracking-wide group-hover:text-amber-200 transition-colors">
+        Corporate Ecosystem & Official Registries
+      </h3>
+      <span class="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-brand-gold/15 border border-brand-gold/30 text-[10px] font-mono font-bold text-brand-gold">
+        Partner Networks
+      </span>
     </div>
-
-  </section>
-
-
-
-  <!-- SECTION: SARLAYASH ECOSYSTEM & OFFICIAL LINKS -->
-
-  <section id="ecosystem" class="py-16 bg-brand-surface border-t border-brand-gold/30 relative">
+    <div class="flex items-center gap-2">
+      <span class="text-[11px] text-slate-400 font-mono hidden sm:inline" id="status-verification-ecosystem">Expanded</span>
+      <button type="button" class="p-1 rounded-lg hover:bg-white/10 text-slate-400 group-hover:text-white transition-all" title="Toggle Section">
+        <i data-lucide="chevron-down" class="pbi-chevron w-4 h-4 transition-transform duration-300" id="chevron-verification-ecosystem"></i>
+      </button>
+    </div>
+  </div>
+  <!-- Card Body -->
+  <div class="pbi-card-body transition-all duration-300" id="body-verification-ecosystem">
+<section id="ecosystem" class="py-16 bg-brand-surface border-t border-brand-gold/30 relative">
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -4560,8 +4767,170 @@
     </div>
 
   </section>
+  </div>
+</div>
+  <!-- Power BI Visual Card: verification-cta -->
+<div class="pbi-visual-card bg-[#0D111A] border border-white/10 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 mb-8" data-pbi-card="verification-cta">
+  <!-- Card Header -->
+  <div class="pbi-card-header bg-gradient-to-r from-[#141A26] via-[#1A2234] to-[#141A26] px-5 py-3.5 border-b border-white/10 flex items-center justify-between cursor-pointer select-none group" onclick="togglePbiCard('verification-cta')">
+    <div class="flex items-center gap-3">
+      <div class="w-2.5 h-2.5 rounded-full bg-brand-gold animate-pulse"></div>
+      <i data-lucide="send" class="w-5 h-5 text-amber-300 shrink-0"></i>
+      <h3 class="font-heading font-bold text-sm sm:text-base text-white tracking-wide group-hover:text-amber-200 transition-colors">
+        Final Cohort Enrolment & Direct Application
+      </h3>
+      <span class="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-brand-gold/15 border border-brand-gold/30 text-[10px] font-mono font-bold text-brand-gold">
+        Admission Gateway
+      </span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="text-[11px] text-slate-400 font-mono hidden sm:inline" id="status-verification-cta">Expanded</span>
+      <button type="button" class="p-1 rounded-lg hover:bg-white/10 text-slate-400 group-hover:text-white transition-all" title="Toggle Section">
+        <i data-lucide="chevron-down" class="pbi-chevron w-4 h-4 transition-transform duration-300" id="chevron-verification-cta"></i>
+      </button>
+    </div>
+  </div>
+  <!-- Card Body -->
+  <div class="pbi-card-body transition-all duration-300" id="body-verification-cta">
+<section class="py-20 bg-gradient-to-t from-black via-brand-surface to-brand-velvet/40 border-t border-brand-gold/30 relative">
+
+    <div class="max-w-5xl mx-auto px-4 text-center space-y-6">
+
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-gold/15 border border-brand-gold/40 text-brand-gold font-mono text-xs">
+
+        <i data-lucide="flame" class="w-4 h-4"></i>
+
+        <span>Anniversary Batch 2026 • 50 Interns Only</span>
+
+      </div>
 
 
+
+      <h2 class="font-heading text-3xl sm:text-5xl font-bold text-white leading-tight">
+
+        Ready for 22 Working Days of<br>
+
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold via-amber-200 to-brand-gold">
+
+          Genuine, Measurable Transformation?
+
+        </span>
+
+      </h2>
+
+
+
+      <p class="text-slate-300 text-base max-w-2xl mx-auto">
+
+        Join SarlaYash Learning Solutions LLP. One hour daily. Real work. ₹50/day commitment deposit. 100% deposit refunded to stipend earners. Zero excuses.
+
+      </p>
+
+
+
+      <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+
+        <button onclick="openApplyModal()" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-brand-gold via-amber-300 to-brand-gold text-brand-dark font-bold text-base rounded-xl shadow-gold-glow hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2">
+
+          <i data-lucide="sparkles" class="w-5 h-5 text-brand-dark"></i>
+
+          <span>Apply Now for Anniversary Batch</span>
+
+          <i data-lucide="arrow-right" class="w-5 h-5"></i>
+
+        </button>
+
+
+
+        <button onclick="showHandbookModal()" class="w-full sm:w-auto px-7 py-4 bg-white/5 hover:bg-white/10 text-white font-semibold text-base rounded-xl border border-white/10 transition-all flex items-center justify-center gap-2">
+
+          <i data-lucide="file-text" class="w-5 h-5 text-brand-gold"></i>
+
+          <span>Read Program Handbook</span>
+
+        </button>
+
+      </div>
+
+
+
+      <div class="pt-8 text-xs text-slate-400 flex flex-wrap items-center justify-center gap-6">
+
+        <span>Official UPI: <strong class="text-white font-mono">9873152277@kotakbank</strong></span>
+
+        <span>•</span>
+
+        <span>Total Deposit: <strong class="text-brand-gold">₹1,000 (₹50/day • 100% Back with Stipend)</strong></span>
+
+        <span>•</span>
+
+        <span>Weekly: <strong class="text-slate-300">₹250 / week</strong></span>
+
+        <span>•</span>
+
+        <span>Stipend Pool: <strong class="text-purple-300">₹0–₹15,000</strong></span>
+
+      </div>
+
+    </div>
+
+  </section>
+  </div>
+</div>
+</div>
+</div>
+
+  <!-- POWER BI BOTTOM SHEET TABS & STATUS BAR -->
+<div id="pbiFooterBar" class="sticky bottom-0 z-30 bg-[#0E121B] border-t border-white/10 shadow-2xl px-3 sm:px-6 py-2 transition-all duration-300 select-none">
+  <div class="flex flex-wrap items-center justify-between gap-3 text-xs">
+    <!-- Left: Power BI Sheet Tabs -->
+    <div class="flex items-center gap-1.5 overflow-x-auto py-0.5">
+      <span class="text-[9.5px] font-mono uppercase text-slate-400 hidden lg:inline mr-1">Views:</span>
+      <button onclick="switchPbiPage('overview')" data-pbi-page="overview" class="pbi-sheet-tab active px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all">
+        <i data-lucide="activity" class="w-3.5 h-3.5"></i>
+        <span>1. Overview</span>
+      </button>
+      <button onclick="switchPbiPage('induction')" data-pbi-page="induction" class="pbi-sheet-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 text-xs font-semibold flex items-center gap-1.5 transition-all">
+        <i data-lucide="compass" class="w-3.5 h-3.5 text-amber-300"></i>
+        <span>2. Day 1 Induction</span>
+      </button>
+      <button onclick="switchPbiPage('coc')" data-pbi-page="coc" class="pbi-sheet-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 text-xs font-semibold flex items-center gap-1.5 transition-all">
+        <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i>
+        <span>3. Code of Conduct</span>
+      </button>
+      <button onclick="switchPbiPage('curriculum')" data-pbi-page="curriculum" class="pbi-sheet-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 text-xs font-semibold flex items-center gap-1.5 transition-all">
+        <i data-lucide="book-open" class="w-3.5 h-3.5 text-sky-400"></i>
+        <span>4. Curriculum</span>
+      </button>
+      <button onclick="switchPbiPage('finance')" data-pbi-page="finance" class="pbi-sheet-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 text-xs font-semibold flex items-center gap-1.5 transition-all">
+        <i data-lucide="calculator" class="w-3.5 h-3.5 text-amber-400"></i>
+        <span>5. Finance</span>
+      </button>
+      <button onclick="switchPbiPage('leadership')" data-pbi-page="leadership" class="pbi-sheet-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 text-xs font-semibold flex items-center gap-1.5 transition-all">
+        <i data-lucide="heart" class="w-3.5 h-3.5 text-rose-400"></i>
+        <span>6. Leadership</span>
+      </button>
+      <button onclick="switchPbiPage('verification')" data-pbi-page="verification" class="pbi-sheet-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 text-xs font-semibold flex items-center gap-1.5 transition-all">
+        <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-300"></i>
+        <span>7. Verify & FAQ</span>
+      </button>
+    </div>
+
+    <!-- Right: Status, Page Index & Collapse Footer Toggle -->
+    <div class="flex items-center gap-3 text-[11px] font-mono text-slate-400">
+      <span class="hidden md:inline-flex items-center gap-1 text-emerald-400">
+        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+        <span>Synced</span>
+      </span>
+      <span id="pbiCurrentPageNum" class="text-white font-bold">Page 1 of 7</span>
+      <span class="text-slate-600 hidden sm:inline">|</span>
+      <span class="text-amber-300/80 hidden lg:inline">With the Sacred Blessings of Maa Sarla & Paa Yash</span>
+      <button onclick="togglePbiFooter()" class="p-1 rounded text-slate-400 hover:text-white" title="Toggle Footer Bar">
+        <i data-lucide="chevron-down" id="pbiFooterToggleIcon" class="w-4 h-4 transition-transform duration-300"></i>
+      </button>
+    </div>
+  </div>
+</div>
 
   <!-- FOOTER -->
 
