@@ -5626,12 +5626,152 @@ function copyWelcomeEmailText() {
 
 
 // 12. HIGH-FIDELITY PDF GENERATION & DOWNLOAD ENGINE
-
-
-
 // ----------------------------------------------------
 
+async function renderDocumentToPdf(config) {
+  const {
+    elementId,
+    pageSelector,
+    filename = 'document.pdf',
+    orientation = 'portrait',
+    btnId,
+    statusMsgId,
+    statusText = 'Rendering document for download...'
+  } = config;
 
+  const element = document.getElementById(elementId);
+  if (!element) {
+    alert("Document element not found.");
+    return;
+  }
+
+  const btn = btnId ? document.getElementById(btnId) : null;
+  const statusContainer = statusMsgId ? document.getElementById(statusMsgId) : null;
+  const originalHtml = btn ? btn.innerHTML : '';
+
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = `<span class="inline-block animate-spin mr-1.5">⏳</span><span>Generating Official PDF...</span>`;
+  }
+  if (statusContainer) {
+    statusContainer.classList.remove('hidden');
+    statusContainer.innerHTML = `<div class="p-2.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2"><span class="animate-pulse">📄</span><span>${statusText}</span></div>`;
+  }
+
+  // Preserve user scroll and temporarily reset to (0, 0)
+  const savedScrollX = window.scrollX || window.pageXOffset || 0;
+  const savedScrollY = window.scrollY || window.pageYOffset || 0;
+  window.scrollTo(0, 0);
+
+  try {
+    if (document.fonts && document.fonts.ready) {
+      await document.fonts.ready;
+    }
+    await new Promise(r => setTimeout(r, 150));
+
+    // Identify pages
+    let pages = pageSelector ? Array.from(element.querySelectorAll(pageSelector)) : [];
+    if (pages.length === 0) {
+      pages = [element];
+    }
+
+    const { jsPDF } = window.jspdf || {};
+    if (jsPDF && typeof window.html2canvas === 'function') {
+      const pdf = new jsPDF({
+        orientation: orientation,
+        unit: 'mm',
+        format: 'a4',
+        compress: true
+      });
+
+      const pdfWidth = orientation === 'landscape' ? 297 : 210;
+      const pdfHeight = orientation === 'landscape' ? 210 : 297;
+
+      for (let i = 0; i < pages.length; i++) {
+        const pageEl = pages[i];
+        const canvas = await window.html2canvas(pageEl, {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: '#ffffff',
+          logging: false,
+          scrollX: 0,
+          scrollY: 0,
+          x: 0,
+          y: 0,
+          windowWidth: pageEl.offsetWidth || (orientation === 'landscape' ? 1020 : 794)
+        });
+
+        const imgData = canvas.toDataURL('image/jpeg', 0.98);
+        if (i > 0) pdf.addPage('a4', orientation);
+        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
+      }
+
+      const blob = pdf.output('blob');
+      const blobUrl = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        if (document.body.contains(a)) document.body.removeChild(a);
+      }, 1000);
+
+      if (statusContainer) {
+        statusContainer.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs">
+            <span>✅ <strong>Official Document Downloaded!</strong> (Pristine 2-Page Copy) If download didn't start:</span>
+            <a href="${blobUrl}" download="${filename}" target="_blank" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-bold underline shadow">
+              Click Here to Open / Save PDF
+            </a>
+          </div>
+        `;
+      }
+    } else if (typeof html2pdf !== 'undefined') {
+      const opt = {
+        margin: [0, 0, 0, 0],
+        filename: filename,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: '#ffffff',
+          logging: false,
+          scrollX: 0,
+          scrollY: 0,
+          x: 0,
+          y: 0
+        },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: orientation },
+        pagebreak: { mode: ['css', 'legacy'] }
+      };
+      const worker = html2pdf().set(opt).from(element);
+      const blob = await worker.outputPdf('blob');
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        if (document.body.contains(a)) document.body.removeChild(a);
+      }, 1000);
+    } else {
+      fallbackCleanPrint(element, filename);
+    }
+  } catch (err) {
+    console.error(`PDF generation error for ${filename}:`, err);
+    fallbackCleanPrint(element, filename);
+  } finally {
+    window.scrollTo(savedScrollX, savedScrollY);
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = originalHtml;
+      if (window.lucide) window.lucide.createIcons();
+    }
+  }
+}
 
 async function downloadOfferLetter() {
   const element = document.getElementById('offerLetterPdfDoc');
@@ -5650,7 +5790,6 @@ async function downloadOfferLetter() {
     utr: 'Logged & Verified'
   };
 
-  // Ensure modal fields are populated
   if (typeof showOfferLetterModal === 'function') {
     showOfferLetterModal(app);
   }
@@ -5668,391 +5807,16 @@ async function downloadOfferLetter() {
     }
   }
 
-
-
-
-
-
-
-  const btn = document.getElementById('downloadOfferPdfBtn');
-
-
-
-  const statusContainer = document.getElementById('offerPdfStatusMsg');
-
-
-
-  const originalHtml = btn ? btn.innerHTML : '';
-
-
-
-
-
-
-
-  if (btn) {
-
-
-
-    btn.disabled = true;
-
-
-
-    btn.innerHTML = `<span class="inline-block animate-spin mr-1.5">⏳</span><span>Generating PDF Document...</span>`;
-
-
-
-  }
-
-
-
-  if (statusContainer) {
-
-
-
-    statusContainer.classList.remove('hidden');
-
-
-
-    statusContainer.innerHTML = `<div class="p-2.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2"><span class="animate-pulse">📜</span><span>Rendering executive appointment document for download...</span></div>`;
-
-
-
-  }
-
-
-
-
-
-
-
-  // Create clean isolated render container at (0, 0)
-
-
-
-  const container = document.createElement('div');
-
-
-
-  container.style.position = 'fixed';
-
-
-
-  container.style.left = '0';
-
-
-
-  container.style.top = '0';
-
-
-
-  container.style.width = '794px';
-
-
-
-  container.style.margin = '0';
-
-
-
-  container.style.padding = '0';
-
-
-
-  container.style.zIndex = '999999';
-
-
-
-  container.style.backgroundColor = '#ffffff';
-
-
-
-  container.style.overflow = 'visible';
-
-
-
-
-
-
-
-  const clone = element.cloneNode(true);
-
-
-
-  clone.style.width = '794px';
-
-
-
-  clone.style.maxWidth = '794px';
-
-
-
-  clone.style.margin = '0';
-
-
-
-  clone.style.padding = '0';
-
-
-
-  clone.style.boxSizing = 'border-box';
-
-
-
-  clone.style.backgroundColor = '#ffffff';
-
-
-
-  clone.style.color = '#0f172a';
-
-
-
-
-
-
-
-  container.appendChild(clone);
-
-
-
-  document.body.appendChild(container);
-
-
-
-
-
-
-
-  const opt = {
-
-
-
-    margin: [0, 0, 0, 0],
-
-
-
+  await renderDocumentToPdf({
+    elementId: 'offerLetterPdfDoc',
+    pageSelector: '.pdf-page',
     filename: filename,
-
-
-
-    image: { type: 'jpeg', quality: 0.98 },
-
-
-
-    html2canvas: { 
-
-
-
-      scale: 2, 
-
-
-
-      useCORS: true, 
-
-
-
-      backgroundColor: '#ffffff',
-
-
-
-      logging: false
-
-
-
-    },
-
-
-
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-
-
-
-    pagebreak: { mode: ['css', 'legacy'] }
-
-
-
-  };
-
-
-
-
-
-
-
-  try {
-
-
-
-    if (typeof html2pdf !== 'undefined') {
-
-
-
-      const worker = html2pdf().set(opt).from(clone);
-
-
-
-      const blob = await worker.outputPdf('blob');
-
-
-
-      const blobUrl = URL.createObjectURL(blob);
-
-
-
-
-
-
-
-      // Direct trigger
-
-
-
-      const a = document.createElement('a');
-
-
-
-      a.href = blobUrl;
-
-
-
-      a.download = filename;
-
-
-
-      document.body.appendChild(a);
-
-
-
-      a.click();
-
-
-
-      setTimeout(() => { 
-
-
-
-        if (document.body.contains(a)) document.body.removeChild(a); 
-
-
-
-      }, 1000);
-
-
-
-
-
-
-
-      if (statusContainer) {
-
-
-
-        statusContainer.innerHTML = `
-
-
-
-          <div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs">
-
-
-
-            <span>✅ <strong>Offer Letter PDF Generated!</strong> If download didn't start:</span>
-
-
-
-            <a href="${blobUrl}" download="${filename}" target="_blank" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-bold underline shadow">
-
-
-
-              Click Here to Open / Save PDF
-
-
-
-            </a>
-
-
-
-          </div>
-
-
-
-        `;
-
-
-
-      }
-
-
-
-    } else {
-
-
-
-      fallbackCleanPrint(element, filename);
-
-
-
-    }
-
-
-
-  } catch (err) {
-
-
-
-    console.error('PDF generation error:', err);
-
-
-
-    fallbackCleanPrint(element, filename);
-
-
-
-  } finally {
-
-
-
-    if (document.body.contains(container)) {
-
-
-
-      document.body.removeChild(container);
-
-
-
-    }
-
-
-
-    if (btn) {
-
-
-
-      btn.disabled = false;
-
-
-
-      btn.innerHTML = originalHtml;
-
-
-
-      if (window.lucide) window.lucide.createIcons();
-
-
-
-    }
-
-
-
-  }
-
-
-
+    orientation: 'portrait',
+    btnId: 'downloadOfferPdfBtn',
+    statusMsgId: 'offerPdfStatusMsg',
+    statusText: 'Rendering 2-page executive appointment document for download...'
+  });
 }
-
-
-
-
-
-
 
 async function downloadWelcomeEmail() {
   const element = document.getElementById('welcomeEmailPdfDoc');
@@ -6070,7 +5834,6 @@ async function downloadWelcomeEmail() {
     utr: 'Logged & Confirmed'
   };
 
-  // Ensure modal fields are populated
   if (typeof showWelcomeEmailModal === 'function') {
     showWelcomeEmailModal(app);
   }
@@ -6078,20 +5841,7 @@ async function downloadWelcomeEmail() {
   const regIdClean = (app.regId || 'SY-2026-0842').replace(/[^a-zA-Z0-9_-]/g, '');
   const filename = `SarlaYash-Welcome-Letter-${regIdClean}.pdf`;
 
-  const btn = document.getElementById('downloadWelcomePdfBtn');
-  const statusContainer = document.getElementById('welcomePdfStatusMsg');
-  const originalHtml = btn ? btn.innerHTML : '';
-
-  if (btn) {
-    btn.disabled = true;
-    btn.innerHTML = `<span class="inline-block animate-spin mr-1.5">⏳</span><span>Generating 2-Page Welcome PDF...</span>`;
-  }
-  if (statusContainer) {
-    statusContainer.classList.remove('hidden');
-    statusContainer.innerHTML = `<div class="p-2.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2"><span class="animate-pulse">📜</span><span>Rendering 2-page welcome correspondence for download...</span></div>`;
-  }
-
-  // Ensure Welcome QR Code is ready
+  // Ensure QR Code is generated
   const welcomeQrImg = document.getElementById('welcomeQrImg');
   if (welcomeQrImg && (!welcomeQrImg.src || !welcomeQrImg.src.startsWith('data:'))) {
     if (typeof generateQrCodeDataUrl === 'function') {
@@ -6101,224 +5851,16 @@ async function downloadWelcomeEmail() {
     }
   }
 
-  // Create clean isolated render container at (0, 0)
-  const container = document.createElement('div');
-  container.style.position = 'fixed';
-  container.style.left = '0';
-  container.style.top = '0';
-  container.style.width = '794px';
-  container.style.margin = '0';
-  container.style.padding = '0';
-  container.style.zIndex = '999999';
-  container.style.backgroundColor = '#ffffff';
-  container.style.overflow = 'visible';
-
-  const clone = element.cloneNode(true);
-  clone.style.width = '794px';
-  clone.style.maxWidth = '794px';
-  clone.style.margin = '0';
-  clone.style.padding = '0';
-  clone.style.boxSizing = 'border-box';
-  clone.style.backgroundColor = '#ffffff';
-  clone.style.color = '#0f172a';
-
-  container.appendChild(clone);
-  document.body.appendChild(container);
-
-  const opt = {
-    margin: [0, 0, 0, 0],
+  await renderDocumentToPdf({
+    elementId: 'welcomeEmailPdfDoc',
+    pageSelector: '.email-pdf-page',
     filename: filename,
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { 
-      scale: 2, 
-      useCORS: true, 
-      backgroundColor: '#ffffff',
-      logging: false
-    },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-    pagebreak: { mode: ['css', 'legacy'] }
-  };
-
-
-
-
-
-
-
-  try {
-
-
-
-    if (typeof html2pdf !== 'undefined') {
-
-
-
-      const worker = html2pdf().set(opt).from(clone);
-
-
-
-      const blob = await worker.outputPdf('blob');
-
-
-
-      const blobUrl = URL.createObjectURL(blob);
-
-
-
-
-
-
-
-      // Direct trigger
-
-
-
-      const a = document.createElement('a');
-
-
-
-      a.href = blobUrl;
-
-
-
-      a.download = filename;
-
-
-
-      document.body.appendChild(a);
-
-
-
-      a.click();
-
-
-
-      setTimeout(() => { 
-
-
-
-        if (document.body.contains(a)) document.body.removeChild(a); 
-
-
-
-      }, 1000);
-
-
-
-
-
-
-
-      if (statusContainer) {
-
-
-
-        statusContainer.innerHTML = `
-
-
-
-          <div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs">
-
-
-
-            <span>✅ <strong>Welcome Letter PDF Generated!</strong> If download didn't start:</span>
-
-
-
-            <a href="${blobUrl}" download="${filename}" target="_blank" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-bold underline shadow">
-
-
-
-              Click Here to Open / Save PDF
-
-
-
-            </a>
-
-
-
-          </div>
-
-
-
-        `;
-
-
-
-      }
-
-
-
-    } else {
-
-
-
-      fallbackCleanPrint(element, filename);
-
-
-
-    }
-
-
-
-  } catch (err) {
-
-
-
-    console.error('PDF generation error:', err);
-
-
-
-    fallbackCleanPrint(element, filename);
-
-
-
-  } finally {
-
-
-
-    if (document.body.contains(container)) {
-
-
-
-      document.body.removeChild(container);
-
-
-
-    }
-
-
-
-    if (btn) {
-
-
-
-      btn.disabled = false;
-
-
-
-      btn.innerHTML = originalHtml;
-
-
-
-      if (window.lucide) window.lucide.createIcons();
-
-
-
-    }
-
-
-
-  }
-
-
-
+    orientation: 'portrait',
+    btnId: 'downloadWelcomePdfBtn',
+    statusMsgId: 'welcomePdfStatusMsg',
+    statusText: 'Rendering 2-page welcome letter for download...'
+  });
 }
-
-
-
-
-
 
 
 function fallbackCleanPrint(element, filename) {
@@ -7541,233 +7083,16 @@ async function downloadDay1Certificate() {
     if (qrData) certQrImg.src = qrData;
   }
 
-  const btn = document.getElementById('downloadCertPdfBtn');
-  const statusContainer = document.getElementById('certPdfStatusMsg');
-  const originalHtml = btn ? btn.innerHTML : '';
-
-  if (btn) {
-    btn.disabled = true;
-    btn.innerHTML = `<span class="inline-block animate-spin mr-1.5">⏳</span><span>Generating Certificate PDF...</span>`;
-  }
-  if (statusContainer) {
-    statusContainer.classList.remove('hidden');
-    statusContainer.innerHTML = `<div class="p-2.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2"><span class="animate-pulse">📜</span><span>Rendering Day 1 Certificate of Appreciation...</span></div>`;
-  }
-
-  const container = document.createElement('div');
-  container.style.position = 'fixed';
-  container.style.left = '0';
-  container.style.top = '0';
-  container.style.width = '1020px';
-  container.style.margin = '0';
-  container.style.padding = '0';
-  container.style.zIndex = '999999';
-  container.style.backgroundColor = '#ffffff';
-  container.style.overflow = 'visible';
-
-  const clone = element.cloneNode(true);
-  clone.style.width = '1020px';
-  clone.style.minWidth = '1020px';
-  clone.style.maxWidth = '1020px';
-  clone.style.height = '710px';
-  clone.style.margin = '0';
-  clone.style.padding = '26px 36px';
-  clone.style.boxSizing = 'border-box';
-  clone.style.backgroundColor = '#ffffff';
-  clone.style.color = '#0f172a';
-
-  container.appendChild(clone);
-  document.body.appendChild(container);
-
-  const opt = {
-    margin: [4, 4, 4, 4],
+  await renderDocumentToPdf({
+    elementId: 'day1CertPdfDoc',
+    pageSelector: null,
     filename: filename,
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { 
-      scale: 2, 
-      useCORS: true, 
-      backgroundColor: '#ffffff',
-      logging: false
-    },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
-  };
-
-
-
-
-
-
-
-  try {
-
-
-
-    if (typeof html2pdf !== 'undefined') {
-
-
-
-      const worker = html2pdf().set(opt).from(clone);
-
-
-
-      const blob = await worker.outputPdf('blob');
-
-
-
-      const blobUrl = URL.createObjectURL(blob);
-
-
-
-
-
-
-
-      const a = document.createElement('a');
-
-
-
-      a.href = blobUrl;
-
-
-
-      a.download = filename;
-
-
-
-      document.body.appendChild(a);
-
-
-
-      a.click();
-
-
-
-      setTimeout(() => { 
-
-
-
-        if (document.body.contains(a)) document.body.removeChild(a); 
-
-
-
-      }, 1000);
-
-
-
-
-
-
-
-      if (statusContainer) {
-
-
-
-        statusContainer.innerHTML = `
-
-
-
-          <div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs">
-
-
-
-            <span>✅ <strong>Day 1 Certificate PDF Generated!</strong> If download didn't start:</span>
-
-
-
-            <a href="${blobUrl}" download="${filename}" target="_blank" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-bold underline shadow">
-
-
-
-              Click Here to Open / Save PDF
-
-
-
-            </a>
-
-
-
-          </div>
-
-
-
-        `;
-
-
-
-      }
-
-
-
-    } else {
-
-
-
-      fallbackCleanPrint(element, filename);
-
-
-
-    }
-
-
-
-  } catch (err) {
-
-
-
-    console.error('Certificate generation error:', err);
-
-
-
-    fallbackCleanPrint(element, filename);
-
-
-
-  } finally {
-
-
-
-    if (document.body.contains(container)) {
-
-
-
-      document.body.removeChild(container);
-
-
-
-    }
-
-
-
-    if (btn) {
-
-
-
-      btn.disabled = false;
-
-
-
-      btn.innerHTML = originalHtml;
-
-
-
-      if (window.lucide) window.lucide.createIcons();
-
-
-
-    }
-
-
-
-  }
-
-
-
+    orientation: 'landscape',
+    btnId: 'downloadCertPdfBtn',
+    statusMsgId: 'certPdfStatusMsg',
+    statusText: 'Rendering Day 1 Certificate of Appreciation...'
+  });
 }
-
-
-
-
-
 
 
 async function showDay1BadgeModal() {
@@ -8821,26 +8146,8 @@ async function downloadSignedCodeOfConductPdf() {
     return;
   }
 
-  const app = window.currentUserApp || {
-    journeyId: jId,
-    name: currentUser ? currentUser.displayName : 'Candidate Name'
-  };
-
   const jIdClean = (jId || 'SYM-2026-7842').replace(/[^a-zA-Z0-9_-]/g, '');
   const filename = `SarlaYash-Code-Of-Conduct-${jIdClean}.pdf`;
-
-  const btn = document.getElementById('downloadCocPdfBtn');
-  const statusContainer = document.getElementById('cocPdfStatusMsg');
-  const originalHtml = btn ? btn.innerHTML : '';
-
-  if (btn) {
-    btn.disabled = true;
-    btn.innerHTML = `<span class="inline-block animate-spin mr-1.5">⏳</span><span>Generating Signed Covenant PDF...</span>`;
-  }
-  if (statusContainer) {
-    statusContainer.classList.remove('hidden');
-    statusContainer.innerHTML = `<div class="p-2.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2"><span class="animate-pulse">📄</span><span>Rendering 2-page executive agreement document for download...</span></div>`;
-  }
 
   // Ensure QR Code is ready
   const signedQrImg = document.getElementById('signedCocQrImg');
@@ -8850,85 +8157,15 @@ async function downloadSignedCodeOfConductPdf() {
     if (qrData) signedQrImg.src = qrData;
   }
 
-  // Create clean isolated render container at (0, 0)
-  const container = document.createElement('div');
-  container.style.position = 'fixed';
-  container.style.left = '0';
-  container.style.top = '0';
-  container.style.width = '794px';
-  container.style.margin = '0';
-  container.style.padding = '0';
-  container.style.zIndex = '999999';
-  container.style.backgroundColor = '#ffffff';
-  container.style.overflow = 'visible';
-
-  const clone = element.cloneNode(true);
-  clone.style.width = '794px';
-  clone.style.maxWidth = '794px';
-  clone.style.margin = '0';
-  clone.style.padding = '0';
-  clone.style.boxSizing = 'border-box';
-  clone.style.backgroundColor = '#ffffff';
-  clone.style.color = '#0f172a';
-
-  container.appendChild(clone);
-  document.body.appendChild(container);
-
-  const opt = {
-    margin: [0, 0, 0, 0],
+  await renderDocumentToPdf({
+    elementId: 'signedCocDoc',
+    pageSelector: '.coc-page-container',
     filename: filename,
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: {
-      scale: 2,
-      useCORS: true,
-      backgroundColor: '#ffffff',
-      logging: false
-    },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-    pagebreak: { mode: ['css', 'legacy'] }
-  };
-
-  try {
-    if (typeof html2pdf !== 'undefined') {
-      const worker = html2pdf().set(opt).from(clone);
-      const blob = await worker.outputPdf('blob');
-      const blobUrl = URL.createObjectURL(blob);
-
-      const a = document.createElement('a');
-      a.href = blobUrl;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(() => {
-        if (document.body.contains(a)) document.body.removeChild(a);
-      }, 1000);
-
-      if (statusContainer) {
-        statusContainer.innerHTML = `
-          <div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs">
-            <span>✅ <strong>Signed Code of Conduct PDF Downloaded!</strong> If download didn't start:</span>
-            <a href="${blobUrl}" download="${filename}" target="_blank" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-bold underline shadow">
-              Click Here to Open / Save PDF
-            </a>
-          </div>
-        `;
-      }
-    } else {
-      fallbackCleanPrint(element, filename);
-    }
-  } catch (err) {
-    console.error('Code of conduct PDF generation error:', err);
-    fallbackCleanPrint(element, filename);
-  } finally {
-    if (document.body.contains(container)) {
-      document.body.removeChild(container);
-    }
-    if (btn) {
-      btn.disabled = false;
-      btn.innerHTML = originalHtml;
-      if (window.lucide) window.lucide.createIcons();
-    }
-  }
+    orientation: 'portrait',
+    btnId: 'downloadCocPdfBtn',
+    statusMsgId: 'cocPdfStatusMsg',
+    statusText: 'Rendering official 2-page signed Code of Conduct agreement...'
+  });
 }
 
 

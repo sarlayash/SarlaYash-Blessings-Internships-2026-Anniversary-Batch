@@ -143,13 +143,11 @@
 
 
   <!-- High-Precision Client-Side PDF Generation -->
-
+  <script src="jspdf.umd.min.js"></script>
+  <script src="html2canvas.min.js"></script>
   <script src="html2pdf.bundle.min.js"></script>
-  <!-- HTML2Canvas for High-Resolution Badge PNG Export -->
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <!-- QR Code Generation for 100% Authentic Verifiable Credentials -->
   <script src="qrcode.min.js"></script>
-  <script>if (typeof QRCode === 'undefined') { document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"><\/script>'); }</script>
 
 
 
@@ -1401,7 +1399,7 @@
               <div id="signedCocDoc" class="bg-white text-slate-900 shadow-2xl mx-auto font-sans" style="background-color: #ffffff !important; color: #0f172a !important; width: 794px; min-width: 794px; box-sizing: border-box;">
                 
                 <!-- PAGE 1 OF 2 -->
-                <div class="coc-page-container bg-white text-slate-900 flex flex-col justify-between" style="width: 794px; min-width: 794px; height: 1080px; max-height: 1080px; box-sizing: border-box; border: 8px double #E5A93C; position: relative; padding: 24px 30px; background-color: #ffffff !important; color: #0f172a !important; overflow: hidden;">
+                <div id="signedCocPage1" class="coc-page-container bg-white text-slate-900 flex flex-col justify-between" style="width: 794px; min-width: 794px; max-width: 794px; height: 1123px; min-height: 1123px; max-height: 1123px; box-sizing: border-box; border: 8px double #E5A93C; position: relative; padding: 24px 30px; background-color: #ffffff !important; color: #0f172a !important; overflow: hidden;">
                   <div style="position: absolute; inset: 4px; border: 1px solid #B87A1E; pointer-events-none;"></div>
                   
                   <!-- Page 1 Header -->
@@ -1461,7 +1459,7 @@
                 </div>
 
                                 <!-- PAGE 2 OF 2 -->
-                <div class="coc-page-container bg-white text-slate-900 flex flex-col justify-between" style="width: 794px; min-width: 794px; height: 1080px; max-height: 1080px; box-sizing: border-box; border: 8px double #E5A93C; position: relative; padding: 24px 30px; background-color: #ffffff !important; color: #0f172a !important; overflow: hidden; page-break-before: always; break-before: page;">
+                <div id="signedCocPage2" class="coc-page-container bg-white text-slate-900 flex flex-col justify-between" style="width: 794px; min-width: 794px; max-width: 794px; height: 1123px; min-height: 1123px; max-height: 1123px; box-sizing: border-box; border: 8px double #E5A93C; position: relative; padding: 24px 30px; background-color: #ffffff !important; color: #0f172a !important; overflow: hidden; page-break-before: always; break-before: page;">
                   <div style="position: absolute; inset: 4px; border: 1px solid #B87A1E; pointer-events-none;"></div>
 
                   <!-- Page 2 Header -->
@@ -5965,7 +5963,7 @@
           <!-- ========================================== -->
           <!-- PAGE 1: WELCOME & ENROLMENT CONFIRMATION  -->
           <!-- ========================================== -->
-          <div id="welcomeEmailPage1" class="bg-white text-slate-900 flex flex-col justify-between" style="box-sizing: border-box; width: 794px; height: 1080px; max-height: 1080px; padding: 24px 30px; background-color: #ffffff !important; color: #0f172a !important; position: relative; border: 8px double #E5A93C; overflow: hidden;">
+          <div id="welcomeEmailPage1" class="email-pdf-page bg-white text-slate-900 flex flex-col justify-between" style="box-sizing: border-box; width: 794px; min-width: 794px; max-width: 794px; height: 1123px; min-height: 1123px; max-height: 1123px; padding: 24px 30px; background-color: #ffffff !important; color: #0f172a !important; position: relative; border: 8px double #E5A93C; overflow: hidden;">
             <div style="position: absolute; inset: 4px; border: 1px solid #B87A1E; pointer-events-none;"></div>
 
             <!-- Page 1 Content -->
@@ -6087,7 +6085,7 @@
           <!-- ========================================== -->
           <!-- PAGE 2: MENTOR NOTE, STEPS & ATTESTATION   -->
           <!-- ========================================== -->
-          <div id="welcomeEmailPage2" class="bg-white text-slate-900 flex flex-col justify-between" style="box-sizing: border-box; width: 794px; height: 1080px; max-height: 1080px; padding: 24px 30px; background-color: #ffffff !important; color: #0f172a !important; position: relative; border: 8px double #E5A93C; overflow: hidden; page-break-before: always; break-before: page;">
+          <div id="welcomeEmailPage2" class="email-pdf-page bg-white text-slate-900 flex flex-col justify-between" style="box-sizing: border-box; width: 794px; min-width: 794px; max-width: 794px; height: 1123px; min-height: 1123px; max-height: 1123px; padding: 24px 30px; background-color: #ffffff !important; color: #0f172a !important; position: relative; border: 8px double #E5A93C; overflow: hidden; page-break-before: always; break-before: page;">
             <div style="position: absolute; inset: 4px; border: 1px solid #B87A1E; pointer-events-none;"></div>
 
             <!-- Page 2 Content -->
@@ -6295,7 +6293,7 @@
         <!-- ========================================== -->
         <!-- PAGE 1: APPOINTMENT & COHORT SCHEDULE     -->
         <!-- ========================================== -->
-        <div id="offerLetterPage1" class="pdf-page bg-white text-slate-900" style="box-sizing: border-box; width: 794px; height: 1080px; max-height: 1080px; padding: 26px 32px 18px 32px; background-color: #ffffff !important; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;">
+        <div id="offerLetterPage1" class="pdf-page bg-white text-slate-900" style="box-sizing: border-box; width: 794px; min-width: 794px; max-width: 794px; height: 1123px; min-height: 1123px; max-height: 1123px; padding: 26px 32px 18px 32px; background-color: #ffffff !important; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;">
           <div class="space-y-3">
             <!-- Official Banner Header with Red Curtains and Gold Title -->
             <div class="w-full rounded-lg overflow-hidden border border-amber-400/90 shadow-sm bg-black">
@@ -6413,7 +6411,7 @@
         <!-- ========================================== -->
         <!-- PAGE 2: COVENANTS, RUBRIC & SIGNATURES    -->
         <!-- ========================================== -->
-        <div id="offerLetterPage2" class="pdf-page bg-white text-slate-900" style="box-sizing: border-box; width: 794px; height: 1080px; max-height: 1080px; padding: 26px 32px 18px 32px; background-color: #ffffff !important; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; page-break-before: always; break-before: page;">
+        <div id="offerLetterPage2" class="pdf-page bg-white text-slate-900" style="box-sizing: border-box; width: 794px; min-width: 794px; max-width: 794px; height: 1123px; min-height: 1123px; max-height: 1123px; padding: 26px 32px 18px 32px; background-color: #ffffff !important; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; page-break-before: always; break-before: page;">
           <div class="space-y-3">
             <!-- Running Letterhead Bar -->
             <div class="flex items-center justify-between border-b-2 border-slate-200 pb-2 text-[11px] font-mono text-slate-700">
